@@ -12,14 +12,15 @@ pipeline {
                 git branch: "setup/CICD",
                     url: "https://github.com/Ninehcobra-Bale-Bros/Furniture-Exchange.git"
             }
+        }
 
-            steps("Login to dockerhub") {
+        stage("Login to dockerhub") {
+             steps {
                 withDockerRegistry(credentialsId: registryCredential, url: "https://index.docker.io/v1/") {
                     sh 'echo $DOCKERHUB_CREDENTIALS_USR'
                     sh 'echo $DOCKERHUB_CREDENTIALS_PSW'
                     echo "Docker registry is ready"
                 }
-            }
         }
     }
 }
