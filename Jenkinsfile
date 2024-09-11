@@ -21,6 +21,7 @@ pipeline {
                     sh 'echo $DOCKERHUB_CREDENTIALS_PSW'
                     echo "Docker registry is ready"
                 }
+            }
         }
     }
 }
