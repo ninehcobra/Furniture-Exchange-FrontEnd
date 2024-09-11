@@ -7,7 +7,7 @@ pipeline {
     }
 
     stages {
-        stage("Cloning the repository") {
+        stage("Cloning the github repository") {
             steps {
                 git branch: "setup/CICD",
                     url: "https://github.com/Ninehcobra-Bale-Bros/Furniture-Exchange.git"
