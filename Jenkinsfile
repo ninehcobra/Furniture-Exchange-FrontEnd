@@ -20,8 +20,8 @@ pipeline {
                 withDockerRegistry(credentialsId: "test-credential-setup-cicd", url: "https://index.docker.io/v1/") {
                     echo "Docker registry is ready"
 
-                    script: "docker build -t test:cicd ."
-                    script: "docker push baledev/test:cicd"
+                    sh "docker build -t test:cicd ."
+                    sh "docker push baledev/test:cicd"
                 }
             }
         }
