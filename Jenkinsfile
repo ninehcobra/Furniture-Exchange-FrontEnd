@@ -25,9 +25,5 @@ pipeline {
                 }
             }
         }
-
-        stage("packaging and pushing docker image") {
-            
-        }
     }
 }
