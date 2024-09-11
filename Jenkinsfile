@@ -25,5 +25,27 @@ pipeline {
                 }
             }
         }
+
+        stage("Deploying to devepment environment") {
+            steps {
+                echo "Docker registry is ready"
+                
+                sh "docker network create dev || echo 'Network already exists'"
+                sh "docker container stop nestjs-architecture || echo 'No container running'"
+                sh "echo y | docker container prune"
+                sh "pwd && ls -la"
+                sh "ls -la ${WORKSPACE}"
+
+                sh "docker image pull baledev/test:cicd"
+                sh "docker container run -d --name furniture-exchange-test --network dev -p 3000:3000 baledev/test:cicd"
+            }
+        }
+    }
+    
+    post {
+        // Clean after build
+        always {
+            cleanWs()
+        }
     }
 }
