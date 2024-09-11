@@ -8,6 +8,8 @@ pipeline {
     stages {
         stage("Cloning the github repository") {
             steps {
+                echo "Cloning the github repository"
+
                 git branch: "setup/CICD",
                     url: "https://github.com/Ninehcobra-Bale-Bros/Furniture-Exchange.git"
             }
@@ -16,13 +18,16 @@ pipeline {
         stage("Login to dockerhub") {
              steps {
                 withDockerRegistry(credentialsId: "test-credential-setup-cicd", url: "https://index.docker.io/v1/") {
-                    sh 'echo $DOCKERHUB_CREDENTIALS_USR'
-
-                    sh 'echo $DOCKERHUB_CREDENTIALS_PSW'
-
                     echo "Docker registry is ready"
+
+                    script: "docker build -t test:cicd ."
+                    script: "docker push baledev/test:cicd"
                 }
             }
+        }
+
+        stage("packaging and pushing docker image") {
+            
         }
     }
 }
