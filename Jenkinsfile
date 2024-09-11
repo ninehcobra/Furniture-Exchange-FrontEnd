@@ -13,7 +13,7 @@ pipeline {
                     url: "https://github.com/Ninehcobra-Bale-Bros/Furniture-Exchange.git"
             }
 
-            steps {
+            steps("Login to dockerhub") {
                 withDockerRegistry(credentialsId: registryCredential, url: "https://index.docker.io/v1/") {
                     sh 'echo $DOCKERHUB_CREDENTIALS_USR'
                     sh 'echo $DOCKERHUB_CREDENTIALS_PSW'
