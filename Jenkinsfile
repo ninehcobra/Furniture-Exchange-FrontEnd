@@ -2,7 +2,6 @@ pipeline {
     agent any
 
     environment {
-        jenkinsRegistryCredential = 'test-credential-setup-cicd'
         DOCKERHUB_CREDENTIALS = credentials('test-credential-setup-cicd')
     }
 
