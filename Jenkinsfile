@@ -18,7 +18,9 @@ pipeline {
              steps {
                 withDockerRegistry(credentialsId: registryCredential, url: "https://index.docker.io/v1/") {
                     sh 'echo $DOCKERHUB_CREDENTIALS_USR'
+
                     sh 'echo $DOCKERHUB_CREDENTIALS_PSW'
+                    
                     echo "Docker registry is ready"
                 }
             }
