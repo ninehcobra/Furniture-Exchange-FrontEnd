@@ -1,14 +1,10 @@
 import { plainToInstance } from 'class-transformer';
-import { IsEnum, IsNumber, Max, Min, validateSync } from 'class-validator';
-
-enum EnvironmentEnum {
-  Development = 'development',
-  Production = 'production',
-}
+import { IsEnum, IsNumber, validateSync } from 'class-validator';
+import { EnvEnum } from 'src/common/enums/env.enum';
 
 class EnvironmentVariables {
-  @IsEnum(EnvironmentEnum)
-  NODE_ENV: EnvironmentEnum;
+  @IsEnum(EnvEnum)
+  NODE_ENV: EnvEnum;
 
   @IsNumber()
   PORT: number;
