@@ -1,10 +1,8 @@
-import { DynamicModule, Global, Module, OnModuleInit } from '@nestjs/common';
-import { ConfigModule, ConfigService } from '@nestjs/config';
+import { DynamicModule, Global, Module, Logger } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
 import { ConfigServiceExt } from './config.service';
-import * as fs from 'fs';
-import * as path from 'path';
-import * as dotenv from 'dotenv';
 import { validate } from 'class-validator';
+import { LoggerService } from 'src/logger/logger.service';
 
 @Global() // Ensures this module is global
 @Module({
@@ -24,6 +22,10 @@ import { validate } from 'class-validator';
   exports: [ConfigServiceExt],
 })
 export class ConfigExtModule {
+  constructor(private loggerService: LoggerService) {
+    loggerService.loggingEnvironmentVariables(ConfigExtModule.name);
+  }
+
   static forRoot(): DynamicModule {
     let envFile = '.env.development';
 
@@ -38,20 +40,6 @@ export class ConfigExtModule {
         envFile = '.env.development';
         break;
     }
-
-    const envFilePath = path.resolve(__dirname, '../../', envFile);
-
-    if (!fs.existsSync(envFilePath)) {
-      console.log('File not found');
-    } else {
-      const envFile = fs.readFileSync(envFilePath, 'utf8');
-      const env = dotenv.parse(envFile);
-      for (const key in env) {
-        console.log(`${key} = ${env[key]}`);
-      }
-    }
-
-    console.log(envFilePath);
 
     return {
       imports: [
