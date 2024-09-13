@@ -2,9 +2,10 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { ConfigServiceExt } from './config/config.service';
-import { LoggerService } from './logger/logger.service';
 import { Logger } from '@nestjs/common';
 import swaggerConfig from './common/sawgger.config';
+import helmet from 'helmet';
+import * as compression from 'compression';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
@@ -13,6 +14,19 @@ async function bootstrap() {
   const logger = new Logger('Application');
   const configService = app.get(ConfigServiceExt);
   const PORT = configService.get('PORT', { infer: true });
+  const CLIENT_URL = configService.get('CLIENT_URL', { infer: true });
+
+  // Enable CORS
+  app.enableCors({
+    origin: CLIENT_URL,
+  });
+
+  // Set security headers
+  // prevent common security vulnerabilities by setting HTTP headers appropriately
+  app.use(helmet());
+
+  // Compression reduce the size of the response body and increase the speed of a web app
+  app.use(compression());
 
   // Set global prefix
   app.setGlobalPrefix('api/v1');
