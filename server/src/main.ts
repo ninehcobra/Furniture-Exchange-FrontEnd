@@ -1,4 +1,4 @@
-import { NestFactory } from '@nestjs/core';
+import { HttpAdapterHost, NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { ConfigServiceExt } from './config/config.service';
@@ -6,6 +6,10 @@ import { Logger } from '@nestjs/common';
 import swaggerConfig from './common/sawgger.config';
 import helmet from 'helmet';
 import * as compression from 'compression';
+import {
+  GlobalExceptionsFilter,
+  HttpExceptionFilter,
+} from './common/exception-filter/http-exception.filter';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
@@ -20,6 +24,10 @@ async function bootstrap() {
   app.enableCors({
     origin: CLIENT_URL,
   });
+
+  // Global Exception filter
+  app.useGlobalFilters(new GlobalExceptionsFilter(app.get(HttpAdapterHost)));
+  // app.useGlobalFilters(new HttpExceptionFilter());
 
   // Set security headers
   // prevent common security vulnerabilities by setting HTTP headers appropriately

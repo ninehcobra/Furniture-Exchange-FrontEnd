@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { ConfigServiceExt } from 'src/config/config.service';
 import { LoggerService } from 'src/logger/logger.service';
 
@@ -17,6 +17,8 @@ export class UsersService {
 
     console.log(PORT);
     console.log(NODE_ENV);
+
+    throw new HttpException('test', HttpStatus.FORBIDDEN);
 
     return `This action returns all users`;
   }
