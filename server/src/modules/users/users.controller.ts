@@ -19,4 +19,9 @@ export class UsersController {
   findAll() {
     return this.usersService.findAll();
   }
+
+  @Post()
+  create(@Body() body: { id: number }) {
+    return this.usersService.create(1243);
+  }
 }

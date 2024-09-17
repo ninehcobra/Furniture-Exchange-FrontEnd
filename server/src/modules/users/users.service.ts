@@ -1,10 +1,14 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
 import { ConfigServiceExt } from 'src/config/config.service';
 import { LoggerService } from 'src/logger/logger.service';
+import { User } from './entities/user.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class UsersService {
   constructor(
+    @InjectRepository(User) private readonly userRepository: Repository<User>,
     private readonly configService: ConfigServiceExt,
     private readonly loggerService: LoggerService,
   ) {}
@@ -21,5 +25,13 @@ export class UsersService {
     throw new HttpException('test', HttpStatus.FORBIDDEN);
 
     return `This action returns all users`;
+  }
+
+  async create(id: number) {
+    const user = this.userRepository.create({
+      name: 'test',
+    });
+
+    return await this.userRepository.save(user);
   }
 }

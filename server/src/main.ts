@@ -6,10 +6,7 @@ import { Logger } from '@nestjs/common';
 import swaggerConfig from './common/sawgger.config';
 import helmet from 'helmet';
 import * as compression from 'compression';
-import {
-  GlobalExceptionsFilter,
-  HttpExceptionFilter,
-} from './common/exception-filter/http-exception.filter';
+import { GlobalExceptionsFilter } from './common/exception-filter/http-exception.filter';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
