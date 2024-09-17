@@ -22,7 +22,7 @@ export var dataSourceOptions: DataSourceOptions = {
       imports: [ConfigExtModule],
       inject: [ConfigServiceExt],
       useFactory: (configService: ConfigServiceExt) => {
-        const NODE_ENV = configService.get('NODE_ENV', { infer: true });
+        const NODE_ENV: string = configService.get('NODE_ENV');
 
         dataSourceOptions = {
           type: 'postgres',
@@ -33,7 +33,7 @@ export var dataSourceOptions: DataSourceOptions = {
           database: configService.get('POSTGRES_DATABASE'),
           entities: ['dist/**/*.entity{.ts,.js}'],
           migrations: ['dist/db/migrations/*{.ts,.js}'],
-          synchronize: NODE_ENV === 'development' ? true : false,
+          synchronize: NODE_ENV.trim() === 'development' ? true : false,
         };
 
         return {

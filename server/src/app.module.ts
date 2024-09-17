@@ -6,6 +6,7 @@ import { ConfigExtModule } from './config/config.module';
 import { LoggerModule } from './logger/logger.module';
 import { RateLimitingModule } from './rate-limiting/rate-limiting.module';
 import { DatabaseModule } from './database/database.module';
+import { AuthModule } from './modules/auth/auth.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { DatabaseModule } from './database/database.module';
     LoggerModule,
     RateLimitingModule,
     UsersModule,
+    AuthModule,
   ],
   providers: [AppService],
 })

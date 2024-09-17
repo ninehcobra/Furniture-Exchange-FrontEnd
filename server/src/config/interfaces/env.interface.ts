@@ -10,4 +10,8 @@ export interface EnvVariables {
   POSTGRES_USER: string;
   POSTGRES_PASSWORD: string;
   POSTGRES_DATABASE: string;
+
+  JWT_SECRET: string;
+  JWT_AT_EXPIRATION: string;
+  JWT_RT_EXPIRATION: string;
 }

@@ -7,5 +7,5 @@ export class User extends BaseEntity {
   id!: string & { __brand: 'userId' };
 
   @Column({ type: 'varchar', length: 255 })
-  name: string;
+  email: string;
 }

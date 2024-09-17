@@ -16,11 +16,15 @@ export class UsersService {
   ) {}
 
   async findAll(): Promise<UserDto[]> {
-    // throw new HttpException('test', HttpStatus.FORBIDDEN);
-
     return await this.userRepository
       .find()
       .then((user) => user.map((e) => UserDto.fromEntity(e)));
+  }
+
+  async findOneByEmail(email: string): Promise<UserDto> {
+    const user = await this.userRepository.findOneBy({ email: email });
+
+    return user;
   }
 
   async create(dto: CreateUserDto): Promise<UserDto> {
