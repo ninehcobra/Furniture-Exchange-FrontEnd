@@ -10,18 +10,19 @@ import {
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { UserDto } from './dto/user.dto';
 
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Get()
-  findAll() {
-    return this.usersService.findAll();
+  async findAll(): Promise<UserDto[]> {
+    return await this.usersService.findAll();
   }
 
   @Post()
-  create(@Body() body: { id: number }) {
-    return this.usersService.create(1243);
+  async create(@Body() body: CreateUserDto) {
+    return await this.usersService.create(body);
   }
 }

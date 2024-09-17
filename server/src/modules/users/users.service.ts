@@ -4,6 +4,8 @@ import { ConfigServiceExt } from 'src/config/config.service';
 import { LoggerService } from 'src/logger/logger.service';
 import { User } from './entities/user.entity';
 import { Repository } from 'typeorm';
+import { UserDto } from './dto/user.dto';
+import { CreateUserDto } from './dto/create-user.dto';
 
 @Injectable()
 export class UsersService {
@@ -13,25 +15,17 @@ export class UsersService {
     private readonly loggerService: LoggerService,
   ) {}
 
-  findAll() {
-    const PORT = this.configService.get('PORT', { infer: true });
-    const NODE_ENV = this.configService.get('NODE_ENV', { infer: true });
+  async findAll(): Promise<UserDto[]> {
+    // throw new HttpException('test', HttpStatus.FORBIDDEN);
 
-    this.loggerService.verbose('TEST LOGGING AT USERS SERVICE');
-
-    console.log(PORT);
-    console.log(NODE_ENV);
-
-    throw new HttpException('test', HttpStatus.FORBIDDEN);
-
-    return `This action returns all users`;
+    return await this.userRepository
+      .find()
+      .then((user) => user.map((e) => UserDto.fromEntity(e)));
   }
 
-  async create(id: number) {
-    const user = this.userRepository.create({
-      name: 'test',
+  async create(dto: CreateUserDto): Promise<UserDto> {
+    return await this.userRepository.save(UserDto.toEntity(dto)).then((u) => {
+      return UserDto.fromEntity(u);
     });
-
-    return await this.userRepository.save(user);
   }
 }

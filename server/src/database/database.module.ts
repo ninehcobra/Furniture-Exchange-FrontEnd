@@ -31,10 +31,15 @@ export var dataSourceOptions: DataSourceOptions = {
           username: configService.get('POSTGRES_USER'),
           password: configService.get('POSTGRES_PASSWORD'),
           database: configService.get('POSTGRES_DATABASE'),
+          entities: ['dist/**/*.entity{.ts,.js}'],
+          migrations: ['dist/db/migrations/*{.ts,.js}'],
           synchronize: NODE_ENV === 'development' ? true : false,
         };
 
-        return dataSourceOptions;
+        return {
+          autoLoadEntities: true,
+          ...dataSourceOptions,
+        };
       },
     }),
   ],
