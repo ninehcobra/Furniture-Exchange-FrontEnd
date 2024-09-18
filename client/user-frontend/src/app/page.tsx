@@ -1,6 +1,6 @@
 'use client'
 import { Layout, Image, Menu, MenuProps, Button, Rate } from 'antd'
-import { FileSearchOutlined, HomeOutlined, UserOutlined, MedicineBoxOutlined } from '@ant-design/icons'
+import { FileSearchOutlined, HomeOutlined, UserOutlined, ShoppingOutlined } from '@ant-design/icons'
 import Link from 'next/link'
 import './_landing-page.scss'
 import { useRouter } from 'next/navigation'
@@ -39,7 +39,7 @@ export default function LandingPage(): React.ReactNode {
     router.push(key)
   }
   return (
-    <Layout>
+    <Layout className='landing-page-layout'>
       <Header>
         <div className='container d-flex align-items-center h-100 w-100 justify-content-between'>
           <Image
@@ -68,20 +68,20 @@ export default function LandingPage(): React.ReactNode {
               <div className='col-lg-6 d-flex align-items-center'>
                 <div>
                   <span className='mb-3 d-flex align-items-center banner-welcome'>
-                    <MedicineBoxOutlined className='me-1 welcome-icon' /> Chào mừng đến với
+                    <ShoppingOutlined className='me-1 welcome-icon' /> Chào mừng đến với
                   </span>
                   <h1 className='banner-title m-0'>
-                    Hệ thống xem kết quả khám bệnh<span className='text-primary'> Bệnh viện Quân Y 7A</span>
+                    Nền tảng mua bán đồ cũ trực tuyến<span className='text-primary'> ESOLD</span>
                   </h1>
                   <p className='mt-3 banner-subtitle'>
-                    Tra cứu kết quả khám bệnh nhanh chóng, chính xác và bảo mật. Hỗ trợ xem kết quả siêu âm, X-quang và
-                    các xét nghiệm khác.
+                    Khám phá kho tàng đồ cũ chất lượng với giá hấp dẫn. Mua sắm thông minh, tiết kiệm và thân thiện với
+                    môi trường.
                   </p>
                   <div className='mt-3 hstack'>
                     <Button onClick={() => handleRedirect('/')} type='primary' className='btn-custom'>
-                      Sử dụng ngay
+                      Mua sắm ngay
                     </Button>
-                    <Button className='btn-custom border-primary'>Xem hướng dẫn</Button>
+                    <Button className='btn-custom border-primary'>Đăng bán</Button>
                   </div>
                 </div>
               </div>
@@ -90,18 +90,18 @@ export default function LandingPage(): React.ReactNode {
                   <div className='d-flex'>
                     <div>
                       <div className='slider-img'>
-                        <Image preview={false} src='/images/landingpage/bannerimg1.svg' alt='Siêu âm' />
+                        <Image preview={false} src='/images/landingpage/bannerimg1.svg' alt='Đồ nội thất cũ' />
                       </div>
                       <div className='slider-img'>
-                        <Image preview={false} src='/images/landingpage/bannerimg1.svg' alt='X-quang' />
+                        <Image preview={false} src='/images/landingpage/bannerimg2.svg' alt='Đồ điện tử cũ' />
                       </div>
                     </div>
                     <div>
                       <div className='slider-img2'>
-                        <Image preview={false} src='/images/landingpage/bannerimg2.svg' alt='Xét nghiệm máu' />
+                        <Image preview={false} src='/images/landingpage/bannerimg2.svg' alt='Quần áo cũ' />
                       </div>
                       <div className='slider-img2'>
-                        <Image preview={false} src='/images/landingpage/bannerimg2.svg' alt='Bác sĩ' />
+                        <Image preview={false} src='/images/landingpage/bannerimg2.svg' alt='Sách cũ' />
                       </div>
                     </div>
                   </div>
@@ -110,6 +110,7 @@ export default function LandingPage(): React.ReactNode {
             </div>
           </div>
         </div>
+
         {/* End banner section */}
 
         <div className='spacer'>
@@ -141,7 +142,7 @@ export default function LandingPage(): React.ReactNode {
                     />
                   </div>
                   <span className='fs-6  '>
-                    <span className='fw-bold'>52,589+</span> bệnh nhân đã tin tưởng và sử dụng dịch vụ của chúng tôi
+                    <span className='fw-bold'>52,589+</span> người dùng đã tin tưởng và sử dụng dịch vụ của chúng tôi
                   </span>
                 </div>
               </div>
@@ -154,7 +155,7 @@ export default function LandingPage(): React.ReactNode {
           <div className='container'>
             <div className='row justify-content-center'>
               <div className='col-lg-8 col-sm-11'>
-                <h2 className='section-title text-center'>Đánh giá từ bệnh nhân của chúng tôi</h2>
+                <h2 className='section-title text-center'>Đánh giá từ khách hàng của chúng tôi</h2>
               </div>
             </div>
             <div className='row mt-4'>
@@ -169,11 +170,10 @@ export default function LandingPage(): React.ReactNode {
                         className='rounded-circle'
                         width={40}
                       />
-
                       <div className='d-flex align-items-center justify-content-between w-100'>
                         <div className='ms-2'>
                           <div className='fw-bold'>Trương Chính </div>
-                          <span>Bệnh nhân</span>
+                          <span>Khách hàng</span>
                         </div>
                         <div>
                           <Rate defaultValue={5} className='ms-5 star-rating' />
@@ -181,8 +181,8 @@ export default function LandingPage(): React.ReactNode {
                       </div>
                     </div>
                     <p className='mt-3 mb-0'>
-                      Tôi rất hài lòng với dịch vụ khám chữa bệnh tại đây. Bác sĩ tận tình, nhân viên chu đáo. Hệ thống
-                      xem kết quả trực tuyến rất tiện lợi và dễ sử dụng.
+                      Tôi rất hài lòng với trải nghiệm mua sắm tại ESOLD. Sản phẩm chất lượng, giá cả hợp lý. Giao diện
+                      dễ sử dụng và quá trình đặt hàng rất thuận tiện.
                     </p>
                   </div>
                 </div>
@@ -199,11 +199,10 @@ export default function LandingPage(): React.ReactNode {
                         className='rounded-circle'
                         width={40}
                       />
-
                       <div className='d-flex align-items-center justify-content-between w-100'>
                         <div className='ms-2'>
                           <div className='fw-bold'>Quách Đạt </div>
-                          <span>Bệnh nhân</span>
+                          <span>Khách hàng</span>
                         </div>
                         <div>
                           <Rate defaultValue={5} className='ms-5 star-rating' />
@@ -211,8 +210,8 @@ export default function LandingPage(): React.ReactNode {
                       </div>
                     </div>
                     <p className='mt-3 mb-0'>
-                      Bệnh viện có cơ sở vật chất hiện đại, sạch sẽ. Tôi đặc biệt ấn tượng với khả năng xem kết quả khám
-                      online, giúp tiết kiệm thời gian và thuận tiện theo dõi.
+                      ESOLD là nơi tuyệt vời để tìm kiếm đồ cũ chất lượng. Tôi đã mua được nhiều món đồ ưng ý với giá rẻ
+                      hơn rất nhiều so với mua mới. Dịch vụ khách hàng cũng rất tốt.
                     </p>
                   </div>
                 </div>
@@ -232,7 +231,7 @@ export default function LandingPage(): React.ReactNode {
                       <div className='d-flex align-items-center justify-content-between w-100'>
                         <div className='ms-2'>
                           <div className=' fw-bold '>Hồ Lý</div>
-                          <span>Bệnh nhân</span>
+                          <span>Khách hàng</span>
                         </div>
                         <div>
                           <Rate defaultValue={5} className=' star-rating' />
@@ -240,8 +239,8 @@ export default function LandingPage(): React.ReactNode {
                       </div>
                     </div>
                     <p className='mt-3 mb-0'>
-                      Đội ngũ y bác sĩ chuyên nghiệp và tận tâm. Hệ thống tra cứu kết quả khám bệnh online rất hữu ích,
-                      giúp tôi dễ dàng theo dõi tình trạng sức khỏe của mình.
+                      Tôi rất thích cách ESOLD kết nối người bán và người mua. Việc đăng bán đồ cũ rất dễ dàng, và tôi
+                      đã kiếm được một khoản tiền kha khá từ những món đồ không còn sử dụng.
                     </p>
                   </div>
                 </div>
@@ -249,6 +248,7 @@ export default function LandingPage(): React.ReactNode {
             </div>
           </div>
         </div>
+
         {/* End testimonial section */}
 
         {/* Features */}
@@ -258,17 +258,17 @@ export default function LandingPage(): React.ReactNode {
               <div className='col-lg-6 col-sm-8'>
                 <span className='text-primary text-uppercase d-block text-center f-w-500'>TÍNH NĂNG NỔI BẬT</span>
                 <h2 className='section-title text-center m-t-16'>
-                  Các tính năng hữu ích của hệ thống xem kết quả khám bệnh
+                  Các tính năng hữu ích của nền tảng mua bán đồ cũ ESOLD
                 </h2>
               </div>
             </div>
 
             <div className='row mt-5'>
               <div className='col-sm-4 col-lg-3 text-center mb-3'>
-                <i className='feature-icon fa-solid fa-laptop-medical'></i>
-                <h6 className='m-0 mb-1 mt-3'>Xem kết quả online</h6>
+                <i className='feature-icon fa-solid fa-search'></i>
+                <h6 className='m-0 mb-1 mt-3'>Tìm kiếm thông minh</h6>
                 <span className='mb-3 feature-detail d-block'>
-                  Truy cập kết quả khám bệnh mọi lúc, mọi nơi qua internet.
+                  Dễ dàng tìm kiếm sản phẩm với bộ lọc đa dạng và chính xác.
                 </span>
               </div>
 
@@ -276,43 +276,43 @@ export default function LandingPage(): React.ReactNode {
                 <i className='feature-icon fa-solid fa-lock'></i>
                 <h6 className='m-0 mb-1 mt-3'>Bảo mật thông tin</h6>
                 <span className='mb-3 feature-detail d-block'>
-                  Đảm bảo an toàn và riêng tư cho thông tin bệnh nhân.
+                  Đảm bảo an toàn và riêng tư cho thông tin người dùng.
                 </span>
               </div>
 
               <div className='col-sm-4 col-lg-3 text-center mb-3'>
-                <i className='feature-icon fa-solid fa-file-medical'></i>
-                <h6 className='m-0 mb-1 mt-3'>Đa dạng loại kết quả</h6>
+                <i className='feature-icon fa-solid fa-tags'></i>
+                <h6 className='m-0 mb-1 mt-3'>Đa dạng danh mục</h6>
                 <span className='mb-3 feature-detail d-block'>
-                  Hỗ trợ xem kết quả siêu âm, X-quang, xét nghiệm máu và nhiều loại khác.
+                  Hỗ trợ nhiều loại sản phẩm từ đồ điện tử đến quần áo, nội thất.
                 </span>
               </div>
 
               <div className='col-sm-4 col-lg-3 text-center mb-3'>
                 <i className='feature-icon fa-solid fa-history'></i>
-                <h6 className='m-0 mb-1 mt-3'>Lịch sử khám bệnh</h6>
-                <span className='mb-3 feature-detail d-block'>
-                  Theo dõi lịch sử khám bệnh và kết quả qua thời gian.
-                </span>
+                <h6 className='m-0 mb-1 mt-3'>Lịch sử giao dịch</h6>
+                <span className='mb-3 feature-detail d-block'>Theo dõi lịch sử mua bán và đánh giá sản phẩm.</span>
               </div>
 
               <div className='col-sm-4 col-lg-3 text-center mb-3'>
                 <i className='feature-icon fa-solid fa-bell'></i>
-                <h6 className='m-0 mb-1 mt-3'>Thông báo kết quả</h6>
-                <span className='mb-3 feature-detail d-block'>Nhận thông báo ngay khi có kết quả mới.</span>
+                <h6 className='m-0 mb-1 mt-3'>Thông báo thông minh</h6>
+                <span className='mb-3 feature-detail d-block'>Nhận thông báo về sản phẩm mới và ưu đãi.</span>
               </div>
 
               <div className='col-sm-4 col-lg-3 text-center mb-3'>
-                <i className='feature-icon fa-solid fa-download'></i>
-                <h6 className='m-0 mb-1 mt-3'>Tải kết quả</h6>
-                <span className='mb-3 feature-detail d-block'>Dễ dàng tải và lưu trữ kết quả khám bệnh.</span>
-              </div>
-
-              <div className='col-sm-4 col-lg-3 text-center mb-3'>
-                <i className='feature-icon fa-solid fa-share-alt'></i>
-                <h6 className='m-0 mb-1 mt-3'>Chia sẻ với bác sĩ</h6>
+                <i className='feature-icon fa-solid fa-camera'></i>
+                <h6 className='m-0 mb-1 mt-3'>Đăng bán dễ dàng</h6>
                 <span className='mb-3 feature-detail d-block'>
-                  Chia sẻ kết quả an toàn với bác sĩ điều trị của bạn.
+                  Nhanh chóng đăng bán sản phẩm với vài bước đơn giản.
+                </span>
+              </div>
+
+              <div className='col-sm-4 col-lg-3 text-center mb-3'>
+                <i className='feature-icon fa-solid fa-comments'></i>
+                <h6 className='m-0 mb-1 mt-3'>Chat trực tiếp</h6>
+                <span className='mb-3 feature-detail d-block'>
+                  Trao đổi trực tiếp với người bán để biết thêm thông tin sản phẩm.
                 </span>
               </div>
 
@@ -324,6 +324,7 @@ export default function LandingPage(): React.ReactNode {
             </div>
           </div>
         </div>
+
         {/* End Features */}
 
         {/* FAQ */}
@@ -332,13 +333,13 @@ export default function LandingPage(): React.ReactNode {
             <div className='col-sm-10 col-lg-6'>
               <div className='cardWithShadow shape-card bg-size-cover'>
                 <div className='p-32 text-center'>
-                  <h3 className='m-0 mt-2 mat-subtitle-1'>Bạn có còn bất kỳ thắc mắc nào không?</h3>
-                  <span className='mt-1 d-block'>Đừng ngần ngại hãy liên hệ với chúng tôi</span>
+                  <h3 className='m-0 mt-2 mat-subtitle-1'>Bạn có thắc mắc về việc mua bán đồ cũ?</h3>
+                  <span className='mt-1 d-block'>Chúng tôi luôn sẵn sàng hỗ trợ bạn</span>
                   <div className='mt-4 mb-2  justify-content-center'>
                     <Button className='btn-custom me-3 mt-2' type='primary'>
-                      Hỗ trợ trực tuyến
+                      Chat với nhân viên hỗ trợ
                     </Button>
-                    <Button className='btn-custom border-primary mt-2'>Những câu hỏi thường gặp</Button>
+                    <Button className='btn-custom border-primary mt-2'>Xem câu hỏi thường gặp</Button>
                   </div>
                 </div>
               </div>
@@ -353,11 +354,10 @@ export default function LandingPage(): React.ReactNode {
             <div className='row justify-content-between'>
               <div className='col-lg-5'>
                 <h3 className='mt-0 section-title2 text-white mb-4'>
-                  Truy cập kết quả khám bệnh mọi lúc, mọi nơi với website của chúng tôi ngay cả bằng điện thoại di động
-                  của chúng tôi
+                  Mua bán đồ cũ dễ dàng mọi lúc, mọi nơi với website ESOLD trên cả máy tính và điện thoại di động
                 </h3>
                 <div className='hstack '>
-                  <Button className='text-primary btn-custom sm bg-white '>Sử dụng </Button>
+                  <Button className='text-primary btn-custom sm bg-white '>Bắt đầu ngay</Button>
                   <Button color='white' type='primary' className='btn-custom sm text-white  border-white'>
                     Tìm hiểu thêm
                   </Button>
@@ -379,11 +379,11 @@ export default function LandingPage(): React.ReactNode {
 
                   <div className='ms-3'>
                     <h5 className=' mat-subtitle-1 mb-1'>Bảo mật thông tin 100%</h5>
-                    <span>Chúng tôi cam kết bảo vệ thông tin cá nhân của bạn.</span>
+                    <span>Chúng tôi cam kết bảo vệ thông tin cá nhân của bạn trong quá trình mua bán.</span>
                   </div>
                 </div>
                 <Button type='primary' className='btn-custom'>
-                  Trải nghiệm ngay
+                  Khám phá ngay
                 </Button>
               </div>
             </div>
@@ -397,12 +397,12 @@ export default function LandingPage(): React.ReactNode {
           <div className='row justify-content-center'>
             <div className='col-sm-5 col-lg-4 text-center'>
               <span>
-                <Image preview={false} src='images/logo.png' alt='logo' />
+                <Image height={80} preview={false} src='images/logo.png' alt='logo' />
               </span>
               <div className='f-s-14 m-t-8'>
                 All rights reserved, designed & developed by
-                <Link href='https://qkit.vn/' className='mat-subtitle-2 ms-1'>
-                  QKIT Software{' '}
+                <Link href='/' className='mat-subtitle-2 ms-1'>
+                  Ninehcobra-Bale-Bros{' '}
                 </Link>
                 .
               </div>
