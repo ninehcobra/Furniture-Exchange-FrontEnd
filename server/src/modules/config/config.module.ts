@@ -2,7 +2,7 @@ import { DynamicModule, Global, Module, Logger } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { ConfigServiceExt } from './config.service';
 import { validate } from 'class-validator';
-import { LoggerService } from 'src/logger/logger.service';
+import { LoggerService } from 'src/modules/logger/logger.service';
 
 @Global() // Ensures this module is global
 @Module({

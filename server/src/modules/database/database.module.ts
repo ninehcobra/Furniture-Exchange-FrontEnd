@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { ConfigExtModule } from 'src/config/config.module';
-import { ConfigServiceExt } from 'src/config/config.service';
 import { DataSourceOptions } from 'typeorm';
+import { ConfigExtModule } from '../config/config.module';
+import { ConfigServiceExt } from '../config/config.service';
 
 export var dataSourceOptions: DataSourceOptions = {
   type: 'postgres',

@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { seconds, ThrottlerModule } from '@nestjs/throttler';
-import { ConfigServiceExt } from 'src/config/config.service';
+import { ConfigServiceExt } from '../config/config.service';
 
 @Module({
   imports: [

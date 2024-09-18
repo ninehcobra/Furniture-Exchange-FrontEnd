@@ -1,12 +1,12 @@
 import { HttpAdapterHost, NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { NestExpressApplication } from '@nestjs/platform-express';
-import { ConfigServiceExt } from './config/config.service';
 import { Logger } from '@nestjs/common';
-import swaggerConfig from './common/sawgger.config';
+import swaggerConfig from './common/swagger.config';
 import helmet from 'helmet';
 import * as compression from 'compression';
-import { GlobalExceptionsFilter } from './common/exception-filter/http-exception.filter';
+import { GlobalExceptionsFilter } from './core/exceptions/global-exception.filter';
+import { ConfigServiceExt } from './modules/config/config.service';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
