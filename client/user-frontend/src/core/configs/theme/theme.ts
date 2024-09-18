@@ -31,6 +31,22 @@ const {
 export const theme: ThemeConfig = {
   token: {
     colorPrimary: highlightColor_1,
-    colorBgContainer: neutralColorLight_5
+    colorPrimaryHover: highlightColor_2,
+    colorPrimaryActive: highlightColor_3,
+    colorBgContainer: neutralColorLight_5,
+    colorSuccess: successColor_1,
+    colorWarning: warningColor_1,
+    colorError: errorColor_1,
+    colorSuccessBg: successColor_3,
+    colorWarningBg: warningColor_3,
+    colorErrorBg: errorColor_3,
+    colorSuccessBgHover: successColor_2,
+    colorWarningBgHover: warningColor_2,
+    colorErrorBgHover: errorColor_2
+  },
+  components: {
+    Layout: {
+      headerBg: neutralColorLight_5
+    }
   }
 }

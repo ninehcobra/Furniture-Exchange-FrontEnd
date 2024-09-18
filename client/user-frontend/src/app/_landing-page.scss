@@ -92,7 +92,7 @@
 }
 
 .banner-slider {
-  background-color: $neutralColorLight_5;
+  background-color: $highlightColor_5;
   min-width: 2000px;
   height: calc(100vh - 100px);
   max-height: 790px;
@@ -270,4 +270,8 @@
 }
 
 .ad-card {
+}
+
+.landing-page-layout {
+  background-color: $neutralColorLight_5 !important;
 }
