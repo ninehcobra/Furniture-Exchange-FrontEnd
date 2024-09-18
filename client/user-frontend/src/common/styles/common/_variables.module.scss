@@ -1,0 +1,56 @@
+// hight light
+$highlightColor_1: #006ffd;
+$highlightColor_2: #2897ff;
+$highlightColor_3: #6fbaff;
+$highlightColor_4: #b4dbff;
+$highlightColor_5: #eaf2ff;
+// light
+$neutralColorLight_1: #c5c6cc;
+$neutralColorLight_2: #d4d6dd;
+$neutralColorLight_3: #e8e9f1;
+$neutralColorLight_4: #f8f9fe;
+$neutralColorLight_5: #ffffff;
+// dark
+$neutralColorDark_1: #1f2024;
+$neutralColorDark_2: #2f3036;
+$neutralColorDark_3: #494a50;
+$neutralColorDark_4: #71727a;
+$neutralColorDark_5: #8f9098;
+
+//support
+$successColor_1: #298267;
+$successColor_2: #3ac0a0;
+$successColor_3: #e7f4e8;
+$warningColor_1: #e86339;
+$warningColor_2: #ffb37c;
+$warningColor_3: #fffae4;
+$errorColor_1: #ed3241;
+$errorColor_2: #ff616d;
+$errorColor_3: #ffe2e5;
+
+:export {
+  highlightColor_1: $highlightColor_1;
+  highlightColor_2: $highlightColor_2;
+  highlightColor_3: $highlightColor_3;
+  highlightColor_4: $highlightColor_4;
+  highlightColor_5: $highlightColor_5;
+  neutralColorLight_1: $neutralColorLight_1;
+  neutralColorLight_2: $neutralColorLight_2;
+  neutralColorLight_3: $neutralColorLight_3;
+  neutralColorLight_4: $neutralColorLight_4;
+  neutralColorLight_5: $neutralColorLight_5;
+  neutralColorDark_1: $neutralColorDark_1;
+  neutralColorDark_2: $neutralColorDark_2;
+  neutralColorDark_3: $neutralColorDark_3;
+  neutralColorDark_4: $neutralColorDark_4;
+  neutralColorDark_5: $neutralColorDark_5;
+  successColor_1: $successColor_1;
+  successColor_2: $successColor_2;
+  successColor_3: $successColor_3;
+  warningColor_1: $warningColor_1;
+  warningColor_2: $warningColor_2;
+  warningColor_3: $warningColor_3;
+  errorColor_1: $errorColor_1;
+  errorColor_2: $errorColor_2;
+  errorColor_3: $errorColor_3;
+}
