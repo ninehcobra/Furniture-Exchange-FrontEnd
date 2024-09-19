@@ -1,6 +1,6 @@
 import { INestApplication } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import { API_DOCS_CREDENTIALS } from './constants/api-docs.constant';
+import { API_DOCS_CREDENTIALS } from 'src/common/constants/api-docs.constant';
 
 const swaggerConfig = (app: INestApplication) => {
   const swaggerUrl = '/api-docs';

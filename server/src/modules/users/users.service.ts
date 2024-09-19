@@ -1,18 +1,16 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { LoggerService } from 'src/modules/logger/logger.service';
 import { User } from './entities/user.entity';
 import { Repository } from 'typeorm';
 import { UserDto } from './dto/user.dto';
 import { CreateUserDto } from './dto/create-user.dto';
-import { ConfigServiceExt } from '../config/config.service';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectRepository(User) private readonly userRepository: Repository<User>,
-    private readonly configService: ConfigServiceExt,
-    private readonly loggerService: LoggerService,
+    private readonly configService: ConfigService,
   ) {}
 
   async findAll(): Promise<UserDto[]> {

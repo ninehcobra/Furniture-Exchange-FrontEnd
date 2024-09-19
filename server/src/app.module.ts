@@ -1,17 +1,19 @@
 import { Module } from '@nestjs/common';
 import { AppService } from './app.service';
 import { UsersModule } from './modules/users/users.module';
-import { LoggerModule } from './modules/logger/logger.module';
 import { RateLimitingModule } from './modules/rate-limiting/rate-limiting.module';
-import { DatabaseModule } from './modules/database/database.module';
 import { AuthModule } from './modules/auth/auth.module';
-import { ConfigExtModule } from './modules/config/config.module';
+import { ConfigModule } from '@nestjs/config';
+import { configurationOptions } from './config/configuration';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { TypeormService } from './config/typeorm';
 
 @Module({
   imports: [
-    ConfigExtModule.forRoot(),
-    DatabaseModule,
-    LoggerModule,
+    ConfigModule.forRoot(configurationOptions),
+    TypeOrmModule.forRootAsync({
+      useClass: TypeormService,
+    }),
     RateLimitingModule,
     UsersModule,
     AuthModule,

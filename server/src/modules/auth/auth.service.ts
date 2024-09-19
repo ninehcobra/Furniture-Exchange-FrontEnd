@@ -3,12 +3,13 @@ import { RegisterDto } from './dto/register.dto';
 import { JwtService } from '@nestjs/jwt';
 import { JwtPayload } from './jwt-payload';
 import { UsersService } from '../users/users.service';
-import { ConfigServiceExt } from '../config/config.service';
+import { ConfigService } from '@nestjs/config';
+import { EnvVariables } from '../../config/configuration/env.interface';
 
 @Injectable()
 export class AuthService {
   constructor(
-    private readonly configService: ConfigServiceExt,
+    private readonly configService: ConfigService<EnvVariables>,
     private readonly jwtService: JwtService,
     private readonly userService: UsersService,
   ) {}

@@ -1,13 +1,10 @@
 import { plainToInstance } from 'class-transformer';
-import { IsEnum, IsNumber, validateSync } from 'class-validator';
+import { IsString, validateSync } from 'class-validator';
 import { EnvEnum } from 'src/common/enums/env.enum';
 
 class EnvironmentVariables {
-  @IsEnum(EnvEnum)
+  @IsString()
   NODE_ENV: EnvEnum;
-
-  @IsNumber()
-  PORT: number;
 }
 
 const validate = (config: Record<string, unknown>) => {

@@ -5,12 +5,12 @@ import { JwtPayload } from '../jwt-payload';
 import { AuthService } from '../auth.service';
 import { UsersService } from 'src/modules/users/users.service';
 import { UserDto } from 'src/modules/users/dto/user.dto';
-import { ConfigServiceExt } from 'src/modules/config/config.service';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor(
-    private readonly configService: ConfigServiceExt,
+    private readonly configService: ConfigService,
     private readonly userService: UsersService,
   ) {
     super({
