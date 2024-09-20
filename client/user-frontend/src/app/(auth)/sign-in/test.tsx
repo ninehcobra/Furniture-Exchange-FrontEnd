@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form'
 import Link from 'next/link'
 import Image from 'next/image'
 
-export default function SignIn(): React.ReactNode {
+export default function SignIn() {
   const router = useRouter()
   const {
     register,
