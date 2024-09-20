@@ -26,11 +26,13 @@ export class GlobalExceptionsFilter implements ExceptionFilter {
         ? exception.getStatus()
         : HttpStatus.INTERNAL_SERVER_ERROR;
 
+    console.log(exception);
+
     const responseBody = {
       statusCode: httpStatus,
       timestamp: new Date().toISOString(),
       path: httpAdapter.getRequestUrl(ctx.getRequest()),
-      trace: trace,
+      trace: exception,
     };
 
     httpAdapter.reply(ctx.getResponse(), responseBody, httpStatus);

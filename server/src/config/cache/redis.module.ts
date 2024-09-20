@@ -1,7 +1,7 @@
 import { CacheModule, CacheModuleAsyncOptions } from '@nestjs/cache-manager';
 import { Global, Module } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { EnvVariables } from '../configuration/env.interface';
+import { EnvVariables } from '../../environments/env.interface';
 import { redisStore } from 'cache-manager-redis-store';
 import { RedisService } from './redis.service';
 

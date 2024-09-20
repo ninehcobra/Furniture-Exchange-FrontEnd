@@ -6,5 +6,4 @@ export const configurationOptions: ConfigModuleOptions = {
   cache: true,
   envFilePath: `.env.${process.env.NODE_ENV}`,
   validate: validate,
-  load: [],
 };

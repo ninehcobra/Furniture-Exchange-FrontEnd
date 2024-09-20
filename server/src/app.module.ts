@@ -11,6 +11,7 @@ import { RateLimitingService } from './config/rate-limit';
 import { RedisModule } from './config/cache/redis.module';
 import { RedisService } from './config/cache/redis.service';
 import { LoggerMiddleware } from './common/middlewares/logger.middleware';
+import { MailModule } from './config/mail/mail.module';
 
 @Module({
   imports: [
@@ -23,6 +24,8 @@ import { LoggerMiddleware } from './common/middlewares/logger.middleware';
     ThrottlerModule.forRootAsync({
       useClass: RateLimitingService,
     }),
+    // Mail module
+    MailModule,
     // Redis cache
     RedisModule,
     // other business modules

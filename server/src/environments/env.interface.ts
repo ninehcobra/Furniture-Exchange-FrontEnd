@@ -1,6 +1,10 @@
 export interface EnvVariables {
-  NODE_ENV: string;
   PORT: number;
+
+  // environment
+  NODE_ENV: string;
+
+  // client url
   CLIENT_URL: string;
 
   // Rate limiting
@@ -16,21 +20,16 @@ export interface EnvVariables {
 
   // JWT
   JWT_SECRET: string;
-  JWT_AT_EXPIRATION: string;
-  JWT_RT_EXPIRATION: string;
+  JWT_AT_EXPIRES_IN: string;
+  JWT_RT_EXPIRES_IN: string;
   SALT_OR_ROUNDS: number;
-
-  // Twilio
-  TWILIO_ACCOUNT_SID: string;
-  TWILIO_AUTH_TOKEN: string;
-  TWILIO_VERIFICATION_SERVICE_SID: string;
 
   // Mail
   MAIL_HOST: string;
   MAIL_USER: string;
   MAIL_PASSWORD: string;
-  MAIL_TOKEN_SECRET: string;
-  MAIL_TOKEN_EXPIRATION: string;
+  MAIL_FROM: string;
+  MAIL_TRANSPORT: string;
 
   // Redis caching
   REDIS_HOST: string;
