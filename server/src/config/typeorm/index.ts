@@ -17,22 +17,19 @@ export const dataSourceOptions: DataSourceOptions = {
 
 @Injectable()
 export class TypeormService implements TypeOrmOptionsFactory {
-  constructor(
-    @Inject(ConfigService) private readonly configService: ConfigService,
-  ) {}
+  constructor(@Inject(ConfigService) private readonly config: ConfigService) {}
 
   createTypeOrmOptions(): TypeOrmModuleOptions {
     return {
       type: 'postgres',
-      host: this.configService.get('POSTGRES_HOST'),
-      port: +this.configService.get('POSTGRES_PORT'),
-      username: this.configService.get('POSTGRES_USER'),
-      password: this.configService.get('POSTGRES_PASSWORD'),
-      database: this.configService.get('POSTGRES_DATABASE'),
+      host: this.config.get('POSTGRES_HOST'),
+      port: +this.config.get('POSTGRES_PORT'),
+      username: this.config.get('POSTGRES_USER'),
+      password: this.config.get('POSTGRES_PASSWORD'),
+      database: this.config.get('POSTGRES_DATABASE'),
       entities: ['dist/**/*.entity{.ts,.js}'],
       migrations: ['dist/db/migrations/*{.ts,.js}'],
-      synchronize:
-        this.configService.get('NODE_ENV') === 'development' ? true : false,
+      synchronize: this.config.get('NODE_ENV') === 'development' ? true : false,
       autoLoadEntities: true,
     };
   }

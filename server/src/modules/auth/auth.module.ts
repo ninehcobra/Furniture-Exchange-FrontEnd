@@ -14,8 +14,8 @@ import { ConfigService } from '@nestjs/config';
     PassportModule.register({ defaultStrategy: 'jwt', session: false }),
     JwtModule.registerAsync({
       inject: [ConfigService],
-      useFactory: (configService: ConfigService) => ({
-        secret: configService.get('JWT_SECRET'),
+      useFactory: (config: ConfigService) => ({
+        secret: config.get('JWT_SECRET'),
       }),
     }),
     UsersModule,

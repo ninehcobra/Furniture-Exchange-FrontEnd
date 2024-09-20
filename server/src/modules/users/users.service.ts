@@ -10,7 +10,7 @@ import { ConfigService } from '@nestjs/config';
 export class UsersService {
   constructor(
     @InjectRepository(User) private readonly userRepository: Repository<User>,
-    private readonly configService: ConfigService,
+    private readonly config: ConfigService,
   ) {}
 
   async findAll(): Promise<UserDto[]> {

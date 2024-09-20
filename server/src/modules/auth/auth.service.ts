@@ -9,7 +9,7 @@ import { EnvVariables } from '../../config/configuration/env.interface';
 @Injectable()
 export class AuthService {
   constructor(
-    private readonly configService: ConfigService<EnvVariables>,
+    private readonly config: ConfigService<EnvVariables>,
     private readonly jwtService: JwtService,
     private readonly userService: UsersService,
   ) {}
@@ -33,15 +33,15 @@ export class AuthService {
 
   private generateAccessToken(payload: JwtPayload) {
     return this.jwtService.sign(payload, {
-      secret: this.configService.get('JWT_SECRET'),
-      expiresIn: this.configService.get('JWT_AT_EXPIRATION'),
+      secret: this.config.get('JWT_SECRET'),
+      expiresIn: this.config.get('JWT_AT_EXPIRATION'),
     });
   }
 
   private generateRefreshToken(payload: JwtPayload) {
     return this.jwtService.sign(payload, {
-      secret: this.configService.get('JWT_SECRET'),
-      expiresIn: this.configService.get('JWT_RT_EXPIRATION'),
+      secret: this.config.get('JWT_SECRET'),
+      expiresIn: this.config.get('JWT_RT_EXPIRATION'),
     });
   }
 }

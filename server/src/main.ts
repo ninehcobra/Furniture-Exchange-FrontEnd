@@ -15,10 +15,10 @@ async function bootstrap() {
     logger: new MyLogger(),
   });
 
-  const configService = app.get(ConfigService);
+  const config = app.get(ConfigService);
 
-  const PORT = configService.get('PORT');
-  const CLIENT_URL = configService.get('CLIENT_URL');
+  const PORT = config.get('PORT');
+  const CLIENT_URL = config.get('CLIENT_URL');
 
   // Enable CORS
   app.enableCors({
