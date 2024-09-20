@@ -1,15 +1,16 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { AppService } from './app.service';
 import { UsersModule } from './modules/users/users.module';
 import { AuthModule } from './modules/auth/auth.module';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { configurationOptions } from './config/configuration';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { TypeormService } from './config/typeorm';
 import { ThrottlerModule } from '@nestjs/throttler';
 import { RateLimitingService } from './config/rate-limit';
-import { CacheModule } from '@nestjs/cache-manager';
-import { RedisOptions } from './config/cache';
+import { RedisModule } from './config/cache/redis.module';
+import { RedisService } from './config/cache/redis.service';
+import { LoggerMiddleware } from './common/middlewares/logger.middleware';
 
 @Module({
   imports: [
@@ -23,11 +24,16 @@ import { RedisOptions } from './config/cache';
       useClass: RateLimitingService,
     }),
     // Redis cache
-    CacheModule.registerAsync(RedisOptions),
-    // others business'module
+    RedisModule,
+    // other business modules
     UsersModule,
     AuthModule,
   ],
-  providers: [AppService],
+  providers: [AppService, RedisService], // Add RedisService here
+  exports: [RedisService], // Export RedisService to be used in other modules
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(LoggerMiddleware).forRoutes('*');
+  }
+}

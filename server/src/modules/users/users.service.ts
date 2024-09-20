@@ -4,30 +4,36 @@ import { User } from './entities/user.entity';
 import { Repository } from 'typeorm';
 import { UserDto } from './dto/user.dto';
 import { CreateUserDto } from './dto/create-user.dto';
-import { ConfigService } from '@nestjs/config';
+import { RedisService } from 'src/config/cache/redis.service';
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectRepository(User) private readonly userRepository: Repository<User>,
-    private readonly config: ConfigService,
+    private readonly redis: RedisService, // Inject RedisService
   ) {}
 
   async findAll(): Promise<UserDto[]> {
     return await this.userRepository
       .find()
-      .then((user) => user.map((e) => UserDto.fromEntity(e)));
+      .then((users) => users.map((user) => UserDto.fromEntity(user)));
   }
 
   async findOneByEmail(email: string): Promise<UserDto> {
-    const user = await this.userRepository.findOneBy({ email: email });
+    const cachedUser = await this.redis.getOTP(email); // Use Redis cache
+    if (cachedUser) {
+      return cachedUser;
+    }
 
+    const user = await this.userRepository.findOneBy({ email });
+    if (user) {
+      await this.redis.setOTP(email, user); // Set in cache
+    }
     return user;
   }
 
   async create(dto: CreateUserDto): Promise<UserDto> {
-    return await this.userRepository.save(UserDto.toEntity(dto)).then((u) => {
-      return UserDto.fromEntity(u);
-    });
+    const newUser = await this.userRepository.save(UserDto.toEntity(dto));
+    return UserDto.fromEntity(newUser);
   }
 }
