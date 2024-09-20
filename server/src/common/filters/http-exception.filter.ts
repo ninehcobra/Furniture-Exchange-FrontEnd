@@ -6,6 +6,7 @@ import {
   HttpStatus,
 } from '@nestjs/common';
 import { HttpAdapterHost } from '@nestjs/core';
+import { trace } from 'console';
 import { Request, Response } from 'express';
 
 // Catch all exceptions
@@ -25,12 +26,11 @@ export class GlobalExceptionsFilter implements ExceptionFilter {
         ? exception.getStatus()
         : HttpStatus.INTERNAL_SERVER_ERROR;
 
-    console.error(exception);
-
     const responseBody = {
       statusCode: httpStatus,
       timestamp: new Date().toISOString(),
       path: httpAdapter.getRequestUrl(ctx.getRequest()),
+      trace: trace,
     };
 
     httpAdapter.reply(ctx.getResponse(), responseBody, httpStatus);

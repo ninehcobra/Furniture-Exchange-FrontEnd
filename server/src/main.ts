@@ -4,7 +4,7 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 import { Logger } from '@nestjs/common';
 import helmet from 'helmet';
 import * as compression from 'compression';
-import { GlobalExceptionsFilter } from './core/exceptions/global-exception.filter';
+import { GlobalExceptionsFilter } from './common/filters/http-exception.filter';
 import swaggerConfig from './config/swagger';
 import { MyLogger } from './config/logger';
 import { ConfigService } from '@nestjs/config';
