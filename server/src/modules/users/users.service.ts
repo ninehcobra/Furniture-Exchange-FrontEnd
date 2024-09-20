@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { Repository } from 'typeorm';
@@ -35,5 +35,9 @@ export class UsersService {
   async create(dto: CreateUserDto): Promise<UserDto> {
     const newUser = await this.userRepository.save(UserDto.toEntity(dto));
     return UserDto.fromEntity(newUser);
+  }
+
+  async test() {
+    throw new BadRequestException('Test error');
   }
 }

@@ -34,4 +34,9 @@ export class UsersController {
   async create(@Body() body: CreateUserDto) {
     return await this.usersService.create(body);
   }
+
+  @Get('test')
+  async test() {
+    return await this.usersService.test();
+  }
 }
