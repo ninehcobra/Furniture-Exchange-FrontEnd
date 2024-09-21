@@ -1,6 +1,6 @@
 'use client'
 import { Layout, Image, Menu, MenuProps, Button, Rate } from 'antd'
-import { FileSearchOutlined, HomeOutlined, UserOutlined, ShoppingOutlined } from '@ant-design/icons'
+import { AppstoreOutlined, HomeOutlined, UserOutlined, ShoppingOutlined } from '@ant-design/icons'
 import Link from 'next/link'
 import './_landing-page.scss'
 import { useRouter } from 'next/navigation'
@@ -18,19 +18,25 @@ export default function LandingPage(): React.ReactNode {
       icon: <HomeOutlined />
     },
     {
-      key: 'results',
-      label: 'Kết quả khám',
-      icon: <FileSearchOutlined />,
+      key: 'categories',
+      label: 'Danh mục',
+      icon: <AppstoreOutlined />,
       children: [
-        { key: 'ultrasound', label: 'Siêu âm' },
-        { key: 'xray', label: 'X-quang' },
-        { key: 'blood', label: 'Xét nghiệm máu' },
+        { key: 'electronics', label: 'Đồ điện tử' },
+        { key: 'furniture', label: 'Nội thất' },
+        { key: 'clothing', label: 'Quần áo' },
+        { key: 'books', label: 'Sách' },
         { key: 'other', label: 'Khác' }
       ]
     },
     {
-      key: 'patient',
-      label: 'Thông tin bệnh nhân',
+      key: 'sell',
+      label: 'Đăng bán',
+      icon: <ShoppingOutlined />
+    },
+    {
+      key: 'account',
+      label: 'Tài khoản',
       icon: <UserOutlined />
     }
   ]
@@ -93,7 +99,7 @@ export default function LandingPage(): React.ReactNode {
                         <Image preview={false} src='/images/landingpage/bannerimg1.svg' alt='Đồ nội thất cũ' />
                       </div>
                       <div className='slider-img'>
-                        <Image preview={false} src='/images/landingpage/bannerimg2.svg' alt='Đồ điện tử cũ' />
+                        <Image preview={false} src='/images/landingpage/bannerimg1.svg' alt='Đồ điện tử cũ' />
                       </div>
                     </div>
                     <div>
