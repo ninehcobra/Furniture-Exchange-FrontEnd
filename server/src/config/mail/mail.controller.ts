@@ -1,5 +1,5 @@
 import { Controller, Post, Body } from '@nestjs/common';
-import { ApiBody, ApiTags } from '@nestjs/swagger';
+import { ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { MailService } from './mail.service';
 
 @Controller('mail')
@@ -8,6 +8,10 @@ export class MailController {
   constructor(private readonly mailService: MailService) {}
 
   @Post('demo/send-email')
+  @ApiOperation({
+    summary: 'FOR TESTING ONLY',
+    description: 'Send email verification with OTP',
+  })
   @ApiBody({
     schema: {
       type: 'object',
@@ -20,7 +24,7 @@ export class MailController {
     },
   })
   send(@Body() body: { email: string }) {
-    return this.mailService.sendEmail({
+    return this.mailService.sendEmailVerification({
       to: body.email,
       otp: '123456',
       name: 'Bach Le',

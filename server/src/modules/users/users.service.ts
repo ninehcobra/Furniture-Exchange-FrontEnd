@@ -1,4 +1,9 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  HttpException,
+  HttpStatus,
+  Injectable,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { Repository } from 'typeorm';
@@ -37,7 +42,17 @@ export class UsersService {
     return UserDto.fromEntity(newUser);
   }
 
-  async test() {
-    throw new BadRequestException('Test error');
+  async updateEmailVerificationStatus(email: string): Promise<UserDto> {
+    const user = await this.userRepository.findOneBy({ email: email });
+
+    if (!user) {
+      throw new HttpException('User not found', HttpStatus.NOT_FOUND);
+    }
+
+    user.emailVerified = true;
+
+    return await this.userRepository.save(user).then((u) => {
+      return UserDto.fromEntity(u);
+    });
   }
 }

@@ -6,8 +6,6 @@ import {
   HttpStatus,
 } from '@nestjs/common';
 import { HttpAdapterHost } from '@nestjs/core';
-import { trace } from 'console';
-import { Request, Response } from 'express';
 
 // Catch all exceptions
 @Catch()
@@ -27,6 +25,7 @@ export class GlobalExceptionsFilter implements ExceptionFilter {
         : HttpStatus.INTERNAL_SERVER_ERROR;
 
     const responseBody = {
+      title: exception.name,
       statusCode: httpStatus,
       timestamp: new Date().toISOString(),
       path: httpAdapter.getRequestUrl(ctx.getRequest()),
@@ -39,18 +38,18 @@ export class GlobalExceptionsFilter implements ExceptionFilter {
 }
 
 // Catch all HttpException
-@Catch(HttpException)
-export class HttpExceptionFilter implements ExceptionFilter {
-  catch(exception: HttpException, host: ArgumentsHost) {
-    const context = host.switchToHttp();
-    const req = context.getRequest<Request>();
-    const res = context.getResponse<Response>();
+// @Catch(HttpException)
+// export class HttpExceptionFilter implements ExceptionFilter {
+//   catch(exception: HttpException, host: ArgumentsHost) {
+//     const context = host.switchToHttp();
+//     const req = context.getRequest<Request>();
+//     const res = context.getResponse<Response>();
 
-    const status = exception.getStatus();
-    const message = exception.getResponse();
+//     const status = exception.getStatus();
+//     const message = exception.getResponse();
 
-    res.status(status).json({
-      message: message,
-    });
-  }
-}
+//     res.status(status).json({
+//       message: message,
+//     });
+//   }
+// }

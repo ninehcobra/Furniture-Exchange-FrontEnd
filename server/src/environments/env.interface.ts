@@ -30,6 +30,8 @@ export interface EnvVariables {
   MAIL_PASSWORD: string;
   MAIL_FROM: string;
   MAIL_TRANSPORT: string;
+  MAIL_TOKEN_SECRET: string;
+  MAIL_TOKEN_EXPIRATION: string;
 
   // Redis caching
   REDIS_HOST: string;

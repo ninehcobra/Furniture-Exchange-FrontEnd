@@ -6,10 +6,11 @@ import { MailConfirmationDto } from './dto/mail-confirmation.dto';
 export class MailService {
   constructor(private readonly mailerService: MailerService) {}
 
-  async sendEmail(dto: MailConfirmationDto) {
+  async sendEmailVerification(dto: MailConfirmationDto) {
     await this.mailerService.sendMail({
       to: dto.to,
       text: 'This is a test email',
+      subject: 'Email Verification',
       template: './mail-confirmation',
       context: {
         name: dto.name,

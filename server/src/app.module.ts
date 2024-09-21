@@ -8,10 +8,11 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { TypeormService } from './config/typeorm';
 import { ThrottlerModule } from '@nestjs/throttler';
 import { RateLimitingService } from './config/rate-limit';
-import { RedisModule } from './config/cache/redis.module';
+import { RedisModule, RedisOptions } from './config/cache/redis.module';
 import { RedisService } from './config/cache/redis.service';
 import { LoggerMiddleware } from './common/middlewares/logger.middleware';
 import { MailModule } from './config/mail/mail.module';
+import { CacheModule } from '@nestjs/cache-manager';
 
 @Module({
   imports: [
@@ -31,6 +32,16 @@ import { MailModule } from './config/mail/mail.module';
     // other business modules
     UsersModule,
     AuthModule,
+    MailModule,
+
+    // cache module for caching data in redis
+    CacheModule.registerAsync(RedisOptions),
+
+    // internal cache (RAM)
+    // CacheModule.registerAsync({
+    //   isGlobal: true,
+    //   useClass: CacheService,
+    // }),
   ],
   providers: [AppService, RedisService], // Add RedisService here
   exports: [RedisService], // Export RedisService to be used in other modules
