@@ -1,0 +1,36 @@
+@import '../../common/styles/common/common';
+.btn-outline-secondary {
+  border-color: $neutralColorDark_5 !important;
+  color: $neutralColorDark_1 !important;
+}
+
+.or-border {
+  position: relative;
+  text-align: center;
+  font-size: 14px;
+  &:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    width: 100px;
+    top: 50%;
+    height: 1px;
+    background: $neutralColorDark_5;
+  }
+  &:after {
+    content: '';
+    position: absolute;
+    right: 0;
+    width: 100px;
+    top: 50%;
+    height: 1px;
+    background: $neutralColorDark_5;
+  }
+
+  @media (max-width: 767px) {
+    &:before,
+    &:after {
+      width: 40px;
+    }
+  }
+}
