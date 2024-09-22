@@ -12,9 +12,9 @@ export default function ForgotPassword(): React.ReactNode {
     const newErrors: { email: string } = { email: '' }
 
     if (!email) {
-      newErrors.email = 'Email is required.'
+      newErrors.email = 'Email không được để trống.'
     } else if (!/\S+@\S+\.\S+/.test(email)) {
-      newErrors.email = 'Invalid email format.'
+      newErrors.email = 'Vui lòng nhập email hợp lệ.'
     }
 
     setErrors(newErrors)

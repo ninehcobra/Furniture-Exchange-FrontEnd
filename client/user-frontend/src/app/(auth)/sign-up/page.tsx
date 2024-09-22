@@ -23,13 +23,13 @@ export default function SignUp(): React.ReactNode {
     }
 
     if (!/\S+@\S+\.\S+/.test(email)) {
-      newErrors.email = 'Please enter a valid email address.'
+      newErrors.email = 'Vui lòng nhập email hợp lệ'
     }
     if (password.length < 8) {
-      newErrors.password = 'Password should be at least 8 characters.'
+      newErrors.password = 'Mật khẩu phải có ít nhất 8 ký tự.'
     }
     if (password !== confirmPassword) {
-      newErrors.confirmPassword = 'Passwords do not match.'
+      newErrors.confirmPassword = ' Mật khẩu và xác nhận mật khẩu không khớp.'
     }
 
     setErrors(newErrors)

@@ -1,0 +1,47 @@
+@import '../../common/styles/common/common';
+
+.header-text-btn {
+  padding-right: 8px;
+  padding-left: 8px;
+  border-right: 1px solid $neutralColorLight_5;
+  color: $neutralColorLight_5;
+
+  &:first-child {
+    padding-left: 0px;
+  }
+
+  &:hover {
+    cursor: pointer;
+    opacity: 0.8;
+  }
+}
+
+.header-container {
+  height: 120px;
+  background: linear-gradient(180deg, $highlightColor_1, $highlightColor_3);
+}
+
+.btn-outline-primary {
+  border-color: $neutralColorLight_5 !important;
+}
+
+.recommend-product {
+  cursor: pointer;
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+.cart-btn {
+  cursor: pointer;
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+.header-btn {
+  cursor: pointer;
+  &:hover {
+    opacity: 0.8;
+  }
+}

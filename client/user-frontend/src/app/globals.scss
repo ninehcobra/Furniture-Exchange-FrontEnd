@@ -1,5 +1,86 @@
 @import '../common/styles/typography.scss';
+@import '../common/styles/common/common';
 
 :root {
   color: red;
+}
+
+// Highlight colors
+.text-highlight-color-1 {
+  color: $highlightColor_1;
+}
+.text-highlight-color-2 {
+  color: $highlightColor_2;
+}
+.text-highlight-color-3 {
+  color: $highlightColor_3;
+}
+.text-highlight-color-4 {
+  color: $highlightColor_4;
+}
+.text-highlight-color-5 {
+  color: $highlightColor_5;
+}
+
+// Light neutral colors
+.text-neutral-light-1 {
+  color: $neutralColorLight_1;
+}
+.text-neutral-light-2 {
+  color: $neutralColorLight_2;
+}
+.text-neutral-light-3 {
+  color: $neutralColorLight_3;
+}
+.text-neutral-light-4 {
+  color: $neutralColorLight_4;
+}
+.text-neutral-light-5 {
+  color: $neutralColorLight_5;
+}
+
+// Dark neutral colors
+.text-neutral-dark-1 {
+  color: $neutralColorDark_1;
+}
+.text-neutral-dark-2 {
+  color: $neutralColorDark_2;
+}
+.text-neutral-dark-3 {
+  color: $neutralColorDark_3;
+}
+.text-neutral-dark-4 {
+  color: $neutralColorDark_4;
+}
+.text-neutral-dark-5 {
+  color: $neutralColorDark_5;
+}
+
+// Support colors
+.text-success-1 {
+  color: $successColor_1;
+}
+.text-success-2 {
+  color: $successColor_2;
+}
+.text-success-3 {
+  color: $successColor_3;
+}
+.text-warning-1 {
+  color: $warningColor_1;
+}
+.text-warning-2 {
+  color: $warningColor_2;
+}
+.text-warning-3 {
+  color: $warningColor_3;
+}
+.text-error-1 {
+  color: $errorColor_1;
+}
+.text-error-2 {
+  color: $errorColor_2;
+}
+.text-error-3 {
+  color: $errorColor_3;
 }

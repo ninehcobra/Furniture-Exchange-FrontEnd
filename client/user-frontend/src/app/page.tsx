@@ -84,7 +84,7 @@ export default function LandingPage(): React.ReactNode {
                     môi trường.
                   </p>
                   <div className='mt-3 hstack'>
-                    <Button onClick={() => handleRedirect('/')} type='primary' className='btn-custom'>
+                    <Button onClick={() => handleRedirect('/sign-in')} type='primary' className='btn-custom'>
                       Mua sắm ngay
                     </Button>
                     <Button className='btn-custom border-primary'>Đăng bán</Button>

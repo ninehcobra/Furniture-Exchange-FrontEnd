@@ -3,21 +3,24 @@ import React, { useState } from 'react'
 
 import Link from 'next/link'
 import Image from 'next/image'
+import { useRouter } from 'next/navigation'
 
 export default function SignIn(): React.ReactNode {
   const [username, setUsername] = useState<string>('')
   const [password, setPassword] = useState<string>('')
   const [errors, setErrors] = useState<{ username: string; password: string }>({ username: '', password: '' })
 
+  const router = useRouter()
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault()
     const newErrors: { username: string; password: string } = { username: '', password: '' }
 
     if (username.length < 6) {
-      newErrors.username = 'Username should be at least 6 characters.'
+      newErrors.username = 'Tài khoản phải có ít nhất 6 ký tự.'
     }
     if (!password) {
-      newErrors.password = 'Password is required.'
+      newErrors.password = 'Mật khẩu không được để trống.'
     }
 
     setErrors(newErrors)
@@ -106,7 +109,7 @@ export default function SignIn(): React.ReactNode {
             </div>
           </div>
 
-          <button type='submit' className='btn btn-primary w-100 mt-5 py-2'>
+          <button onClick={() => router.push('/home')} type='submit' className='btn btn-primary w-100 mt-5 py-2'>
             Đăng nhập
           </button>
         </form>
