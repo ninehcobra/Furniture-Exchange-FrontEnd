@@ -2,6 +2,8 @@ import {
   BadRequestException,
   Body,
   Controller,
+  Delete,
+  Get,
   Post,
   UploadedFile,
   UploadedFiles,
@@ -16,7 +18,6 @@ import { UPLOAD_CONSTANTS } from 'src/common/constants/upload.constant';
 @ApiTags('cloudinary')
 export class CloudinaryController {
   constructor(private readonly cloudinaryService: CloudinaryService) {}
-
   @Post('upload/single')
   @ApiConsumes('multipart/form-data')
   @ApiBody({
@@ -130,9 +131,93 @@ export class CloudinaryController {
     },
   })
   async uploadImageFromUrl(@Body('url') url: string) {
-    // console.log('url', url);
     return await this.cloudinaryService.uploadFileFromUrl(url).catch((err) => {
       throw new BadRequestException(err);
     });
+  }
+
+  @Post('upload/urls')
+  @ApiBody({
+    schema: {
+      type: 'object',
+      properties: {
+        urls: {
+          type: 'array',
+          items: {
+            type: 'string',
+          },
+        },
+      },
+    },
+  })
+  uploadImagesFromUrls(@Body('urls') urls: string[]) {
+    if (!urls || urls.length === 0) {
+      throw new BadRequestException('At least one URL is required.');
+    }
+
+    const uploadedUrls = Promise.all(
+      urls.map(async (url) => {
+        const { secure_url } = await this.cloudinaryService
+          .uploadFileFromUrl(url)
+          .catch((err) => {
+            throw new BadRequestException(err);
+          });
+
+        return secure_url;
+      }),
+    );
+
+    return uploadedUrls;
+  }
+
+  @Delete('single')
+  @ApiBody({
+    schema: {
+      type: 'object',
+      properties: {
+        publicId: {
+          type: 'string',
+        },
+      },
+    },
+  })
+  async deleteImage(@Body('publicId') publicId: string) {
+    return await this.cloudinaryService.deleteFile(publicId).catch((err) => {
+      throw new BadRequestException(err);
+    });
+  }
+
+  @Delete('multiple')
+  @ApiBody({
+    schema: {
+      type: 'object',
+      properties: {
+        publicIds: {
+          type: 'array',
+          items: {
+            type: 'string',
+          },
+        },
+      },
+    },
+  })
+  deleteImages(@Body('publicIds') publicIds: string[]) {
+    if (!publicIds || publicIds.length === 0) {
+      throw new BadRequestException('At least one public ID is required.');
+    }
+
+    const deletedImages = Promise.all(
+      publicIds.map(async (publicId) => {
+        const { result } = await this.cloudinaryService
+          .deleteFile(publicId)
+          .catch((err) => {
+            throw new BadRequestException(err);
+          });
+
+        return result;
+      }),
+    );
+
+    return deletedImages;
   }
 }

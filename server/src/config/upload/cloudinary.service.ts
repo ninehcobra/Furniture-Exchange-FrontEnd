@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { UploadApiErrorResponse, UploadApiResponse, v2 } from 'cloudinary';
 import { EnvVariables } from 'src/environments/env.interface';
@@ -22,7 +22,7 @@ export class CloudinaryService {
     return new Promise((resolve, reject) => {
       const uploadStream = v2.uploader.upload_stream(
         {
-          resource_type: 'auto',
+          resource_type: 'image',
           folder: `${this.configService.get<string>('CLOUDINARY_FOLDER')}`,
           public_id: `${new Date().toISOString()}-${file.originalname}`,
           phash: true,
@@ -49,7 +49,15 @@ export class CloudinaryService {
     });
   }
 
-  async uploadFileFromUrl(url: string) {
+  async uploadFileFromUrl(
+    url: string,
+  ): Promise<UploadApiResponse | UploadApiErrorResponse> {
+    const isValidUrl = await this.isValidUrlImage(url);
+
+    if (!isValidUrl) {
+      throw new BadRequestException('Invalid image URL:' + url);
+    }
+
     return new Promise((resolve, reject) => {
       const startTime = Date.now();
 
@@ -81,6 +89,49 @@ export class CloudinaryService {
     });
   }
 
+  async deleteFile(
+    publicId: string,
+  ): Promise<UploadApiResponse | UploadApiErrorResponse> {
+    return new Promise((resolve, reject) => {
+      v2.uploader.destroy(
+        publicId,
+        (err: UploadApiErrorResponse, result: UploadApiResponse) => {
+          if (err) {
+            console.error('Cloudinary delete error:', err);
+
+            return reject(err);
+          }
+
+          console.log('Cloudinary delete result:', result);
+          resolve(result);
+        },
+      );
+    });
+  }
+
+  async deleteFiles(
+    publicIds: string[],
+  ): Promise<UploadApiResponse | UploadApiErrorResponse> {
+    return new Promise((resolve, reject) => {
+      v2.api.delete_resources(
+        publicIds,
+        {
+          resource_type: 'image',
+        },
+        (err: UploadApiErrorResponse, result: UploadApiResponse) => {
+          if (err) {
+            console.error('Cloudinary delete error:', err);
+
+            return reject(err);
+          }
+
+          console.log('Cloudinary delete result:', result);
+          resolve(result);
+        },
+      );
+    });
+  }
+
   private async compressToJpg(fileBuffer: Buffer): Promise<Buffer> {
     const compressedImageBuffer = sharp(fileBuffer).jpeg({
       quality: 80,
@@ -96,5 +147,21 @@ export class CloudinaryService {
     });
 
     return await compressedImageBuffer.toBuffer();
+  }
+
+  private async isValidUrlImage(url: string): Promise<boolean> {
+    const response = await fetch(url, { method: 'HEAD' });
+
+    if (!response.ok) {
+      return false;
+    }
+
+    const contentType = response.headers.get('content-type');
+
+    if (!contentType || !contentType.startsWith('image/')) {
+      return false;
+    }
+
+    return true;
   }
 }
