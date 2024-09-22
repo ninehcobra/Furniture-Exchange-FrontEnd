@@ -34,4 +34,9 @@ export interface EnvVariables {
   // Redis caching
   REDIS_HOST: string;
   REDIS_PORT: number;
+
+  // Cloudinary
+  CLOUDINARY_CLOUD_NAME: string;
+  CLOUDINARY_API_KEY: string;
+  CLOUDINARY_API_SECRET: string;
 }

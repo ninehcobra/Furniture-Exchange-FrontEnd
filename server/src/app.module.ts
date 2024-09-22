@@ -12,6 +12,7 @@ import { RedisModule } from './config/cache/redis.module';
 import { RedisService } from './config/cache/redis.service';
 import { LoggerMiddleware } from './common/middlewares/logger.middleware';
 import { MailModule } from './config/mail/mail.module';
+import { CloudinaryModule } from './config/upload/cloudinary.module';
 
 @Module({
   imports: [
@@ -28,6 +29,8 @@ import { MailModule } from './config/mail/mail.module';
     MailModule,
     // Redis cache
     RedisModule,
+    // cloudinary module
+    CloudinaryModule,
     // other business modules
     UsersModule,
     AuthModule,
