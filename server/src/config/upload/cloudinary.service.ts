@@ -13,6 +13,8 @@ export class CloudinaryService {
   async uploadFile(
     file: Express.Multer.File,
   ): Promise<UploadApiResponse | UploadApiErrorResponse> {
+    console.log('file', file);
+
     const startTime = Date.now();
 
     const fileBuffer = await this.compressToWebP(file.buffer);
@@ -47,9 +49,50 @@ export class CloudinaryService {
     });
   }
 
+  async uploadFileFromUrl(url: string) {
+    return new Promise((resolve, reject) => {
+      const startTime = Date.now();
+
+      v2.uploader.upload(
+        url,
+        {
+          resource_type: 'auto',
+          folder: `${this.configService.get<string>('CLOUDINARY_FOLDER')}`,
+          phash: true,
+          format: 'webp',
+        },
+        (err: UploadApiErrorResponse, result: UploadApiResponse) => {
+          if (err) {
+            console.error('Cloudinary upload error:', err);
+
+            return reject(err);
+          }
+
+          // End timing
+          const endTime = Date.now();
+          const uploadDuration = (endTime - startTime) / 1000; // Convert to seconds
+
+          console.log(`Cloudinary upload duration: ${uploadDuration}s`);
+
+          console.log('Cloudinary upload result:', result);
+          resolve(result);
+        },
+      );
+    });
+  }
+
+  private async compressToJpg(fileBuffer: Buffer): Promise<Buffer> {
+    const compressedImageBuffer = sharp(fileBuffer).jpeg({
+      quality: 80,
+      progressive: true,
+    });
+
+    return await compressedImageBuffer.toBuffer();
+  }
+
   private async compressToWebP(fileBuffer: Buffer): Promise<Buffer> {
     const compressedImageBuffer = sharp(fileBuffer).webp({
-      quality: 100,
+      quality: 80,
     });
 
     return await compressedImageBuffer.toBuffer();
