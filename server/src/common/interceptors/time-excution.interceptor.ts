@@ -21,7 +21,7 @@ export class TimeExecutionInterceptor implements NestInterceptor {
         const statusCode = res.statusCode;
         const time = Date.now() - now;
 
-        Logger.log(
+        this.logger.log(
           `${method} ${url} ${statusCode} - ${time}ms`,
           context.getClass().name,
         );

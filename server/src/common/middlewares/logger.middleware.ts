@@ -9,12 +9,18 @@ export class LoggerMiddleware implements NestMiddleware {
     const { ip, method, originalUrl } = req;
     const userAgent = req.get('user-agent') || '';
 
+    const startTime = Date.now();
+
     res.on('finish', () => {
       const { statusCode } = res;
       const contentLength = res.get('content-length');
 
+      const endTime = Date.now();
+
+      const duration = (endTime - startTime) / 1000;
+
       this.logger.fatal(
-        `${method} ${originalUrl} ${statusCode} ${contentLength} - ${userAgent} ${ip}`,
+        `${method} ${originalUrl} ${statusCode} ${contentLength} - ${userAgent} ${ip} - duration:${duration}s`,
       );
     });
 

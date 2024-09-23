@@ -1,5 +1,7 @@
 import * as dotenv from 'dotenv';
-dotenv.config();
+dotenv.config({
+  path: `.env.${process.env.NODE_ENV}`,
+});
 
 // port
 const PORT = process.env.PORT || 3000;
@@ -37,6 +39,7 @@ const THROTTLE_LIMIT = +process.env.RATE_LIMIT_LIMIT || 10;
 const CLOUDINARY_CLOUD_NAME = process.env.CLOUDINARY_CLOUD_NAME;
 const CLOUDINARY_API_KEY = process.env.CLOUDINARY_API_KEY;
 const CLOUDINARY_API_SECRET = process.env.CLOUDINARY_API_SECRET;
+const CLOUDINARY_FOLDER = process.env.CLOUDINARY_FOLDER || 'nestjs-cloudinary';
 
 export {
   PORT,
@@ -58,4 +61,5 @@ export {
   CLOUDINARY_CLOUD_NAME,
   CLOUDINARY_API_KEY,
   CLOUDINARY_API_SECRET,
+  CLOUDINARY_FOLDER,
 };

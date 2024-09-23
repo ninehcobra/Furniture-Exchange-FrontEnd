@@ -1,24 +1,20 @@
 import {
   ArgumentsHost,
   Catch,
-  ExceptionFilter,
   HttpException,
   HttpStatus,
 } from '@nestjs/common';
+import { BaseGlobalExceptionFilter } from './base-exception.filter';
 import { HttpAdapterHost } from '@nestjs/core';
-import { trace } from 'console';
-import { Request, Response } from 'express';
 
-// Catch all exceptions include internal server error
-@Catch()
-export class GlobalExceptionsFilter implements ExceptionFilter {
-  constructor(private readonly httpAdapterHost: HttpAdapterHost) {}
+// Catch all HttpException
+@Catch(HttpException)
+export class GlobalHttpExceptionFilter extends BaseGlobalExceptionFilter {
+  constructor(httpAdapterHost: HttpAdapterHost) {
+    super(httpAdapterHost);
+  }
 
   catch(exception: HttpException, host: ArgumentsHost): void {
-    // In certain situations `httpAdapter` might not be available in the
-    // constructor method, thus we should resolve it here.
-    const { httpAdapter } = this.httpAdapterHost;
-
     const ctx = host.switchToHttp();
 
     const httpStatus =
@@ -26,31 +22,10 @@ export class GlobalExceptionsFilter implements ExceptionFilter {
         ? exception.getStatus()
         : HttpStatus.INTERNAL_SERVER_ERROR;
 
-    const responseBody = {
-      statusCode: httpStatus,
-      timestamp: new Date().toISOString(),
-      path: httpAdapter.getRequestUrl(ctx.getRequest()),
-      message: exception.message,
-      trace: exception.stack,
-    };
+    const title = exception instanceof HttpException ? exception.name : 'Error';
 
-    httpAdapter.reply(ctx.getResponse(), responseBody, httpStatus);
-  }
-}
+    const isDevelopment = process.env.NODE_ENV === 'development' ? true : false;
 
-// Catch all HttpException
-@Catch(HttpException)
-export class HttpExceptionFilter implements ExceptionFilter {
-  catch(exception: HttpException, host: ArgumentsHost) {
-    const context = host.switchToHttp();
-    const req = context.getRequest<Request>();
-    const res = context.getResponse<Response>();
-
-    const status = exception.getStatus();
-    const message = exception.getResponse();
-
-    res.status(status).json({
-      message: message,
-    });
+    this.buildResponse(exception, ctx, title, httpStatus, isDevelopment);
   }
 }
