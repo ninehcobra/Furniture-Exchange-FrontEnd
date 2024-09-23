@@ -4,7 +4,10 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 import { Logger } from '@nestjs/common';
 import helmet from 'helmet';
 import * as compression from 'compression';
-import { GlobalExceptionsFilter } from './common/filters/http-exception.filter';
+import {
+  GlobalExceptionsFilter,
+  HttpExceptionFilter,
+} from './common/filters/http-exception.filter';
 import swaggerConfig from './config/swagger';
 import { MyLogger } from './config/logger';
 import { ConfigService } from '@nestjs/config';
@@ -27,7 +30,7 @@ async function bootstrap() {
 
   // Global Exception filter
   app.useGlobalFilters(new GlobalExceptionsFilter(app.get(HttpAdapterHost)));
-  // app.useGlobalFilters(new HttpExceptionFilter());
+  app.useGlobalFilters(new HttpExceptionFilter());
 
   // Set security headers
   // prevent common security vulnerabilities by setting HTTP headers appropriately

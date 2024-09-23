@@ -1,6 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { TypeOrmModuleOptions, TypeOrmOptionsFactory } from '@nestjs/typeorm';
+import { EnvVariables } from 'src/environments/env.interface';
 import { DataSourceOptions } from 'typeorm';
 
 export const dataSourceOptions: DataSourceOptions = {
@@ -17,7 +18,9 @@ export const dataSourceOptions: DataSourceOptions = {
 
 @Injectable()
 export class TypeormService implements TypeOrmOptionsFactory {
-  constructor(@Inject(ConfigService) private readonly config: ConfigService) {}
+  constructor(
+    @Inject(ConfigService) private readonly config: ConfigService<EnvVariables>,
+  ) {}
 
   createTypeOrmOptions(): TypeOrmModuleOptions {
     return {

@@ -9,7 +9,7 @@ import { HttpAdapterHost } from '@nestjs/core';
 import { trace } from 'console';
 import { Request, Response } from 'express';
 
-// Catch all exceptions
+// Catch all exceptions include internal server error
 @Catch()
 export class GlobalExceptionsFilter implements ExceptionFilter {
   constructor(private readonly httpAdapterHost: HttpAdapterHost) {}
