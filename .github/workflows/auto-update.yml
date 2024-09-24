@@ -1,0 +1,25 @@
+name: Auto Update Frontend
+
+on:
+  push:
+    branches:
+      - chinh-dev
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v2
+        with:
+          repository: https://github.com/Ninehcobra-Bale-Bros/Furniture-Exchange.git
+          ref: chinh-dev
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Merge to Frontend Branch
+        run: |
+          git config user.name ninehcobra
+          git config user.email ttbexinhtt2903@gmail.com
+          git checkout front-end
+          git merge chinh-dev
+          git push origin front-end
