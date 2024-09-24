@@ -1,6 +1,13 @@
-import { Role } from 'src/common/enums/role.enum';
+import { RoleEnum } from 'src/common/enums/role.enum';
+import { SexEnum } from 'src/common/enums/sex.enum';
 import { BaseEntity } from 'src/core/base.entity';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity()
 export class User extends BaseEntity {
@@ -11,23 +18,39 @@ export class User extends BaseEntity {
   email!: string;
 
   @Column({ type: 'boolean', default: false })
-  emailVerified: boolean;
+  emailVerified!: boolean;
 
   @Column({ type: 'varchar', length: 255, nullable: false })
-  password: string;
+  password!: string;
+
+  @Column({ type: 'varchar', length: 255, nullable: false })
+  firstName!: string;
+
+  @Column({ type: 'varchar', length: 255, nullable: false })
+  lastName!: string;
+
+  @Column({ type: 'enum', enum: SexEnum, nullable: false })
+  sex!: SexEnum;
+
+  @Column({ type: 'varchar', nullable: true })
+  image: string;
+
+  @Column({ type: 'varchar', length: 10, nullable: false })
+  phoneNumber: string;
 
   @Column({ type: 'varchar', length: 255, nullable: true })
-  firstName: string;
+  addressLine1: string;
 
   @Column({ type: 'varchar', length: 255, nullable: true })
-  lastName: string;
+  addressLine2: string;
 
-  @Column({ type: 'varchar', length: 10, nullable: false, unique: true })
-  phoneNumber!: string;
+  @Column({ type: 'enum', enum: RoleEnum, default: RoleEnum.BUYER })
+  role!: RoleEnum;
 
-  @Column({ type: 'boolean', default: false })
-  phoneNumberVerified: boolean;
-
-  @Column({ type: 'enum', enum: Role, default: Role.BUYER })
-  role: Role;
+  @CreateDateColumn({
+    type: 'timestamptz',
+    default: () => 'CURRENT_TIMESTAMP',
+    onUpdate: 'CURRENT_TIMESTAMP',
+  })
+  updated_at: Date;
 }

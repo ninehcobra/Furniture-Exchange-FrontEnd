@@ -1,6 +1,7 @@
 import { IsBoolean, IsEnum, IsString, IsUUID } from 'class-validator';
 import { User } from '../entities/user.entity';
-import { Role } from 'src/common/enums/role.enum';
+import { RoleEnum } from 'src/common/enums/role.enum';
+import { SexEnum } from 'src/common/enums/sex.enum';
 
 export class UserDto implements Readonly<UserDto> {
   @IsUUID()
@@ -8,6 +9,9 @@ export class UserDto implements Readonly<UserDto> {
 
   @IsString()
   email: string;
+
+  @IsBoolean()
+  emailVerified: boolean;
 
   @IsString()
   password: string;
@@ -21,11 +25,11 @@ export class UserDto implements Readonly<UserDto> {
   @IsString()
   phoneNumber: string;
 
-  @IsBoolean()
-  emailVerified: boolean;
+  @IsEnum(SexEnum)
+  sex: SexEnum;
 
-  @IsEnum(Role)
-  role: Role;
+  @IsEnum(RoleEnum)
+  role: RoleEnum;
 
   public static from(dto: Partial<UserDto>) {
     const user = new UserDto();
@@ -38,6 +42,7 @@ export class UserDto implements Readonly<UserDto> {
     user.phoneNumber = dto.phoneNumber;
     user.role = dto.role;
     user.emailVerified = dto.emailVerified;
+    user.sex = dto.sex;
 
     return user;
   }
@@ -52,6 +57,7 @@ export class UserDto implements Readonly<UserDto> {
       role: entity.role,
       password: entity.password,
       emailVerified: entity.emailVerified,
+      sex: entity.sex,
     });
   }
 
@@ -63,9 +69,9 @@ export class UserDto implements Readonly<UserDto> {
     user.password = dto.password;
     user.firstName = dto.firstName;
     user.lastName = dto.lastName;
-    user.role = dto.role ?? Role.BUYER;
+    user.role = dto.role ?? RoleEnum.BUYER;
     user.emailVerified = dto.emailVerified ?? false;
-    user.phoneNumberVerified = dto.phoneNumberVerified ?? false;
+    user.sex = dto.sex;
 
     return user;
   }

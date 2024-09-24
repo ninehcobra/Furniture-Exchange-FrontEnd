@@ -1,4 +1,4 @@
-import { Role } from 'src/common/enums/role.enum';
+import { RoleEnum } from 'src/common/enums/role.enum';
 import { UserDto } from '../users/dto/user.dto';
 
 export class JwtPayload implements Readonly<JwtPayload>, Partial<UserDto> {
@@ -7,5 +7,5 @@ export class JwtPayload implements Readonly<JwtPayload>, Partial<UserDto> {
   phoneNumber?: string;
   firstName?: string;
   lastName?: string;
-  role: Role;
+  role: RoleEnum;
 }

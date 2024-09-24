@@ -1,19 +1,17 @@
 import {
   BadRequestException,
   Injectable,
-  NotFoundException,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { RegisterDto } from './dto/register.dto';
 import { UsersService } from '../users/users.service';
 import { ConfigService } from '@nestjs/config';
 import { EnvVariables } from '../../environments/env.interface';
-
-import * as bcrypt from 'bcrypt';
 import { LoginDto } from './dto/login.dto';
-import * as utils from '../../utils';
 import { JwtService } from '@nestjs/jwt';
 import { MailService } from 'src/config/mail/mail.service';
 import { RedisService } from 'src/config/cache/redis.service';
+import * as utils from '../../utils';
 
 @Injectable()
 export class AuthService {
@@ -26,7 +24,7 @@ export class AuthService {
   ) {}
 
   async register(dto: RegisterDto) {
-    // step 1: Check if user with the same email, phone number exists or not
+    // Check if user with the same email exists or not
     const user = await this.userService.findOneByEmail(dto.email);
 
     if (user) {
@@ -36,20 +34,20 @@ export class AuthService {
     // if not exists => create new user
     const hashedPassword = await utils.hashPassword(dto.password);
 
-    // create new user
     const newUser = await this.userService.create({
       email: dto.email,
       password: hashedPassword,
       firstName: dto.firstName,
       lastName: dto.lastName,
       phoneNumber: dto.phoneNumber,
+      sex: dto.sex,
     });
 
     if (!newUser) {
       throw new BadRequestException('Failed to create new user');
     }
 
-    // step 2: Generate OTP store in redis (cache) and send email to user'email
+    // Generate OTP store in redis (caching) and send email to user'email
     const otp = utils.generateOTP(5);
 
     const url = await this.sendEmailVerification(
@@ -65,18 +63,24 @@ export class AuthService {
   }
 
   async login(dto: LoginDto) {
+    // Check if user with the same email exists or not
     const user = await this.userService.findOneByEmail(dto.email);
 
     if (!user) {
-      throw new Error('User not found');
+      throw new BadRequestException('User not found');
     }
 
-    const isPasswordValid = await bcrypt.compare(dto.password, user.password);
+    const isPasswordValid = await utils.comparePasswords(
+      dto.password,
+      user.password,
+    );
 
     if (!isPasswordValid) {
-      throw new Error('Invalid password');
+      throw new BadRequestException('Wrong password');
     }
 
+    // Check if user's email is verified or not
+    // If not verified => send email verification link
     if (!user.emailVerified) {
       const otp = utils.generateOTP(5);
 
@@ -87,11 +91,14 @@ export class AuthService {
         user.lastName,
       );
 
+      // Return only url to verify email
       return {
+        message: 'Email not verified, verification link sent to your email',
         url,
       };
     }
 
+    // If email is verified => generate token pair
     const payload = {
       email: user.email,
       role: user.role,
@@ -106,22 +113,25 @@ export class AuthService {
   }
 
   async verify(q: string, otp: string) {
-    const payload = this.jwtService.verify(q, {
+    // Verify token
+    const payload = await this.jwtService.verifyAsync(q, {
       secret: this.config.get('MAIL_TOKEN_SECRET'),
     });
 
     if (!payload) {
-      throw new Error('Invalid token');
+      throw new UnauthorizedException('Invalid token');
     }
 
     const validOTP = await this.redisService.getOTP(payload.email);
 
     if (validOTP !== otp) {
-      throw new Error('Invalid OTP');
+      throw new BadRequestException('Invalid OTP');
     }
 
+    // Delete OTP from redis
     this.redisService.delOTP(payload.email);
 
+    // Update user's email verification status
     await this.userService.updateEmailVerificationStatus(payload.email);
 
     return {

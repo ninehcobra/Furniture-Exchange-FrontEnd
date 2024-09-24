@@ -7,8 +7,8 @@ import { Request } from 'express';
 
 @Controller('users')
 @ApiTags('users')
-@ApiBearerAuth()
-@UseGuards(JwtAuthGuard)
+// @ApiBearerAuth()
+// @UseGuards(JwtAuthGuard)
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 

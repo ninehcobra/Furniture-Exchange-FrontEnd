@@ -6,10 +6,11 @@ import {
 } from '@nestjs/common';
 import { BaseGlobalExceptionFilter } from './base-exception.filter';
 import { HttpAdapterHost } from '@nestjs/core';
+import { TokenExpiredError } from 'jsonwebtoken';
 
 // Catch all HttpException
-@Catch(HttpException)
-export class GlobalHttpExceptionFilter extends BaseGlobalExceptionFilter {
+@Catch(TokenExpiredError)
+export class JwtExpirationExceptionFilter extends BaseGlobalExceptionFilter {
   constructor(httpAdapterHost: HttpAdapterHost) {
     super(httpAdapterHost);
   }
@@ -17,12 +18,9 @@ export class GlobalHttpExceptionFilter extends BaseGlobalExceptionFilter {
   catch(exception: HttpException, host: ArgumentsHost): void {
     const ctx = host.switchToHttp();
 
-    const httpStatus =
-      exception instanceof HttpException
-        ? exception.getStatus()
-        : HttpStatus.INTERNAL_SERVER_ERROR;
+    const httpStatus = HttpStatus.UNAUTHORIZED;
 
-    const title = exception instanceof HttpException ? exception.name : 'Error';
+    const title = 'Token Expired';
 
     const isDevelopment = process.env.NODE_ENV === 'development' ? true : false;
 

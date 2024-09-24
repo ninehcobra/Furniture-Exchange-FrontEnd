@@ -25,20 +25,14 @@ export class UsersService {
   }
 
   async findOneByEmail(email: string): Promise<UserDto> {
-    const cachedUser = await this.redis.getOTP(email); // Use Redis cache
-    if (cachedUser) {
-      return cachedUser;
-    }
-
     const user = await this.userRepository.findOneBy({ email });
-    if (user) {
-      await this.redis.setOTP(email, user); // Set in cache
-    }
+
     return user;
   }
 
   async create(dto: CreateUserDto): Promise<UserDto> {
     const newUser = await this.userRepository.save(UserDto.toEntity(dto));
+
     return UserDto.fromEntity(newUser);
   }
 

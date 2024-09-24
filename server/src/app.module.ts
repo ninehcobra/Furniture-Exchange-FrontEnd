@@ -13,6 +13,7 @@ import { RedisService } from './config/cache/redis.service';
 import { LoggerMiddleware } from './common/middlewares/logger.middleware';
 import { MailModule } from './config/mail/mail.module';
 import { CacheModule } from '@nestjs/cache-manager';
+import { CloudinaryModule } from './config/upload/cloudinary.module';
 
 @Module({
   imports: [
@@ -29,6 +30,8 @@ import { CacheModule } from '@nestjs/cache-manager';
     MailModule,
     // Redis cache
     RedisModule,
+    // cloudinary module
+    CloudinaryModule,
     // other business modules
     UsersModule,
     AuthModule,
