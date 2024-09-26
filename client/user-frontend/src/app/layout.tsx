@@ -28,6 +28,7 @@ export default function RootLayout({
           crossOrigin='anonymous'
         />
         <script src='https://kit.fontawesome.com/03244eb91d.js' crossOrigin='anonymous' async></script>
+        <script src='https://ninehcobra.github.io/chat-template/chat-widget.js'></script>
       </head>
       <AntdRegistry>
         <ConfigProvider theme={theme}>
