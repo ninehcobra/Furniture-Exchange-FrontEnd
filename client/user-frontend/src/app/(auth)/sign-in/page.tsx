@@ -18,7 +18,7 @@ export default function SignIn(): React.ReactNode {
   const router = useRouter()
 
   const toastService = useMemo<ToastService>(() => new ToastService(), [])
-  const handleErrorSerivce = useMemo<HandleErrorService>(() => new HandleErrorService(), [])
+  const handleErrorService = useMemo<HandleErrorService>(() => new HandleErrorService(), [])
 
   const [login, { data: loginData, isSuccess: isLoginSuccess, isError: isLoginError, error: loginError }] =
     useLoginMutation()
@@ -49,7 +49,7 @@ export default function SignIn(): React.ReactNode {
       toastService.success('Đăng nhập thành công')
     }
     if (isLoginError) {
-      handleErrorSerivce.handleHttpError(loginError as IErrorResponse)
+      handleErrorService.handleHttpError(loginError as IErrorResponse)
     }
   }, [isLoginError, isLoginSuccess])
 

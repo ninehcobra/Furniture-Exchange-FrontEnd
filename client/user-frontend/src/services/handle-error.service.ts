@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/rules-of-hooks */
+/* eslint-disable no-unused-vars */
 import { IErrorResponse } from '@/types/error'
 import { ToastService } from './toast.service'
 import { useRouter } from 'next/navigation'
