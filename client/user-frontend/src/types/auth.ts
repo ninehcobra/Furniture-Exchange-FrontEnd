@@ -13,8 +13,10 @@ export interface IRegisterPayload {
 }
 
 export interface ILoginResponse {
-  message: string
-  url: string
+  message?: string
+  url?: string
+  accessToken?: string
+  refreshToken?: string
 }
 
 export interface IRegisterResponse {

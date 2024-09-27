@@ -13,7 +13,9 @@ import { IErrorResponse } from '@/types/error'
 export default function SignIn(): React.ReactNode {
   const [loginPayload, setLoginPayload] = useState<ILoginPayload>({ email: '', password: '' })
 
-  const [errors, setErrors] = useState<{ username: string; password: string }>({ username: '', password: '' })
+  const [payloadErrors, setPayloadErrors] = useState<ILoginPayload>({ email: '', password: '' })
+
+  const [isPayloadValid, setIsPayloadValid] = useState<boolean>(false)
 
   const router = useRouter()
 
@@ -25,28 +27,46 @@ export default function SignIn(): React.ReactNode {
 
   const handleOnChangeLoginPayload = (value: string, type: string): void => {
     setLoginPayload({ ...loginPayload, [type]: value })
+    checkPayloadValid()
+  }
+
+  const checkPayloadValid = (): void => {
+    if (loginPayload.email.length < 6) {
+      setPayloadErrors({ ...payloadErrors, email: 'Tài khoản phải có ít nhất 6 ký tự.' })
+    }
+    if (loginPayload.password === '') {
+      setPayloadErrors({ ...payloadErrors, password: 'Mật khẩu không được để trống.' })
+    }
+    if (loginPayload.email.length >= 6 && loginPayload.password !== '') {
+      setPayloadErrors({ ...payloadErrors, email: '', password: '' })
+    }
+    if (loginPayload.email.length >= 6 && loginPayload.password !== '') {
+      setIsPayloadValid(true)
+    } else {
+      setIsPayloadValid(false)
+    }
   }
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault()
-    const newErrors: { username: string; password: string } = { username: '', password: '' }
 
-    if (loginPayload.email.length < 6) {
-      newErrors.username = 'Tài khoản phải có ít nhất 6 ký tự.'
-    }
-    if (loginPayload.password === '') {
-      newErrors.password = 'Mật khẩu không được để trống.'
-    }
-
-    setErrors(newErrors)
-
-    if (!newErrors.username && !newErrors.password) {
+    if (isPayloadValid) {
       login(loginPayload)
     }
   }
 
   useEffect(() => {
     if (isLoginSuccess) {
-      toastService.success('Đăng nhập thành công')
+      if (loginData.accessToken && loginData.refreshToken) {
+        toastService.success('Đăng nhập thành công')
+        localStorage.setItem('access-token', loginData.accessToken)
+        localStorage.setItem('refresh-token', loginData.refreshToken)
+        router.push('/home')
+      } else if (loginData.message && loginData.url) {
+        toastService.error(loginData.message)
+        router.push(loginData.url)
+      } else {
+        toastService.error('Đăng nhập thất bại')
+      }
     }
     if (isLoginError) {
       handleErrorService.handleHttpError(loginError as IErrorResponse)
@@ -83,12 +103,12 @@ export default function SignIn(): React.ReactNode {
 
         <form onSubmit={handleSubmit}>
           <div className='mb-3'>
-            <label htmlFor='username' className='form-label body-s fw-bold '>
+            <label htmlFor='email' className='form-label body-s fw-bold '>
               Email
             </label>
             <input
               type='text'
-              className={`form-control py-3 body-m ${errors.username ? 'is-invalid' : ''}`}
+              className={`form-control py-3 body-m ${payloadErrors.email ? 'is-invalid' : ''}`}
               id='email'
               value={loginPayload.email}
               name={`user-id-${randomString()}`}
@@ -96,7 +116,7 @@ export default function SignIn(): React.ReactNode {
               onChange={(e) => handleOnChangeLoginPayload(e.target.value, 'email')}
               placeholder='Vui lòng nhập email'
             />
-            {errors.username && <div className='invalid-feedback'>{errors.username}</div>}
+            {payloadErrors.email && <div className='invalid-feedback'>{payloadErrors.email}</div>}
           </div>
 
           <div className='mb-3'>
@@ -105,7 +125,7 @@ export default function SignIn(): React.ReactNode {
             </label>
             <input
               type='password'
-              className={`form-control py-3 body-m ${errors.password ? 'is-invalid' : ''}`}
+              className={`form-control py-3 body-m ${payloadErrors.password ? 'is-invalid' : ''}`}
               id='password'
               value={loginPayload.password}
               onChange={(e) => handleOnChangeLoginPayload(e.target.value, 'password')}
@@ -113,7 +133,7 @@ export default function SignIn(): React.ReactNode {
               autoComplete='new-password'
               placeholder='Vui lòng nhập mật khẩu'
             />
-            {errors.password && <div className='invalid-feedback'>{errors.password}</div>}
+            {payloadErrors.password && <div className='invalid-feedback'>{payloadErrors.password}</div>}
           </div>
 
           <div className='d-flex justify-content-between align-items-center'>
@@ -131,7 +151,12 @@ export default function SignIn(): React.ReactNode {
             </div>
           </div>
 
-          <button onClick={() => router.push('/home')} type='submit' className='btn btn-primary w-100 mt-5 py-2'>
+          <button
+            disabled
+            onClick={() => router.push('/home')}
+            type='submit'
+            className='btn btn-primary w-100 mt-5 py-2'
+          >
             Đăng nhập
           </button>
         </form>
