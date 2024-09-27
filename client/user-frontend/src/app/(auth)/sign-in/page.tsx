@@ -1,11 +1,14 @@
 'use client'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 
 import Link from 'next/link'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { useLoginMutation } from '@/services/auth.service'
 import { ILoginPayload } from '@/types/auth'
+import { ToastService } from '@/services/toast.service'
+import { HandleErrorService } from '@/services/handle-error.service'
+import { IErrorResponse } from '@/types/error'
 
 export default function SignIn(): React.ReactNode {
   const [loginPayload, setLoginPayload] = useState<ILoginPayload>({ email: '', password: '' })
@@ -13,6 +16,9 @@ export default function SignIn(): React.ReactNode {
   const [errors, setErrors] = useState<{ username: string; password: string }>({ username: '', password: '' })
 
   const router = useRouter()
+
+  const toastService = useMemo<ToastService>(() => new ToastService(), [])
+  const handleErrorSerivce = useMemo<HandleErrorService>(() => new HandleErrorService(), [])
 
   const [login, { data: loginData, isSuccess: isLoginSuccess, isError: isLoginError, error: loginError }] =
     useLoginMutation()
@@ -38,7 +44,14 @@ export default function SignIn(): React.ReactNode {
     }
   }
 
-  useEffect(() => {}, [isLoginError, isLoginSuccess])
+  useEffect(() => {
+    if (isLoginSuccess) {
+      toastService.success('Đăng nhập thành công')
+    }
+    if (isLoginError) {
+      handleErrorSerivce.handleHttpError(loginError as IErrorResponse)
+    }
+  }, [isLoginError, isLoginSuccess])
 
   const randomString = (): string => Math.random().toString(36).substring(7)
 

@@ -1,10 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
-import { useRouter } from 'next/navigation'
 import { toast } from 'react-toastify'
 export class ToastService {
-  constructor(private router = useRouter()) {}
-
   success(message: string): void {
     toast.success(message)
   }
