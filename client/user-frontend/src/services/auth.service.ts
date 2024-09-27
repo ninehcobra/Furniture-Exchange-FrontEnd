@@ -1,4 +1,4 @@
-import { ILoginResponse, IRegisterPayload, IRegisterResponse } from '@/types/auth'
+import { ILoginPayload, ILoginResponse, IRegisterPayload, IRegisterResponse } from '@/types/auth'
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 export const authApi = createApi({
@@ -7,7 +7,7 @@ export const authApi = createApi({
     baseUrl: 'https://3.1.103.136/api/v1/auth'
   }),
   endpoints: (builder) => ({
-    login: builder.mutation<ILoginResponse, ILoginResponse>({
+    login: builder.mutation<ILoginResponse, ILoginPayload>({
       query: (body) => ({
         url: '/login',
         method: 'POST',

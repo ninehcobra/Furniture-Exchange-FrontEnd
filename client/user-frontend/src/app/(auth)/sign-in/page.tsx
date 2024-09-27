@@ -1,35 +1,44 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import Link from 'next/link'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
+import { useLoginMutation } from '@/services/auth.service'
+import { ILoginPayload } from '@/types/auth'
 
 export default function SignIn(): React.ReactNode {
-  const [username, setUsername] = useState<string>('')
-  const [password, setPassword] = useState<string>('')
+  const [loginPayload, setLoginPayload] = useState<ILoginPayload>({ email: '', password: '' })
+
   const [errors, setErrors] = useState<{ username: string; password: string }>({ username: '', password: '' })
 
   const router = useRouter()
 
+  const [login, { data: loginData, isSuccess: isLoginSuccess, isError: isLoginError, error: loginError }] =
+    useLoginMutation()
+
+  const handleOnChangeLoginPayload = (value: string, type: string): void => {
+    setLoginPayload({ ...loginPayload, [type]: value })
+  }
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault()
     const newErrors: { username: string; password: string } = { username: '', password: '' }
 
-    if (username.length < 6) {
+    if (loginPayload.email.length < 6) {
       newErrors.username = 'Tài khoản phải có ít nhất 6 ký tự.'
     }
-    if (!password) {
+    if (loginPayload.password === '') {
       newErrors.password = 'Mật khẩu không được để trống.'
     }
 
     setErrors(newErrors)
 
     if (!newErrors.username && !newErrors.password) {
-      console.log({ username, password })
-      // Handle form submission
+      login(loginPayload)
     }
   }
+
+  useEffect(() => {}, [isLoginError, isLoginSuccess])
 
   const randomString = (): string => Math.random().toString(36).substring(7)
 
@@ -67,11 +76,11 @@ export default function SignIn(): React.ReactNode {
             <input
               type='text'
               className={`form-control py-3 body-m ${errors.username ? 'is-invalid' : ''}`}
-              id='username'
-              value={username}
+              id='email'
+              value={loginPayload.email}
               name={`user-id-${randomString()}`}
               autoComplete='off'
-              onChange={(e) => setUsername(e.target.value)}
+              onChange={(e) => handleOnChangeLoginPayload(e.target.value, 'email')}
               placeholder='Vui lòng nhập email'
             />
             {errors.username && <div className='invalid-feedback'>{errors.username}</div>}
@@ -85,8 +94,8 @@ export default function SignIn(): React.ReactNode {
               type='password'
               className={`form-control py-3 body-m ${errors.password ? 'is-invalid' : ''}`}
               id='password'
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              value={loginPayload.password}
+              onChange={(e) => handleOnChangeLoginPayload(e.target.value, 'password')}
               name={`password${randomString()}`}
               autoComplete='new-password'
               placeholder='Vui lòng nhập mật khẩu'

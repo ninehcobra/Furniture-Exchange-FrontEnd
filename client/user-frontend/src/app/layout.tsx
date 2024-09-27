@@ -7,6 +7,7 @@ import { theme } from '@/core/configs/theme/theme'
 import { Poppins } from 'next/font/google'
 import { Provider } from 'react-redux'
 import { store } from '@/redux/store'
+import { ToastContainer } from 'react-toastify'
 
 const poppins = Poppins({ weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'], subsets: ['latin'] })
 
@@ -33,6 +34,7 @@ export default function RootLayout({
             <body className={poppins.className}>{children}</body>
           </ConfigProvider>
         </AntdRegistry>
+        <ToastContainer />
       </Provider>
     </html>
   )
