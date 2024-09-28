@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useMemo, useCallback, useState } from 'react'
+import React, { useEffect, useMemo, useCallback, useState, Suspense } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useVerifyEmailMutation } from '@/services/auth.service'
 import { IVerifyEmailPayload } from '@/types/auth'
@@ -9,6 +9,14 @@ import { HandleErrorService } from '@/services/handle-error.service'
 import { IErrorResponse } from '@/types/error'
 
 export default function VerifyEmail(): React.ReactNode {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <VerifyEmailContent />
+    </Suspense>
+  )
+}
+
+function VerifyEmailContent(): React.ReactNode {
   const [otp, setOtp] = useState<string[]>(Array(5).fill(''))
 
   const router = useRouter()
