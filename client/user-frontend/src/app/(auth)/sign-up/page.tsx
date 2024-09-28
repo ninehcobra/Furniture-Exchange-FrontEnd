@@ -1,140 +1,214 @@
 'use client'
-import React, { useState } from 'react'
-
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
+import { useRouter } from 'next/navigation'
+import { useRegisterMutation } from '@/services/auth.service'
+import { IRegisterPayload } from '@/types/auth'
+import { ToastService } from '@/services/toast.service'
+import { HandleErrorService } from '@/services/handle-error.service'
+import { IErrorResponse } from '@/types/error'
 
 export default function SignUp(): React.ReactNode {
-  const [email, setEmail] = useState<string>('')
-  const [password, setPassword] = useState<string>('')
-  const [confirmPassword, setConfirmPassword] = useState<string>('')
-  const [errors, setErrors] = useState<{ email: string; password: string; confirmPassword: string }>({
+  const [registerPayload, setRegisterPayload] = useState<IRegisterPayload>({
     email: '',
     password: '',
-    confirmPassword: ''
+    firstName: '',
+    lastName: '',
+    phoneNumber: '',
+    sex: ''
   })
+  const [payloadErrors, setPayloadErrors] = useState<Partial<IRegisterPayload>>({})
+  const [isPayloadValid, setIsPayloadValid] = useState<boolean>(false)
+
+  const [showPassword, setShowPassword] = useState<boolean>(false)
+
+  const router = useRouter()
+  const toastService = useMemo<ToastService>(() => new ToastService(), [])
+  const handleErrorService = useMemo<HandleErrorService>(() => new HandleErrorService(), [])
+
+  const [
+    register,
+    { data: registerData, isSuccess: isRegisterSuccess, isError: isRegisterError, error: registerError }
+  ] = useRegisterMutation()
+
+  const handleOnChangeRegisterPayload = (value: string, type: keyof IRegisterPayload): void => {
+    setRegisterPayload((prev) => {
+      const updatedPayload = { ...prev, [type]: value }
+      const newErrors = validatePayload(updatedPayload)
+      setPayloadErrors(newErrors)
+      setIsPayloadValid(Object.keys(newErrors).length === 0)
+      return updatedPayload
+    })
+  }
+
+  const validatePayload = useCallback<(payload: IRegisterPayload) => Partial<IRegisterPayload>>(
+    (payload: IRegisterPayload): Partial<IRegisterPayload> => {
+      const errors: Partial<IRegisterPayload> = {}
+
+      if (!/\S+@\S+\.\S+/.test(payload.email)) {
+        errors.email = 'Vui lòng nhập email hợp lệ'
+      }
+      if (payload.password.length < 8) {
+        errors.password = 'Mật khẩu phải có ít nhất 8 ký tự.'
+      }
+      if (!payload.firstName.trim()) {
+        errors.firstName = 'Vui lòng nhập họ'
+      }
+      if (!payload.lastName.trim()) {
+        errors.lastName = 'Vui lòng nhập tên'
+      }
+      if (!/^\d{10}$/.test(payload.phoneNumber)) {
+        errors.phoneNumber = 'Vui lòng nhập số điện thoại hợp lệ'
+      }
+      if (!payload.sex) {
+        errors.sex = 'Vui lòng chọn giới tính'
+      }
+
+      return errors
+    },
+    []
+  )
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault()
-    const newErrors: { email: string; password: string; confirmPassword: string } = {
-      email: '',
-      password: '',
-      confirmPassword: ''
-    }
-
-    if (!/\S+@\S+\.\S+/.test(email)) {
-      newErrors.email = 'Vui lòng nhập email hợp lệ'
-    }
-    if (password.length < 8) {
-      newErrors.password = 'Mật khẩu phải có ít nhất 8 ký tự.'
-    }
-    if (password !== confirmPassword) {
-      newErrors.confirmPassword = ' Mật khẩu và xác nhận mật khẩu không khớp.'
-    }
-
-    setErrors(newErrors)
-
-    if (!newErrors.email && !newErrors.password && !newErrors.confirmPassword) {
-      console.log({ email, password })
-      // Handle form submission
+    if (isPayloadValid) {
+      register(registerPayload)
     }
   }
+
+  useEffect(() => {
+    if (isRegisterSuccess) {
+      toastService.success('Đăng ký thành công')
+      router.push('/sign-in')
+    }
+    if (isRegisterError) {
+      handleErrorService.handleHttpError(registerError as IErrorResponse)
+    }
+  }, [isRegisterError, isRegisterSuccess])
+
+  useEffect(() => {
+    const errors = validatePayload(registerPayload)
+    setPayloadErrors(errors)
+    setIsPayloadValid(Object.keys(errors).length === 0)
+  }, [])
 
   const randomString = (): string => Math.random().toString(36).substring(7)
 
   return (
     <div className='row justify-content-center w-100'>
-      <div className='w-100 d-flex align-items-center justify-content-center mb-2'>
-        <Image src='/images/logo.png' alt='logo' width={100} height={100} />
-      </div>
       <div className='col-lg-9'>
         <h4 className='fw-bold fs-4 mb-0'>Tạo tài khoản ESOLD</h4>
         <span className='d-block mb-4 body-s mt-1'>Đăng ký để bắt đầu sử dụng dịch vụ của chúng tôi</span>
 
-        <div className='row mt-4'>
-          <div className='col-12 col-sm-6 mb-3'>
-            <button className='btn btn-outline-secondary w-100 body-s'>
-              <Image src='/icon/google.png' alt='google' width={16} height={16} className='me-2' />
-              Đăng ký với Google
-            </button>
-          </div>
-          <div className='col-12 col-sm-6 mb-3'>
-            <button className='btn btn-outline-secondary w-100 body-s'>
-              <Image src='/icon/facebook.png' alt='facebook' width={16} height={16} className='me-2' />
-              Đăng ký với FB
-            </button>
-          </div>
-        </div>
-
-        <div className='text-center my-4 or-border'>Hoặc đăng ký với</div>
-
         <form onSubmit={handleSubmit}>
           <div className='mb-3'>
-            <label htmlFor='email' className='form-label body-s fw-bold '>
+            <label htmlFor='email' className='form-label body-s fw-bold'>
               Email
             </label>
             <input
               type='email'
-              className={`form-control py-3 body-m ${errors.email ? 'is-invalid' : ''}`}
+              className={`form-control py-3 body-m ${payloadErrors.email ? 'is-invalid' : ''}`}
               id='email'
-              value={email}
+              value={registerPayload.email}
               name={`email-${randomString()}`}
               autoComplete='off'
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => handleOnChangeRegisterPayload(e.target.value, 'email')}
               placeholder='Vui lòng nhập email'
             />
-            {errors.email && <div className='invalid-feedback'>{errors.email}</div>}
+            {payloadErrors.email && <div className='invalid-feedback'>{payloadErrors.email}</div>}
           </div>
 
-          <div className='mb-3'>
+          <div className='mb-3 position-relative'>
             <label htmlFor='password' className='form-label body-s fw-bold'>
               Mật khẩu
             </label>
-            <input
-              type='password'
-              className={`form-control py-3 body-m ${errors.password ? 'is-invalid' : ''}`}
-              id='password'
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              name={`password-${randomString()}`}
-              autoComplete='new-password'
-              placeholder='Vui lòng nhập mật khẩu'
-            />
-            {errors.password && <div className='invalid-feedback'>{errors.password}</div>}
+            <div className='input-group'>
+              <input
+                type={showPassword ? 'text' : 'password'}
+                className={`form-control py-3 body-m ${payloadErrors.password ? 'is-invalid' : ''}`}
+                id='password'
+                value={registerPayload.password}
+                onChange={(e) => handleOnChangeRegisterPayload(e.target.value, 'password')}
+                name={`password-${randomString()}`}
+                autoComplete='new-password'
+                placeholder='Vui lòng nhập mật khẩu'
+              />
+              <button
+                className='btn btn-outline-secondary'
+                type='button'
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                <i className={`fa-regular ${showPassword ? 'fa-eye-slash' : 'fa-eye'}`}></i>
+              </button>
+            </div>
+            {payloadErrors.password && <div className='invalid-feedback'>{payloadErrors.password}</div>}
           </div>
 
           <div className='mb-3'>
-            <label htmlFor='confirmPassword' className='form-label body-s fw-bold'>
-              Xác nhận mật khẩu
+            <label htmlFor='firstName' className='form-label body-s fw-bold'>
+              Họ
             </label>
             <input
-              type='password'
-              className={`form-control py-3 body-m ${errors.confirmPassword ? 'is-invalid' : ''}`}
-              id='confirmPassword'
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              name={`confirm-password-${randomString()}`}
-              autoComplete='new-password'
-              placeholder='Vui lòng xác nhận mật khẩu'
+              type='text'
+              className={`form-control py-3 body-m ${payloadErrors.firstName ? 'is-invalid' : ''}`}
+              id='firstName'
+              value={registerPayload.firstName}
+              onChange={(e) => handleOnChangeRegisterPayload(e.target.value, 'firstName')}
+              placeholder='Vui lòng nhập họ'
             />
-            {errors.confirmPassword && <div className='invalid-feedback'>{errors.confirmPassword}</div>}
+            {payloadErrors.firstName && <div className='invalid-feedback'>{payloadErrors.firstName}</div>}
           </div>
 
-          <div className='mb-3 form-check'>
-            <input type='checkbox' className='form-check-input' id='agreeTerms' required />
-            <label className='form-check-label body-m' htmlFor='agreeTerms'>
-              Tôi đồng ý với{' '}
-              <Link href='/terms' className='text-primary text-decoration-none'>
-                Điều khoản sử dụng
-              </Link>{' '}
-              và{' '}
-              <Link href='/privacy' className='text-primary text-decoration-none'>
-                Chính sách bảo mật
-              </Link>
+          <div className='mb-3'>
+            <label htmlFor='lastName' className='form-label body-s fw-bold'>
+              Tên
             </label>
+            <input
+              type='text'
+              className={`form-control py-3 body-m ${payloadErrors.lastName ? 'is-invalid' : ''}`}
+              id='lastName'
+              value={registerPayload.lastName}
+              onChange={(e) => handleOnChangeRegisterPayload(e.target.value, 'lastName')}
+              placeholder='Vui lòng nhập tên'
+            />
+            {payloadErrors.lastName && <div className='invalid-feedback'>{payloadErrors.lastName}</div>}
           </div>
 
-          <button type='submit' className='btn btn-primary w-100 mt-4 py-2'>
+          <div className='mb-3'>
+            <label htmlFor='phoneNumber' className='form-label body-s fw-bold'>
+              Số điện thoại
+            </label>
+            <input
+              type='tel'
+              className={`form-control py-3 body-m ${payloadErrors.phoneNumber ? 'is-invalid' : ''}`}
+              id='phoneNumber'
+              value={registerPayload.phoneNumber}
+              onChange={(e) => handleOnChangeRegisterPayload(e.target.value, 'phoneNumber')}
+              placeholder='Vui lòng nhập số điện thoại'
+            />
+            {payloadErrors.phoneNumber && <div className='invalid-feedback'>{payloadErrors.phoneNumber}</div>}
+          </div>
+
+          <div className='mb-3'>
+            <label htmlFor='sex' className='form-label body-s fw-bold'>
+              Giới tính
+            </label>
+            <select
+              className={`form-select py-3 body-m ${payloadErrors.sex ? 'is-invalid' : ''}`}
+              id='sex'
+              value={registerPayload.sex}
+              onChange={(e) => handleOnChangeRegisterPayload(e.target.value, 'sex')}
+            >
+              <option value=''>Chọn giới tính</option>
+              <option value='male'>Nam</option>
+              <option value='female'>Nữ</option>
+              <option value='other'>Khác</option>
+            </select>
+            {payloadErrors.sex && <div className='invalid-feedback'>{payloadErrors.sex}</div>}
+          </div>
+
+          <button disabled={!isPayloadValid} type='submit' className='btn btn-primary w-100 mt-4 py-2'>
             Đăng ký
           </button>
         </form>

@@ -8,7 +8,7 @@ import { Poppins } from 'next/font/google'
 import { Provider } from 'react-redux'
 import { store } from '@/redux/store'
 import { ToastContainer } from 'react-toastify'
-
+import 'react-toastify/dist/ReactToastify.css'
 const poppins = Poppins({ weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'], subsets: ['latin'] })
 
 export default function RootLayout({
@@ -26,7 +26,7 @@ export default function RootLayout({
           crossOrigin='anonymous'
         />
         <script src='https://kit.fontawesome.com/03244eb91d.js' crossOrigin='anonymous' async></script>
-        <script src='https://ninehcobra.github.io/chat-template/chat-widget.js' async></script>
+        {/* <script src='https://ninehcobra.github.io/chat-template/chat-widget.js' async></script> */}
       </head>
       <Provider store={store}>
         <AntdRegistry>

@@ -1,5 +1,5 @@
 'use client'
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 
 import Link from 'next/link'
 import Image from 'next/image'
@@ -12,10 +12,7 @@ import { IErrorResponse } from '@/types/error'
 
 export default function SignIn(): React.ReactNode {
   const [loginPayload, setLoginPayload] = useState<ILoginPayload>({ email: '', password: '' })
-
   const [payloadErrors, setPayloadErrors] = useState<ILoginPayload>({ email: '', password: '' })
-
-  const [isPayloadValid, setIsPayloadValid] = useState<boolean>(false)
 
   const router = useRouter()
 
@@ -25,30 +22,37 @@ export default function SignIn(): React.ReactNode {
   const [login, { data: loginData, isSuccess: isLoginSuccess, isError: isLoginError, error: loginError }] =
     useLoginMutation()
 
-  const handleOnChangeLoginPayload = (value: string, type: string): void => {
-    setLoginPayload({ ...loginPayload, [type]: value })
-    checkPayloadValid()
+  const validatePayload = useCallback<(payload: ILoginPayload) => ILoginPayload>(
+    (_payload: ILoginPayload): ILoginPayload => {
+      const errors: ILoginPayload = { email: '', password: '' }
+      if (_payload.email.length < 6) {
+        errors.email = 'Tài khoản phải có ít nhất 6 ký tự.'
+      }
+      if (_payload.password === '') {
+        errors.password = 'Mật khẩu không được để trống.'
+      }
+      return errors
+    },
+    []
+  )
+
+  const handleOnChangeLoginPayload = (value: string, type: keyof ILoginPayload): void => {
+    setLoginPayload((prev) => {
+      const updatedPayload = { ...prev, [type]: value }
+      const newErrors = validatePayload(updatedPayload)
+      setPayloadErrors(newErrors)
+      return updatedPayload
+    })
   }
 
-  const checkPayloadValid = (): void => {
-    if (loginPayload.email.length < 6) {
-      setPayloadErrors({ ...payloadErrors, email: 'Tài khoản phải có ít nhất 6 ký tự.' })
-    }
-    if (loginPayload.password === '') {
-      setPayloadErrors({ ...payloadErrors, password: 'Mật khẩu không được để trống.' })
-    }
-    if (loginPayload.email.length >= 6 && loginPayload.password !== '') {
-      setPayloadErrors({ ...payloadErrors, email: '', password: '' })
-    }
-    if (loginPayload.email.length >= 6 && loginPayload.password !== '') {
-      setIsPayloadValid(true)
-    } else {
-      setIsPayloadValid(false)
-    }
-  }
+  const isPayloadValid = useMemo<boolean>(
+    () =>
+      loginPayload.email.length >= 6 && loginPayload.password !== '' && !payloadErrors.email && !payloadErrors.password,
+    [loginPayload, payloadErrors]
+  )
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault()
-
     if (isPayloadValid) {
       login(loginPayload)
     }
@@ -56,22 +60,22 @@ export default function SignIn(): React.ReactNode {
 
   useEffect(() => {
     if (isLoginSuccess) {
-      if (loginData.accessToken && loginData.refreshToken) {
+      if (loginData?.accessToken && loginData?.refreshToken) {
         toastService.success('Đăng nhập thành công')
         localStorage.setItem('access-token', loginData.accessToken)
         localStorage.setItem('refresh-token', loginData.refreshToken)
         router.push('/home')
-      } else if (loginData.message && loginData.url) {
+      } else if (loginData?.message && loginData?.url) {
         toastService.error(loginData.message)
         router.push(loginData.url)
       } else {
         toastService.error('Đăng nhập thất bại')
       }
     }
-    if (isLoginError) {
+    if (isLoginError && loginError) {
       handleErrorService.handleHttpError(loginError as IErrorResponse)
     }
-  }, [isLoginError, isLoginSuccess])
+  }, [isLoginError, isLoginSuccess, loginData, loginError, router, toastService, handleErrorService])
 
   const randomString = (): string => Math.random().toString(36).substring(7)
 
@@ -152,7 +156,7 @@ export default function SignIn(): React.ReactNode {
           </div>
 
           <button
-            disabled
+            disabled={!isPayloadValid}
             onClick={() => router.push('/home')}
             type='submit'
             className='btn btn-primary w-100 mt-5 py-2'
