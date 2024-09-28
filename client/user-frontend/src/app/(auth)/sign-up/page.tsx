@@ -80,7 +80,11 @@ export default function SignUp(): React.ReactNode {
   useEffect(() => {
     if (isRegisterSuccess) {
       toastService.success('Đăng ký thành công')
-      router.push('/sign-in')
+      const url = new URL(registerData.url)
+      const q = url.searchParams.get('q')
+      if (q) {
+        router.push(`/verify-email?q=${q}`)
+      }
     }
     if (isRegisterError) {
       handleErrorService.handleHttpError(registerError as IErrorResponse)
