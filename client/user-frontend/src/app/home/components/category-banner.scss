@@ -1,0 +1,28 @@
+@import '../../../common/styles/common/common';
+.category-banner {
+  background-color: $neutralColorLight_5;
+}
+
+.heading-h6 {
+  color: $neutralColorDark_5 !important;
+}
+
+.category-banner-list {
+  border-top: 1px solid #f5f5f5;
+  border-bottom: 1px solid #f5f5f5;
+}
+
+.category-item {
+  height: 150px;
+  border-right: 1px solid #f5f5f5;
+
+  &:last-child {
+    border-right: 0px;
+  }
+}
+
+.category-image {
+  img {
+    height: 80px;
+  }
+}
