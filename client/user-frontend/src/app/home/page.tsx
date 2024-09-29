@@ -14,6 +14,7 @@ export default function Home(): React.ReactNode {
         <div className='w-100 mt-3 p-0 container'>
           <img className='w-100' src='./images/banner/banner-full-size.png' alt='banner' />
         </div>
+        <div className='my-3 text-center container suggest-section p-3 body-l'>Gợi ý hôm nay</div>
       </div>
       <Footer />
     </div>

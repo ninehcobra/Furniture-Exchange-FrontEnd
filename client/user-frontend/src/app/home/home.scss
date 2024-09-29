@@ -7,3 +7,10 @@
 .home-page {
   background-color: #f5f5f5;
 }
+
+.suggest-section {
+  background-color: $neutralColorLight_5;
+  color: $highlightColor_1 !important;
+  border-bottom: 3px solid $highlightColor_1;
+  font-weight: bold;
+}
