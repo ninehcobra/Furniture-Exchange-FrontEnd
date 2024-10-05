@@ -141,6 +141,47 @@ export default function Page({ params }: { params: { id: string } }): React.Reac
           <div className='w-100 p-2 product-info'>
             <div className='body-m fw-bold'>Porsche Panamera 2019 lướt keng</div>
             <div className='body-s category-text pt-2 pb-1'>2019 . 30000 km . Xăng . Tự động</div>
+            <div className='d-flex mt-2 align-items-center'>
+              <div
+                className='d-flex align-items-center justify-content-center mx-3'
+                style={{ height: '40px', width: '15spx' }}
+              >
+                <i className='fa-solid fa-location-dot'></i>
+              </div>
+              <div className=' body-s '>Phường Phú Thọ Hòa, Quận Tân Phú, Tp Hồ Chí Minh</div>
+            </div>
+            <div className='d-flex align-items-center'>
+              <div
+                className='d-flex align-items-center justify-content-center mx-3'
+                style={{ height: '40px', width: '15spx' }}
+              >
+                <i className='fa-regular fa-clock'></i>
+              </div>
+              <div className=' body-s '>Đăng 10 giờ trước</div>
+            </div>
+          </div>
+
+          <div className='w-100 p-2 product-info mt-2'>
+            <div className='body-m fw-bold'>Porsche Panamera 2019 lướt keng</div>
+            <div className='body-s category-text pt-2 pb-1'>2019 . 30000 km . Xăng . Tự động</div>
+            <div className='d-flex mt-2 align-items-center'>
+              <div
+                className='d-flex align-items-center justify-content-center mx-3'
+                style={{ height: '40px', width: '15spx' }}
+              >
+                <i className='fa-solid fa-location-dot'></i>
+              </div>
+              <div className=' body-s '>Phường Phú Thọ Hòa, Quận Tân Phú, Tp Hồ Chí Minh</div>
+            </div>
+            <div className='d-flex align-items-center'>
+              <div
+                className='d-flex align-items-center justify-content-center mx-3'
+                style={{ height: '40px', width: '15spx' }}
+              >
+                <i className='fa-regular fa-clock'></i>
+              </div>
+              <div className=' body-s '>Đăng 10 giờ trước</div>
+            </div>
           </div>
         </div>
       </div>
