@@ -1,3 +1,38 @@
 .detail-container {
   min-height: 88vh;
 }
+
+.ads-container {
+  height: 250px;
+  object-fit: cover;
+}
+
+.product-image {
+  height: 412px !important;
+}
+
+.product-image-slider {
+  height: 104px !important;
+  width: 104px !important;
+  border-radius: 7px;
+  object-fit: cover;
+}
+
+.transition-all {
+  transition: all 0.3s ease;
+}
+
+.slider-button {
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 7px;
+  margin-left: 4px;
+
+  &:last-child {
+    margin-left: 0px;
+    margin-right: 4px;
+  }
+}
