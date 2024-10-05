@@ -1,0 +1,26 @@
+@import '../../common/styles/common/common';
+
+.card-product {
+  height: 298px;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+  border: 2px solid transparent;
+
+  cursor: pointer;
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-color: blue;
+  }
+}
+
+.card-img-top {
+  height: 188px;
+  object-fit: cover;
+  width: 100%;
+}
+
+.btn-link {
+}

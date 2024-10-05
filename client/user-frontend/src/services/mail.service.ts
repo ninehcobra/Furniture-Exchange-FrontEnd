@@ -1,11 +1,11 @@
-import { ILoginResponse, IRegisterPayload, IRegisterResponse } from '@/types/auth'
+import { enviroment } from '@/environments/environment'
 import { IMailPayload, IMailResponse } from '@/types/mail'
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 export const mailApi = createApi({
   reducerPath: 'mailApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'https://3.1.103.136/api/v1/auth'
+    baseUrl: `${enviroment.apiUrl}/auth`
   }),
   endpoints: (builder) => ({
     sendMail: builder.mutation<IMailResponse, IMailPayload>({
