@@ -13,6 +13,7 @@
     "@reduxjs/toolkit": "^2.2.7",
     "antd": "^5.20.6",
     "js-cookie": "^3.0.5",
+    "moment": "^2.30.1",
     "next": "^14.2.11",
     "react": "^18",
     "react-dom": "^18",

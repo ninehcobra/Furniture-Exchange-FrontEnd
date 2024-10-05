@@ -6,9 +6,9 @@ import HomeBanner from './components/HomeBanner'
 import CategoryBanner from './components/category-banner'
 import ProductList from './components/ProductList'
 import { useGetProductsQuery } from '@/services/product.service'
-
 export default function Home(): React.ReactNode {
   const { data } = useGetProductsQuery()
+
   return (
     <div className='home-page'>
       <Header />

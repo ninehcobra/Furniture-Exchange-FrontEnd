@@ -6,13 +6,14 @@
     transform 0.3s ease,
     box-shadow 0.3s ease;
   border: 2px solid transparent;
+  line-height: 1 !important;
 
   cursor: pointer;
 
   &:hover {
     transform: translateY(-3px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-color: blue;
+    border-color: $highlightColor_1;
   }
 }
 
@@ -23,4 +24,17 @@
 }
 
 .btn-link {
+}
+
+.price-text {
+  color: $highlightColor_1;
+  font-weight: bold !important;
+}
+
+.category-text {
+  color: $neutralColorDark_5;
+}
+
+.time-district-text {
+  color: $neutralColorDark_5;
 }

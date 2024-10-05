@@ -18,6 +18,7 @@ export interface IProduct {
   state: string
   updated_at: string
   expired_at: string
+  category_name?: string
 }
 
 export interface ICreateProductPayload {
