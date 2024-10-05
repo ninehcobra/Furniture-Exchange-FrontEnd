@@ -17,7 +17,7 @@ export default function ProductList({ products }: { products: IProduct[] }): Rea
   })
 
   return (
-    <div className='container p-0 '>
+    <div className='container p-0 product-list-wrapper'>
       <div className='row g-2 mb-3'>
         {productsWithCategoryNames.map((product) => (
           <div key={product.id} className='col-md-2 mb-1'>
