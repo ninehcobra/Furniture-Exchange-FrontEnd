@@ -5,8 +5,8 @@ export default function ProductLayout({ children }: { children: React.ReactNode 
   return (
     <div>
       <Header />
-      {children}
-      <Footer />
+      <div style={{ backgroundColor: '#e5e5e5' }}>{children}</div>
+      <Footer isSecondary={true} />
     </div>
   )
 }

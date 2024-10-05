@@ -7,7 +7,7 @@ import { useState, useRef } from 'react'
 import './product-detail.scss'
 import { LeftOutlined, RightOutlined } from '@ant-design/icons'
 
-export default function Page(): React.ReactNode {
+export default function Page({ params }: { params: { id: string } }): React.ReactNode {
   const [activeSlide, setActiveSlide] = useState<number>(0)
   const carouselRef = useRef<any>(null)
 
@@ -47,10 +47,17 @@ export default function Page(): React.ReactNode {
     }
   }
 
+  const [isExpanded, setIsExpanded] = useState<boolean>(false)
+  const maxLines = 6
+
+  const toggleDescription = (): void => {
+    setIsExpanded(!isExpanded)
+  }
+
   return (
     <div className='detail-container container'>
       <img className='w-100 ads-container my-2' src='/images/ads-1.png' alt='ads'></img>
-      <div className='row'>
+      <div className='row g-2'>
         <div className='col-8 '>
           <Carousel
             ref={carouselRef}
@@ -101,8 +108,41 @@ export default function Page(): React.ReactNode {
               <RightOutlined />
             </button>
           </div>
+
+          <div className='product-description p-3 pb-1 my-2'>
+            <div className='fw-bold text-secondary'>Mô tả chi tiết</div>
+            <div
+              className={`mt-2 body-s text-description mb-3 ${isExpanded ? '' : 'description-truncate'}`}
+              style={{ '--max-lines': maxLines } as React.CSSProperties}
+            >
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi veritatis distinctio, ipsa ratione
+              consequuntur iusto provident laboriosam quibusdam? Voluptatem consectetur consequuntur nihil illo,
+              voluptates excepturi rerum aspernatur asperiores eum fugit. Lorem ipsum dolor sit amet consectetur
+              adipisicing elit. Sequi veritatis distinctio, ipsa ratione consequuntur iusto provident laboriosam
+              quibusdam? Voluptatem consectetur consequuntur nihil illo, voluptates excepturi rerum aspernatur
+              asperiores eum fugit. Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi veritatis distinctio,
+              ipsa ratione consequuntur iusto provident laboriosam quibusdam? Voluptatem consectetur consequuntur nihil
+              illo, voluptates excepturi rerum aspernatur asperiores eum fugit. Lorem ipsum dolor sit amet consectetur
+              adipisicing elit. Sequi veritatis distinctio, ipsa ratione consequuntur iusto provident laboriosam
+              quibusdam? Voluptatem consectetur consequuntur nihil illo, voluptates excepturi rerum aspernatur
+              asperiores eum fugit. Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi veritatis distinctio,
+              ipsa ratione consequuntur iusto provident laboriosam quibusdam? Voluptatem consectetur consequuntur nihil
+              illo, voluptates excepturi rerum aspernatur asperiores eum fugit. Lorem ipsum dolor sit amet consectetur
+              adipisicing elit. Sequi veritatis distinctio, ipsa ratione consequuntur iusto provident laboriosam
+              quibusdam? Voluptatem consectetur consequuntur nihil illo, voluptates excepturi rerum aspernatur
+              asperiores eum fugit.
+            </div>
+            <div className='m-2 btn-more text-center py-2 fw-bold' onClick={toggleDescription}>
+              {isExpanded ? 'Rút gọn' : 'Xem thêm'}
+            </div>
+          </div>
         </div>
-        <div className='col-4'>3</div>
+        <div className='col-4'>
+          <div className='w-100 p-2 product-info'>
+            <div className='body-m fw-bold'>Porsche Panamera 2019 lướt keng</div>
+            <div className='body-s category-text pt-2 pb-1'>2019 . 30000 km . Xăng . Tự động</div>
+          </div>
+        </div>
       </div>
     </div>
   )

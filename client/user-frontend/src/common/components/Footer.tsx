@@ -2,9 +2,9 @@ import React from 'react'
 import './footer.scss'
 import Image from 'next/image'
 
-export default function Footer(): React.ReactNode {
+export default function Footer({ isSecondary = false }: { isSecondary?: boolean }): React.ReactNode {
   return (
-    <footer className='footer'>
+    <footer className={`footer ${isSecondary ? 'secondary-footer' : ''}`}>
       <div className='container'>
         <div className='row top-content'>
           <div className='col-md-3'>

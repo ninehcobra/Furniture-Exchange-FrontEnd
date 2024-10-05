@@ -1,3 +1,5 @@
+@import '../../../common/styles/common/common';
+
 .detail-container {
   min-height: 88vh;
 }
@@ -9,6 +11,7 @@
 
 .product-image {
   height: 412px !important;
+  border-radius: 7px;
 }
 
 .product-image-slider {
@@ -35,4 +38,38 @@
     margin-left: 0px;
     margin-right: 4px;
   }
+}
+
+.product-description {
+  background-color: white;
+  border-radius: 7px;
+}
+
+.text-description {
+  text-align: justify;
+}
+.btn-more {
+  border: 1px solid $neutralColorDark_5;
+  cursor: pointer;
+  border-radius: 7px;
+  &:hover {
+    background-color: $neutralColorDark_5;
+  }
+}
+
+.description-truncate {
+  display: -webkit-box;
+  -webkit-line-clamp: var(--max-lines);
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.product-info {
+  background-color: $neutralColorLight_5;
+  border-radius: 7px;
+}
+
+.category-text {
+  color: $neutralColorDark_5;
+  border-bottom: 1px dashed $neutralColorDark_5;
 }
