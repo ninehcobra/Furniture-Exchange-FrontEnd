@@ -17,13 +17,16 @@ export default function ProductList({ products }: { products: IProduct[] }): Rea
   })
 
   return (
-    <div className='container p-0 mb-3'>
-      <div className='row g-2'>
+    <div className='container p-0 '>
+      <div className='row g-2 mb-3'>
         {productsWithCategoryNames.map((product) => (
           <div key={product.id} className='col-md-2 mb-1'>
             <ProductCard product={product} />
           </div>
         ))}
+      </div>
+      <div className='w-100 d-flex align-items-center justify-content-center mb-3'>
+        <div className='more-btn'>Xem thêm</div>
       </div>
     </div>
   )
