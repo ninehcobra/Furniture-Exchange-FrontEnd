@@ -42,9 +42,9 @@ export default function RootLayout({
       <Provider store={store}>
         <AntdRegistry>
           <ConfigProvider theme={theme}>
-            <GoogleAdUnitClient>
+           
               <body className={poppins.className}>{children}</body>
-            </GoogleAdUnitClient>
+      
           </ConfigProvider>
         </AntdRegistry>
         <ToastContainer />
