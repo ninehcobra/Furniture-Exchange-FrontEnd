@@ -6,6 +6,7 @@ import { Carousel } from 'antd'
 import { useState, useRef } from 'react'
 import './product-detail.scss'
 import { LeftOutlined, RightOutlined } from '@ant-design/icons'
+import { AdBanner } from '@/common/components/AdBanner'
 
 export default function Page({ params }: { params: { id: string } }): React.ReactNode {
   const [activeSlide, setActiveSlide] = useState<number>(0)
@@ -56,14 +57,28 @@ export default function Page({ params }: { params: { id: string } }): React.Reac
 
   return (
     <div className='detail-container container'>
-      <img className='w-100 ads-container my-2' src='/images/ads-1.png' alt='ads'></img>
+      <div className='mb-2'>
+        <AdBanner dataAdFormat='auto' dataAdSlot='5832681765' dataFullWidthResponsive={true} />
+      </div>
       <div className='row g-2'>
-        <div className='col-8 '>
+        <div className='col-8 position-relative '>
+          <button
+            className='btn btn-link position-absolute top-0 end-0 d-flex align-items-center justify-content-center m-2 mt-1'
+            onClick={() => console.log('Add to wishlist')}
+          >
+            <i className='fa-solid fa-share'></i>
+          </button>
+          <button
+            className='btn btn-link position-absolute top-0 end-0 d-flex align-items-center justify-content-center m-2 mt-1 me-5'
+            onClick={() => console.log('Add to wishlist')}
+          >
+            <i className='fa-regular fa-heart'></i>
+          </button>
           <Carousel
             ref={carouselRef}
             arrows={true}
             draggable={true}
-            className='w-100'
+            className='w-100 '
             style={{ height: '412px', borderRadius: '7px' }}
             afterChange={onChange}
           >
@@ -162,25 +177,33 @@ export default function Page({ params }: { params: { id: string } }): React.Reac
           </div>
 
           <div className='w-100 p-2 product-info mt-2'>
-            <div className='body-m fw-bold'>Porsche Panamera 2019 lướt keng</div>
-            <div className='body-s category-text pt-2 pb-1'>2019 . 30000 km . Xăng . Tự động</div>
-            <div className='d-flex mt-2 align-items-center'>
-              <div
-                className='d-flex align-items-center justify-content-center mx-3'
-                style={{ height: '40px', width: '15spx' }}
-              >
-                <i className='fa-solid fa-location-dot'></i>
-              </div>
-              <div className=' body-s '>Phường Phú Thọ Hòa, Quận Tân Phú, Tp Hồ Chí Minh</div>
-            </div>
             <div className='d-flex align-items-center'>
-              <div
-                className='d-flex align-items-center justify-content-center mx-3'
-                style={{ height: '40px', width: '15spx' }}
-              >
-                <i className='fa-regular fa-clock'></i>
+              <img
+                src='/images/profile/user-1.jpg'
+                alt='user'
+                className='user-avatar rounded-circle me-3'
+                height={40}
+                width={40}
+              />
+              <div>
+                <div className='body-m fw-bold'>Xe lướt miền nam</div>
+                <div className='body-s  body-xs pb-1'>Hoạt động 3 giờ trước - Phản hồi: 83%</div>
               </div>
-              <div className=' body-s '>Đăng 10 giờ trước</div>
+            </div>
+            <div className='d-flex mt-2 align-items-center flex-column'>
+              <div className='w-100 py-2 text-center btn-contact fw-bold'>
+                <i className='fa-solid fa-phone me-2'></i>
+                Gọi điện
+              </div>
+              <div className='w-100 py-2 text-center btn-contact fw-bold mt-2'>
+                <i className='fa-solid fa-message me-2'></i>
+                Chat
+              </div>
+            </div>
+
+            <div className='mt-2 mb-2 d-flex'>
+              <div className='body-s px-3 py-2 sample-chat d-inline-block'>Mặc hàng này còn không ạ?</div>
+              <div className='body-s px-3 py-2 sample-chat d-inline-block ms-2'>Bạn có đó không?</div>
             </div>
           </div>
         </div>

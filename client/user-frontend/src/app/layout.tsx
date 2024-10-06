@@ -11,6 +11,7 @@ import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
+import { AdSense } from '@/common/components/AdSense'
 const poppins = Poppins({ weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'], subsets: ['latin'] })
 
 export default function RootLayout({
@@ -28,6 +29,7 @@ export default function RootLayout({
           crossOrigin='anonymous'
         />
         <script src='https://kit.fontawesome.com/03244eb91d.js' crossOrigin='anonymous' async></script>
+        <AdSense pId='ca-pub-6214420931907905' />
         {/* <script src='https://ninehcobra.github.io/chat-template/chat-widget.js' async></script> */}
       </head>
       <Provider store={store}>

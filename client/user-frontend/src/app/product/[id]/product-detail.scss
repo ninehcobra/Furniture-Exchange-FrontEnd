@@ -73,3 +73,38 @@
   color: $neutralColorDark_5;
   border-bottom: 1px dashed $neutralColorDark_5;
 }
+
+.btn-link {
+  z-index: 9;
+  background-color: $neutralColorLight_5 !important;
+  height: 35px;
+  width: 35px;
+  border-radius: 50% !important;
+  text-decoration: none !important;
+}
+
+.btn-contact {
+  background-color: #12a154;
+  color: $neutralColorLight_5;
+  border-radius: 7px;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.8;
+  }
+
+  &:last-child {
+    background-color: $neutralColorLight_5;
+    color: #12a154;
+    border: 1px solid #12a154;
+  }
+}
+
+.sample-chat {
+  background-color: #f4f4f4;
+  border-radius: 20px;
+  cursor: pointer;
+  &:hover {
+    background-color: $neutralColorDark_5;
+  }
+}
