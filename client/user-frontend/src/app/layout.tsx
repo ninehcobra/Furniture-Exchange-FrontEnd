@@ -29,7 +29,7 @@ export default function RootLayout({
           crossOrigin='anonymous'
         />
         <script src='https://kit.fontawesome.com/03244eb91d.js' crossOrigin='anonymous' async></script>
-        <AdSense pId='ca-pub-6214420931907905' />
+        <AdSense pId={''} />
         {/* <script src='https://ninehcobra.github.io/chat-template/chat-widget.js' async></script> */}
       </head>
       <Provider store={store}>
