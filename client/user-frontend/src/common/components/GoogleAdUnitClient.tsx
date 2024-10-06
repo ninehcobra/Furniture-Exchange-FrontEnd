@@ -15,7 +15,7 @@ declare global {
     adsbygoogle?: any | any[]
   }
 }
-
+// test
 const GoogleAdUnitClient: React.FC<GoogleAdUnitProps> = ({ children }) => {
   const pathname = usePathname()
   const searchParams = useSearchParams()
