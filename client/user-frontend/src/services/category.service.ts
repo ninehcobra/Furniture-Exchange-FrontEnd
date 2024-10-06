@@ -1,6 +1,7 @@
 import { enviroment } from '@/environments/environment'
-import { ICategory } from '@/types/category'
+import { ICategory, IGetProductByCategorySlugResponse } from '@/types/category'
 import { IMailPayload, IMailResponse } from '@/types/mail'
+import { IProduct } from '@/types/product'
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { get } from 'http'
 
@@ -15,8 +16,14 @@ export const categoryApi = createApi({
         url: '/',
         method: 'GET'
       })
+    }),
+    getProductByCategorySlug: builder.query<IGetProductByCategorySlugResponse, string>({
+      query: (slug) => ({
+        url: `/${slug}/products`,
+        method: 'GET'
+      })
     })
   })
 })
 
-export const { useGetCategoriesQuery } = categoryApi
+export const { useGetCategoriesQuery, useGetProductByCategorySlugQuery } = categoryApi

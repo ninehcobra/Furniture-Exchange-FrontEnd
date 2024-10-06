@@ -27,7 +27,7 @@ export default function ProductCard({ product }: { product: IProduct }): React.R
   return (
     <div
       onClick={() => {
-        router.push(`/product/${product.id}`)
+        router.push(`/product/${product.slug}`)
       }}
       className='card card-product'
     >
@@ -36,10 +36,7 @@ export default function ProductCard({ product }: { product: IProduct }): React.R
         <span className='position-absolute top-0 end-0 badge state-badge  m-2'>
           {product.state === 'new' ? 'Mới' : 'Đã qua sử dụng'}
         </span>
-        <button
-          className='btn btn-link position-absolute bottom-0 end-0 p-2'
-          onClick={() => console.log('Add to wishlist')}
-        >
+        <button className='btn btn-link position-absolute bottom-0 end-0 p-2'>
           <i className='fa-regular fa-heart'></i>
         </button>
       </div>

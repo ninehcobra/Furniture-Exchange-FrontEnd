@@ -1,7 +1,7 @@
 @import '../../../common/styles/common/common';
 
 .detail-container {
-  min-height: 88vh;
+  margin-bottom: 20px;
 }
 
 .ads-container {
@@ -12,6 +12,7 @@
 .product-image {
   height: 412px !important;
   border-radius: 7px;
+  object-fit: cover;
 }
 
 .product-image-slider {
@@ -71,6 +72,9 @@
 
 .category-text {
   color: $neutralColorDark_5;
+}
+
+.dashed-text {
   border-bottom: 1px dashed $neutralColorDark_5;
 }
 
@@ -84,7 +88,7 @@
 }
 
 .btn-contact {
-  background-color: #12a154;
+  background-color: $highlightColor_1;
   color: $neutralColorLight_5;
   border-radius: 7px;
   cursor: pointer;
@@ -95,8 +99,8 @@
 
   &:last-child {
     background-color: $neutralColorLight_5;
-    color: #12a154;
-    border: 1px solid #12a154;
+    color: $highlightColor_1;
+    border: 1px solid $highlightColor_1;
   }
 }
 
@@ -107,4 +111,34 @@
   &:hover {
     background-color: $neutralColorDark_5;
   }
+}
+
+.same-product-image {
+  height: 175px;
+  object-fit: cover;
+}
+
+.product-same-card {
+  cursor: pointer;
+  height: 316px;
+  border-top: 1px solid #f4f4f4;
+  border-left: 1px solid #f4f4f4;
+  border-bottom: 1px solid #f4f4f4;
+
+  &:last-child {
+    border-right: 1px solid #f4f4f4;
+  }
+
+  &:hover {
+    border: 1px solid $neutralColorDark_5;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.product-same {
+  margin-bottom: 60px; // Adjust this value as needed
+}
+
+.state-badge {
+  background-color: $warningColor_1;
 }

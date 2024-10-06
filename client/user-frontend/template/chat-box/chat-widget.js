@@ -1,12 +1,12 @@
-(function () {
-  let container;
-  let toggleBtn;
+;(function () {
+  let container
+  let toggleBtn
 
-  let color = "blue";
+  let color = 'blue'
 
   function initChatWidget() {
     // Tạo style cho widget
-    const style = document.createElement("style");
+    const style = document.createElement('style')
     style.textContent = `
       #chat-widget-container {
         position: fixed;
@@ -34,40 +34,38 @@
 
   
       
-    `;
-    document.head.appendChild(style);
+    `
+    document.head.appendChild(style)
 
     // Thêm library vào header
     // FontAwesome
-    const fontawesomeLibrary = document.createElement("script");
-    fontawesomeLibrary.src = "https://kit.fontawesome.com/03244eb91d.js";
-    fontawesomeLibrary.crossOrigin = "anonymous";
+    const fontawesomeLibrary = document.createElement('script')
+    fontawesomeLibrary.src = 'https://kit.fontawesome.com/03244eb91d.js'
+    fontawesomeLibrary.crossOrigin = 'anonymous'
     // Bootstrap
-    const bootstrapLibrary = document.createElement("link");
-    bootstrapLibrary.rel = "stylesheet";
-    bootstrapLibrary.href =
-      "https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css";
+    const bootstrapLibrary = document.createElement('link')
+    bootstrapLibrary.rel = 'stylesheet'
+    bootstrapLibrary.href = 'https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css'
 
     // Moment
-    const momentLibrary = document.createElement("script");
-    momentLibrary.src =
-      "https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js";
+    const momentLibrary = document.createElement('script')
+    momentLibrary.src = 'https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js'
     // Thêm các thư viện vào header
 
-    document.head.appendChild(fontawesomeLibrary);
-    document.head.appendChild(bootstrapLibrary);
-    document.head.appendChild(momentLibrary);
+    document.head.appendChild(fontawesomeLibrary)
+    document.head.appendChild(bootstrapLibrary)
+    document.head.appendChild(momentLibrary)
     // Tạo container cho widget
-    container = document.createElement("div");
-    container.id = "chat-widget-container";
-    container.style.display = "none";
+    container = document.createElement('div')
+    container.id = 'chat-widget-container'
+    container.style.display = 'none'
 
     // Tạo nút toggle
-    toggleBtn = document.createElement("div");
-    toggleBtn.id = "chat-widget-toggle";
+    toggleBtn = document.createElement('div')
+    toggleBtn.id = 'chat-widget-toggle'
     toggleBtn.className =
-      "d-flex justify-content-center align-items-center rounded-circle  text-white btn close-btn bg-custom ";
-    toggleBtn.innerHTML = '<i class="fa-solid fa-comment "></i>';
+      'd-flex justify-content-center align-items-center rounded-circle  text-white btn close-btn bg-custom '
+    toggleBtn.innerHTML = '<i class="fa-solid fa-comment "></i>'
 
     // Thêm nội dung chat từ template
     container.innerHTML = `
@@ -296,64 +294,59 @@
   </body>
 </html>
 
-    `;
+    `
 
     // Thêm các phần tử vào body
-    document.body.appendChild(container);
-    document.body.appendChild(toggleBtn);
+    document.body.appendChild(container)
+    document.body.appendChild(toggleBtn)
 
     // Xử lý việc hiển thị/ẩn widget
-    let isVisible = false;
-    toggleBtn.addEventListener("click", () => {
-      isVisible = !isVisible;
-      container.style.display = isVisible ? "block" : "none";
-      toggleBtn.innerHTML = isVisible
-        ? '<i class="fa-solid fa-xmark"></i>'
-        : '<i class="fa-solid fa-comment"></i>';
-    });
+    let isVisible = false
+    toggleBtn.addEventListener('click', () => {
+      isVisible = !isVisible
+      container.style.display = isVisible ? 'block' : 'none'
+      toggleBtn.innerHTML = isVisible ? '<i class="fa-solid fa-xmark"></i>' : '<i class="fa-solid fa-comment"></i>'
+    })
 
     // logic thêm tin nhắn
-    document
-      .getElementById("chatForm")
-      .addEventListener("submit", function (event) {
-        console.log("vafo day");
-        event.preventDefault(); // Ngăn không cho form reload trang
+    document.getElementById('chatForm').addEventListener('submit', function (event) {
+      event.preventDefault() // Ngăn không cho form reload trang
 
-        const chatInput = document.getElementById("chatInput");
-        const message = chatInput.value.trim();
+      const chatInput = document.getElementById('chatInput')
+      const message = chatInput.value.trim()
 
-        if (message !== "") {
-          // Thêm tin nhắn của người dùng vào chat box
-          addMessageToChat(message, "user-message");
+      if (message !== '') {
+        // Thêm tin nhắn của người dùng vào chat box
+        addMessageToChat(message, 'user-message')
 
-          // Xóa input sau khi gửi
-          chatInput.value = "";
+        // Xóa input sau khi gửi
+        chatInput.value = ''
 
-          // Giả sử hệ thống tự động trả lời (có thể thay bằng API AI chatbot)
-          setTimeout(function () {
-            addMessageToChat("This is an automated response", "bot-message");
-          }, 500);
-        }
-      });
+        // Giả sử hệ thống tự động trả lời (có thể thay bằng API AI chatbot)
+        setTimeout(function () {
+          addMessageToChat('This is an automated response', 'bot-message')
+        }, 500)
+      }
+    })
 
     function addMessageToChat(message, className) {
-      const chatBox = document.getElementById("chatBox");
+      const chatBox = document.getElementById('chatBox')
       momentLibrary.onload = function () {
-        moment.locale("vi");
-      };
+        moment.locale('vi')
+      }
 
-      const currentTime = moment().format("h:mm A");
+      const currentTime = moment().format('h:mm A')
 
-      let messageHtml;
+      let messageHtml
 
-      if (className === "user-message") {
+      if (className === 'user-message') {
         messageHtml = `
                   <div class="message-row d-flex justify-content-end mb-3">
                     <div class="message-content bg-custom-text text-white p-2 rounded">
                       <p class="mb-0">${message}</p>
                       <small class="text-white-50">10:32 AM</small>
                     </div>
-                  </div>`;
+                  </div>`
       } else {
         messageHtml = `
                   <div class="message-row d-flex justify-content-start mb-3">
@@ -361,41 +354,40 @@
                       <p class="mb-0">${message}</p>
                       <small class="text-muted">${currentTime}</small>
                     </div>
-                  </div>`;
+                  </div>`
       }
 
-      chatBox.innerHTML += messageHtml;
+      chatBox.innerHTML += messageHtml
 
-      chatBox.scrollTop = chatBox.scrollHeight;
+      chatBox.scrollTop = chatBox.scrollHeight
     }
   }
 
   // Gọi hàm initChatWidget khi DOM đã sẵn sàng
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", initChatWidget);
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initChatWidget)
   } else {
-    initChatWidget();
+    initChatWidget()
   }
 
   // Hàm để đặt vị trí widget
   function setPosition(position) {
-    console.log(position);
-    const [vertical, horizontal] = position.split("-");
+    const [vertical, horizontal] = position.split('-')
 
-    container.style[vertical] = "80px";
-    container.style[horizontal] = "20px";
-    toggleBtn.style[vertical] = "20px";
-    toggleBtn.style[horizontal] = "20px";
+    container.style[vertical] = '80px'
+    container.style[horizontal] = '20px'
+    toggleBtn.style[vertical] = '20px'
+    toggleBtn.style[horizontal] = '20px'
   }
 
   // Hàm để đặt màu sắc
   function setColor(newColor) {
-    color = newColor;
-    updateColors();
+    color = newColor
+    updateColors()
   }
 
   function updateColors() {
-    const style = document.createElement("style");
+    const style = document.createElement('style')
     style.textContent = `
       .bg-custom, .btn-primary {
         background-color: ${color} !important;
@@ -404,13 +396,13 @@
         background-color: ${color} !important;
         opacity: 0.7;
       }
-    `;
-    document.head.appendChild(style);
+    `
+    document.head.appendChild(style)
   }
 
   // Hàm để cấu hình widget
   window.configChatWidget = function (config) {
-    if (config.position) setPosition(config.position);
-    if (config.color) setColor(config.color);
-  };
-})();
+    if (config.position) setPosition(config.position)
+    if (config.color) setColor(config.color)
+  }
+})()

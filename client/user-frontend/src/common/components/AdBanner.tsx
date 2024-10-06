@@ -13,14 +13,6 @@ export const AdBanner = ({
   dataAdFormat: string
   dataFullWidthResponsive: boolean
 }): React.ReactNode => {
-  useEffect(() => {
-    try {
-      ((window as any).adsbygoogle = (window as any).adsbygoogle || []).push({})
-    } catch (error) {
-      console.log(error)
-    }
-  }, [])
-
   return (
     <ins
       className='adsbygoogle'

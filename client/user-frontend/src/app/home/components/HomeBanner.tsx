@@ -5,9 +5,7 @@ import { Carousel } from 'antd'
 import './home-banner.scss'
 
 export default function HomeBanner(): React.ReactNode {
-  const onChange = (currentSlide: number): void => {
-    console.log(currentSlide)
-  }
+  const onChange = (currentSlide: number): void => {}
 
   const bannerButtons = [
     { src: './images/btn-background-image/btn-1.png', title: 'Voucher giảm giá 10%' },

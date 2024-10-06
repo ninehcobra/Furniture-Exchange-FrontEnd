@@ -12,6 +12,8 @@ import 'react-toastify/dist/ReactToastify.css'
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
 import { AdSense } from '@/common/components/AdSense'
+import Script from 'next/script'
+import GoogleAdUnitClient from 'nextjs13_google_adsense/dist/esm/GoogleAdUnitClient'
 const poppins = Poppins({ weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'], subsets: ['latin'] })
 
 export default function RootLayout({
@@ -29,13 +31,20 @@ export default function RootLayout({
           crossOrigin='anonymous'
         />
         <script src='https://kit.fontawesome.com/03244eb91d.js' crossOrigin='anonymous' async></script>
-        <AdSense pId={''} />
+        <Script
+          async
+          src='https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6214420931907905'
+          crossOrigin='anonymous'
+          strategy='lazyOnload'
+        />
         {/* <script src='https://ninehcobra.github.io/chat-template/chat-widget.js' async></script> */}
       </head>
       <Provider store={store}>
         <AntdRegistry>
           <ConfigProvider theme={theme}>
-            <body className={poppins.className}>{children}</body>
+            <GoogleAdUnitClient>
+              <body className={poppins.className}>{children}</body>
+            </GoogleAdUnitClient>
           </ConfigProvider>
         </AntdRegistry>
         <ToastContainer />

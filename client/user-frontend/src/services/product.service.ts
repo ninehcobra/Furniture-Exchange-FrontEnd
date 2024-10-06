@@ -21,8 +21,14 @@ export const productApi = createApi({
         method: 'POST',
         body
       })
+    }),
+    getProductBySlug: builder.query<IProduct, string>({
+      query: (slug) => ({
+        url: `/${slug}`,
+        method: 'GET'
+      })
     })
   })
 })
 
-export const { useGetProductsQuery } = productApi
+export const { useGetProductsQuery,useGetProductBySlugQuery } = productApi

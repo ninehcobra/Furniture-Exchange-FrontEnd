@@ -20,7 +20,6 @@ export default function ForgotPassword(): React.ReactNode {
     setErrors(newErrors)
 
     if (!newErrors.email) {
-      console.log({ email })
       // Handle password reset request
     }
   }
