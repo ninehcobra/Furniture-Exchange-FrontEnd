@@ -147,7 +147,7 @@ export default function Page({ params }: { params: { slug: string } }): React.Re
 
   return (
     <div className='detail-container container mb-3'>
-      <GoogleAdUnit>
+      {/* <GoogleAdUnit>
         <ins
           className='adsbygoogle'
           style={{ display: 'block', width: '100%' }}
@@ -156,7 +156,7 @@ export default function Page({ params }: { params: { slug: string } }): React.Re
           data-ad-format='auto'
           data-full-width-responsive='true'
         ></ins>
-      </GoogleAdUnit>
+      </GoogleAdUnit> */}
       <div className='row g-2'>
         <div className='col-8 position-relative '>
           <button className='btn btn-link position-absolute top-0 end-0 d-flex align-items-center justify-content-center m-2 mt-1'>

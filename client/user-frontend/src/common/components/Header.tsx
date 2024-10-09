@@ -1,8 +1,52 @@
+'use client'
 import Image from 'next/image'
 import './header.scss'
 import Link from 'next/link'
-/* eslint-disable @next/next/no-img-element */
-export default function Header(): React.ReactNode {
+import { Dropdown, List, Avatar, Badge } from 'antd'
+import type { MenuProps } from 'antd'
+import { useGetConversationQuery } from '@/services/chat.service'
+
+export default function Header(): JSX.Element {
+  const accessToken = localStorage.getItem('access-token')
+  console.log('token ne', accessToken)
+  const { data: conversations, isSuccess } = useGetConversationQuery(undefined, {
+    skip: !accessToken
+  })
+
+  const notificationMenu: MenuProps['items'] = [
+    {
+      key: '1',
+      label: (
+        <>
+          <List
+            itemLayout='horizontal'
+            dataSource={conversations}
+            renderItem={(item) => (
+              <List.Item className='p-3 hover:bg-gray-100 chat-noti-item '>
+                <List.Item.Meta
+                  avatar={<Avatar src={item.other.image_url} size={48} />}
+                  title={
+                    <a href='#' className='font-bold'>
+                      {`${item.other.first_name} ${item.other.last_name}`}
+                    </a>
+                  }
+                  description={<div className='text-sm text-gray-600'>{item.last_message.content}</div>}
+                />
+              </List.Item>
+            )}
+          />
+          <div className='text-center p-2'>
+            <Link href='/messages' className='text-primary hover:text-primary-dark'>
+              Xem tất cả
+            </Link>
+          </div>
+        </>
+      )
+    }
+  ]
+
+  const unreadCount = conversations?.filter((conv) => !conv.last_message.isRead).length || 0
+
   return (
     <div className='header-container'>
       {/* Header */}
@@ -60,7 +104,22 @@ export default function Header(): React.ReactNode {
                 <div className='pe-3 recommend-product'>Iphone 15</div>
               </div>
             </div>
-            <div className='col-md-1 text-end text-neutral-light-5'>
+            <div className='col-md-1 text-end text-neutral-light-5 d-flex'>
+              {accessToken && isSuccess && (
+                <Dropdown
+                  menu={{ items: notificationMenu }}
+                  placement='bottomRight'
+                  trigger={['click']}
+                  overlayStyle={{ width: '400px' }}
+                >
+                  <Badge offset={[-15, 5]} count={unreadCount} overflowCount={99}>
+                    <i
+                      className='fa-solid fa-bell me-3 heading-h3 cart-btn'
+                      style={{ fontSize: '24px', color: 'white' }}
+                    ></i>
+                  </Badge>
+                </Dropdown>
+              )}
               <i className='fa-solid fa-shopping-cart me-2 heading-h3 cart-btn'></i>
             </div>
           </div>

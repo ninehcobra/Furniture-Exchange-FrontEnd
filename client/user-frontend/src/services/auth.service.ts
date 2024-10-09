@@ -8,6 +8,7 @@ import {
   IVerifyEmailResponse
 } from '@/types/auth'
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import { saveToLocalStorage } from '../../utils/local-storage'
 
 export const authApi = createApi({
   reducerPath: 'authApi',
@@ -20,7 +21,16 @@ export const authApi = createApi({
         url: '/login',
         method: 'POST',
         body
-      })
+      }),
+      onQueryStarted: async (_, { queryFulfilled }) => {
+        try {
+          const { data } = await queryFulfilled
+          saveToLocalStorage('access-token', data.accessToken)
+          saveToLocalStorage('refresh-token', data.refreshToken)
+        } catch (error) {
+          // Handle error
+        }
+      }
     }),
     register: builder.mutation<IRegisterResponse, IRegisterPayload>({
       query: (body) => ({

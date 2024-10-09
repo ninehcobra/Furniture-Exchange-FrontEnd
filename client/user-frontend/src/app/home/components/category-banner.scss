@@ -22,7 +22,9 @@
 }
 
 .category-image {
-  img {
-    height: 80px;
-  }
+  border-radius: 50%;
+}
+
+.category-link {
+  text-decoration: none;
 }
