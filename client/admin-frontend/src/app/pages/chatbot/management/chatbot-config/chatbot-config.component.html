@@ -1,0 +1,361 @@
+<div class="config-container">
+  <div class="config-panel">
+    <div class="d-flex align-items-center justify-content-between m-b-12">
+      <h2>Chatbot Configuration</h2>
+      <div>
+        <button
+          class="m-t-24 m-r-12"
+          mat-raised-button
+          color="primary"
+          (click)="onSetDefault()"
+        >
+          Set Default
+        </button>
+        <button
+          class="m-t-24"
+          mat-raised-button
+          color="secondary"
+          (click)="openPreview()"
+        >
+          Preview
+        </button>
+      </div>
+    </div>
+    <mat-accordion>
+      <mat-expansion-panel [expanded]="panelOpenState['general']">
+        <mat-expansion-panel-header (click)="togglePanel('general')">
+          <mat-panel-title>General Settings</mat-panel-title>
+        </mat-expansion-panel-header>
+        <mat-form-field appearance="outline">
+          <mat-label>Direction</mat-label>
+          <mat-select
+            [(ngModel)]="config.direction"
+            (selectionChange)="onConfigChange()"
+          >
+            <mat-option value="ltr">Left to Right</mat-option>
+            <mat-option value="rtl">Right to Left</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel [expanded]="panelOpenState['button']">
+        <mat-expansion-panel-header>
+          <mat-panel-title>Button Settings</mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="row">
+          <mat-form-field class="col-3" appearance="outline">
+            <mat-label>Position</mat-label>
+            <mat-select
+              [(ngModel)]="config.button.position"
+              (selectionChange)="onConfigChange()"
+            >
+              <mat-option value="left">Left</mat-option>
+              <mat-option value="right">Right</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field class="col-3" appearance="outline">
+            <div class="m-b-4">Background Color</div>
+            <input
+              matInput
+              [(colorPicker)]="config.button.backgroundColor"
+              [style.background]="config.button.backgroundColor"
+              (colorPickerChange)="onConfigChange()"
+              [cpPosition]="'top'"
+              [cpPositionOffset]="'0%'"
+              [cpPositionRelativeToArrow]="true"
+              [cpCloseClickOutside]="true"
+            />
+          </mat-form-field>
+          <mat-form-field class="col-3" appearance="outline">
+            <mat-label>Horizontal Position</mat-label>
+            <input
+              matInput
+              type="number"
+              [(ngModel)]="config.button.horizontal"
+              (input)="onConfigChange()"
+            />
+          </mat-form-field>
+          <mat-form-field class="col-3" appearance="outline">
+            <mat-label>Bottom Position</mat-label>
+            <input
+              matInput
+              type="number"
+              [(ngModel)]="config.button.bottom"
+              (input)="onConfigChange()"
+            />
+          </mat-form-field>
+          <mat-form-field class="col-3" appearance="outline">
+            <mat-label>Size</mat-label>
+            <mat-select
+              [(ngModel)]="config.button.size"
+              (selectionChange)="onConfigChange()"
+            >
+              <mat-option value="small">Small</mat-option>
+              <mat-option value="medium">Medium</mat-option>
+              <mat-option value="large">Large</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field class="col-3" appearance="outline">
+            <div class="m-b-4">Icon Color</div>
+            <input
+              matInput
+              [(colorPicker)]="config.button.iconColor"
+              [style.background]="config.button.iconColor"
+              (colorPickerChange)="onConfigChange()"
+              [cpPosition]="'top'"
+              [cpPositionOffset]="'0%'"
+              [cpPositionRelativeToArrow]="true"
+              [cpCloseClickOutside]="true"
+            />
+          </mat-form-field>
+          <mat-form-field class="col-3" appearance="outline">
+            <mat-label>Custom Icon Source</mat-label>
+            <input
+              matInput
+              [(ngModel)]="config.button.customIconSrc"
+              (input)="onConfigChange()"
+            />
+          </mat-form-field>
+        </div>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel [expanded]="panelOpenState['chatWindow']">
+        <mat-expansion-panel-header>
+          <mat-panel-title>Chat Window</mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="row">
+          <mat-form-field class="col-3" appearance="outline">
+            <mat-label>Welcome Message</mat-label>
+            <input
+              matInput
+              [(ngModel)]="config.chatWindow.welcomeMessage"
+              (input)="onConfigChange()"
+            />
+          </mat-form-field>
+          <mat-form-field class="col-3" appearance="outline">
+            <div class="m-b-4">Background Color</div>
+            <input
+              matInput
+              [(colorPicker)]="config.chatWindow.backgroundColor"
+              [style.background]="config.chatWindow.backgroundColor"
+              (colorPickerChange)="onConfigChange()"
+              [cpPosition]="'top'"
+              [cpPositionOffset]="'0%'"
+              [cpPositionRelativeToArrow]="true"
+              [cpCloseClickOutside]="true"
+            />
+          </mat-form-field>
+          <mat-form-field class="col-3" appearance="outline">
+            <mat-label>Height</mat-label>
+            <input
+              matInput
+              type="number"
+              [(ngModel)]="config.chatWindow.height"
+              (input)="onConfigChange()"
+            />
+          </mat-form-field>
+          <mat-form-field class="col-3" appearance="outline">
+            <mat-label>Width</mat-label>
+            <input
+              matInput
+              type="number"
+              [(ngModel)]="config.chatWindow.width"
+              (input)="onConfigChange()"
+            />
+          </mat-form-field>
+          <mat-form-field class="col-3" appearance="outline">
+            <mat-label>Font Size</mat-label>
+            <input
+              matInput
+              type="number"
+              [(ngModel)]="config.chatWindow.fontSize"
+              (input)="onConfigChange()"
+            />
+          </mat-form-field>
+          <mat-form-field class="col-3" appearance="outline">
+            <div class="m-b-4">Powered By Text Color</div>
+            <input
+              matInput
+              [(colorPicker)]="config.chatWindow.poweredByTextColor"
+              [style.background]="config.chatWindow.poweredByTextColor"
+              (colorPickerChange)="onConfigChange()"
+              [cpPosition]="'top'"
+              [cpPositionOffset]="'0%'"
+              [cpPositionRelativeToArrow]="true"
+              [cpCloseClickOutside]="true"
+            />
+          </mat-form-field>
+        </div>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel [expanded]="panelOpenState['botMessage']">
+        <mat-expansion-panel-header>
+          <mat-panel-title>Bot Message</mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="row">
+          <mat-form-field class="col-3" appearance="outline">
+            <mat-label>Bot Name</mat-label>
+            <input
+              matInput
+              [(ngModel)]="config.chatWindow.botMessage.name"
+              (input)="onConfigChange()"
+            />
+          </mat-form-field>
+          <mat-form-field class="col-3" appearance="outline">
+            <div class="m-b-4">Background Color</div>
+            <input
+              matInput
+              [(colorPicker)]="config.chatWindow.botMessage.backgroundColor"
+              [style.background]="config.chatWindow.botMessage.backgroundColor"
+              (colorPickerChange)="onConfigChange()"
+              [cpPosition]="'top'"
+              [cpPositionOffset]="'0%'"
+              [cpPositionRelativeToArrow]="true"
+              [cpCloseClickOutside]="true"
+            />
+          </mat-form-field>
+          <mat-form-field class="col-3" appearance="outline">
+            <div class="m-b-4">Text Color</div>
+            <input
+              matInput
+              [(colorPicker)]="config.chatWindow.botMessage.textColor"
+              [style.background]="config.chatWindow.botMessage.textColor"
+              (colorPickerChange)="onConfigChange()"
+              [cpPosition]="'top'"
+              [cpPositionOffset]="'0%'"
+              [cpPositionRelativeToArrow]="true"
+              [cpCloseClickOutside]="true"
+            />
+          </mat-form-field>
+          <mat-checkbox
+            class="col-3"
+            [(ngModel)]="config.chatWindow.botMessage.showAvatar"
+            (change)="onConfigChange()"
+            >Show Avatar</mat-checkbox
+          >
+          <mat-form-field class="col-3" appearance="outline">
+            <mat-label>Avatar Source</mat-label>
+            <input
+              matInput
+              [(ngModel)]="config.chatWindow.botMessage.avatarSrc"
+              (input)="onConfigChange()"
+            />
+          </mat-form-field>
+        </div>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel [expanded]="panelOpenState['userMessage']">
+        <mat-expansion-panel-header>
+          <mat-panel-title>User Message</mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="row">
+          <mat-form-field class="col-3" appearance="outline">
+            <div class="m-b-4">Background Color</div>
+            <input
+              matInput
+              [(colorPicker)]="config.chatWindow.userMessage.backgroundColor"
+              [style.background]="config.chatWindow.userMessage.backgroundColor"
+              (colorPickerChange)="onConfigChange()"
+              [cpPosition]="'top'"
+              [cpPositionOffset]="'0%'"
+              [cpPositionRelativeToArrow]="true"
+              [cpCloseClickOutside]="true"
+            />
+          </mat-form-field>
+          <mat-form-field class="col-3" appearance="outline">
+            <div class="m-b-4">Text Color</div>
+            <input
+              matInput
+              [(colorPicker)]="config.chatWindow.userMessage.textColor"
+              [style.background]="config.chatWindow.userMessage.textColor"
+              (colorPickerChange)="onConfigChange()"
+              [cpPosition]="'top'"
+              [cpPositionOffset]="'0%'"
+              [cpPositionRelativeToArrow]="true"
+              [cpCloseClickOutside]="true"
+            />
+          </mat-form-field>
+          <mat-checkbox
+            class="col-3"
+            [(ngModel)]="config.chatWindow.userMessage.showAvatar"
+            (change)="onConfigChange()"
+            >Show Avatar</mat-checkbox
+          >
+          <mat-form-field class="col-3" appearance="outline">
+            <mat-label>Avatar Source</mat-label>
+            <input
+              matInput
+              [(ngModel)]="config.chatWindow.userMessage.avatarSrc"
+              (input)="onConfigChange()"
+            />
+          </mat-form-field>
+        </div>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel [expanded]="panelOpenState['textInput']">
+        <mat-expansion-panel-header>
+          <mat-panel-title>Text Input</mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="row">
+          <mat-form-field class="col-3" appearance="outline">
+            <mat-label>Placeholder</mat-label>
+            <input
+              matInput
+              [(ngModel)]="config.chatWindow.textInput.placeholder"
+              (input)="onConfigChange()"
+            />
+          </mat-form-field>
+          <mat-form-field class="col-3" appearance="outline">
+            <div class="m-b-4">Background Color</div>
+            <input
+              matInput
+              [(colorPicker)]="config.chatWindow.textInput.backgroundColor"
+              [style.background]="config.chatWindow.textInput.backgroundColor"
+              (colorPickerChange)="onConfigChange()"
+              [cpPosition]="'top'"
+              [cpPositionOffset]="'0%'"
+              [cpPositionRelativeToArrow]="true"
+              [cpCloseClickOutside]="true"
+            />
+          </mat-form-field>
+          <mat-form-field class="col-3" appearance="outline">
+            <div class="m-b-4">Text Color</div>
+            <input
+              matInput
+              [(colorPicker)]="config.chatWindow.textInput.textColor"
+              [style.background]="config.chatWindow.textInput.textColor"
+              (colorPickerChange)="onConfigChange()"
+              [cpPosition]="'top'"
+              [cpPositionOffset]="'0%'"
+              [cpPositionRelativeToArrow]="true"
+              [cpCloseClickOutside]="true"
+            />
+          </mat-form-field>
+          <mat-form-field class="col-3" appearance="outline">
+            <div class="m-b-4">Send Button Color</div>
+            <input
+              matInput
+              [(colorPicker)]="config.chatWindow.textInput.sendButtonColor"
+              [style.background]="config.chatWindow.textInput.sendButtonColor"
+              (colorPickerChange)="onConfigChange()"
+              [cpPosition]="'top'"
+              [cpPositionOffset]="'0%'"
+              [cpPositionRelativeToArrow]="true"
+              [cpCloseClickOutside]="true"
+            />
+          </mat-form-field>
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+    <div class="w-100 d-flex align-items-center justify-content-center">
+      <button
+        class="m-t-24"
+        mat-raised-button
+        color="primary"
+        (click)="updateConfig()"
+      >
+        Save Configuration
+      </button>
+    </div>
+  </div>
+</div>
