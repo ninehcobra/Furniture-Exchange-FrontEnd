@@ -29,6 +29,8 @@ import { CustomizerComponent } from './shared/customizer/customizer.component';
 import { BannerService } from 'src/app/services/banner.service';
 import { BannerComponent } from 'src/app/components/banner/banner.component';
 import { AuthService } from 'src/app/services/auth.service';
+import { IUser } from 'src/app/models/user.model';
+import { LocalStorageUtil } from 'src/app/utils/local-storage.util';
 
 const MOBILE_VIEW = 'screen and (max-width: 768px)';
 const TABLET_VIEW = 'screen and (min-width: 769px) and (max-width: 1024px)';
@@ -77,6 +79,8 @@ export class FullComponent implements OnInit, OnDestroy {
   private bannerSubscription: Subscription;
 
   navItems = navItems;
+
+  user: IUser = LocalStorageUtil.get('user');
 
   @ViewChild('leftsidenav')
   public sidenav: MatSidenav;

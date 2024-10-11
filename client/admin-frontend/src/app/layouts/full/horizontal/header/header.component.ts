@@ -10,6 +10,8 @@ import { BrandingComponent } from '../../vertical/sidebar/branding.component';
 import { NgFor, NgForOf } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
+import { IUser } from 'src/app/models/user.model';
+import { LocalStorageUtil } from 'src/app/utils/local-storage.util';
 
 interface notifications {
   id: number;
@@ -60,6 +62,8 @@ export class AppHorizontalHeaderComponent {
   @Output() toggleCollapsed = new EventEmitter<void>();
 
   showFiller = false;
+
+  user: IUser = LocalStorageUtil.get('user');
 
   public selectedLanguage: any = {
     language: 'English',

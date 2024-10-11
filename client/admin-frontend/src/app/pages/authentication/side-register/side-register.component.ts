@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { CoreService } from 'src/app/services/core.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -7,10 +7,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { MaterialModule } from 'src/app/material.module';
 import { AuthService } from 'src/app/services/auth.service';
-import { IRegisterPayload, IRegisterResponse } from 'src/app/models/auth.model';
+import { IRegisterPayload } from 'src/app/models/auth.model';
 import { LocalStorageUtil } from 'src/app/utils/local-storage.util';
-import { IErrorResponse } from 'src/app/models/error.model';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
@@ -62,20 +60,18 @@ export class AppSideRegisterComponent {
         firstName: this.form.value.firstName || '',
         lastName: this.form.value.lastName || '',
       };
-      this.authService.register(registerPayload).subscribe(
-        (response: IRegisterResponse) => {
-          LocalStorageUtil.remove('access_token');
-          LocalStorageUtil.remove('refresh_token');
-          LocalStorageUtil.set('access_token', response.accessToken);
-          LocalStorageUtil.set('refresh_token', response.refreshToken);
-          this.toastService.showSuccess('Register success');
-          this.router.navigate(['/starter']);
-        },
-        (error) => {
-          const errorResponse = error.error as IErrorResponse;
-          this.toastService.showError(errorResponse.message);
-        }
-      );
+      this.authService
+        .register(registerPayload)
+        .subscribe((response: boolean) => {
+          if (response) {
+            this.toastService.showSuccess(
+              'Register success! Please check your email to verify your account.'
+            );
+            this.router.navigate(['/authentication/email-confirm'], {
+              state: { email: this.form.value.email },
+            });
+          }
+        });
     }
 
     // this.router.navigate(['/dashboards/dashboard1']);

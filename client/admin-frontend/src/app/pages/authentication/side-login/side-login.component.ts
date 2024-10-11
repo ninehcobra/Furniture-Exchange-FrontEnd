@@ -64,20 +64,14 @@ export class AppSideLoginComponent {
           email: usernameOrEmail,
           password: password,
         })
-        .subscribe(
-          (response) => {
-            LocalStorageUtil.remove('access_token');
-            LocalStorageUtil.remove('refresh_token');
-            LocalStorageUtil.set('access_token', response.accessToken);
-            LocalStorageUtil.set('refresh_token', response.refreshToken);
-            this.toastService.showSuccess('Login success');
-            this.router.navigate(['/starter']);
-          },
-          (error) => {
-            const errorResponse = error.error as IErrorResponse;
-            this.toastService.showError(errorResponse.message);
-          }
-        );
+        .subscribe((response) => {
+          LocalStorageUtil.remove('access_token');
+          LocalStorageUtil.remove('refresh_token');
+          LocalStorageUtil.set('access_token', response.accessToken);
+          LocalStorageUtil.set('refresh_token', response.refreshToken);
+          this.toastService.showSuccess('Login success');
+          this.router.navigate(['/chatbot/management']);
+        });
     }
   }
 }

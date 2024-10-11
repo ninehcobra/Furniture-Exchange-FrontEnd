@@ -17,7 +17,6 @@ import { CHAT_WIDGET_DEFAULT_CONFIG } from 'src/constants/chat-widget-config.con
 import { MatAccordion } from '@angular/material/expansion';
 import { BannerService } from 'src/app/services/banner.service';
 import { MatDialog } from '@angular/material/dialog';
-import { AppDialogOverviewComponent } from 'src/app/pages/ui-components/dialog/dialog.component';
 import { ConfirmDialogComponent } from './confirm-dialog.component';
 import { PreviewChatbotDialogComponent } from './preview/preview-chatbot-dialog.component';
 

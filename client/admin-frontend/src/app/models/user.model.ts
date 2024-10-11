@@ -3,18 +3,10 @@ import { IRole } from './role.model';
 export interface IUser {
   id: string;
   email: string;
+  username: string;
   firstName: string;
   lastName: string;
-  role: IRole;
+  isEmailVerified: boolean;
+  verificationToken: string;
 }
 export interface IGetUserInfoResponse extends IUser {}
-
-export interface IGetUser {
-  page: number;
-  take: number;
-  itemCount: number;
-  pageCount: number;
-  hasPreviousPage: boolean;
-  hasNextPage: boolean;
-  items: IUser[];
-}

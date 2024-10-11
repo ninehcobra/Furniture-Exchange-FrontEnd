@@ -1,0 +1,48 @@
+<div class="blank-layout-container justify-content-center align-items-center">
+  <div
+    class="position-relative row w-100 h-100 bg-gredient justify-content-center"
+  >
+    <div class="col-lg-4 d-flex align-items-center">
+      <mat-card class="cardWithShadow boxed-auth">
+        <mat-card-content class="p-32">
+          <div class="text-center">
+            @if(options.theme === 'light') {
+            <a [routerLink]="['/dashboards/dashboard1']">
+              <img
+                src="./assets/images/logos/dark-logo.svg"
+                class="align-middle m-2"
+                alt="logo"
+              />
+            </a>
+            } @if(options.theme === 'dark') {
+            <a [routerLink]="['/dashboards/dashboard1']">
+              <img
+                src="./assets/images/logos/light-logo.svg"
+                class="align-middle m-2"
+                alt="logo"
+              />
+            </a>
+            }
+          </div>
+
+          <h3 class="text-center">Confirm Verify Your Email</h3>
+          <span class="f-s-14 d-block mat-body-1 text-center m-t-30">
+            Are you sure you want to verify this is your account? If not, you
+            can skip and turn off this page.
+          </span>
+
+          <span class="d-block f-w-500 d-block f-s-14 m-t-24 text-center">
+            <button
+              mat-flat-button
+              color="primary"
+              (click)="verifyEmail()"
+              class="m-l-12"
+            >
+              Confirm
+            </button>
+          </span>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>

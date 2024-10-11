@@ -22,6 +22,7 @@ export interface ICreateChatBotPayload {
   domain: string;
   chatbotConfig: any;
   apiKeyId: string;
+  checkSSL?: boolean;
 }
 
 export interface ICreateChatBotResponse {

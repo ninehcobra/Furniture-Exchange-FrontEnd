@@ -16,5 +16,3 @@ export interface ILoginResponse {
   accessToken: string;
   refreshToken: string;
 }
-
-export interface IRegisterResponse extends ILoginResponse {}

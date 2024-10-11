@@ -64,7 +64,7 @@ export class BaseService {
 
   post<T = {}>(url: string, body: any, options?: any) {
     return this.http
-      .post<T>(`${url}`, body, {
+      .post<T>(`${this.dynamicURL}/${url}`, body, {
         ...this.customHeaders,
         ...options,
         responseType: 'json',

@@ -16,6 +16,8 @@ import { CommonModule, NgForOf } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { NgScrollbarModule } from 'ngx-scrollbar';
 import { AuthService } from 'src/app/services/auth.service';
+import { LocalStorageUtil } from 'src/app/utils/local-storage.util';
+import { IUser } from 'src/app/models/user.model';
 
 interface notifications {
   id: number;
@@ -67,6 +69,8 @@ export class HeaderComponent {
   @Output() toggleCollapsed = new EventEmitter<void>();
 
   showFiller = false;
+
+  user: IUser = LocalStorageUtil.get('user');
 
   public selectedLanguage: any = {
     language: 'English',

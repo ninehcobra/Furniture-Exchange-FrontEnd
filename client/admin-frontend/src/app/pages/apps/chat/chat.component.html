@@ -1,4 +1,17 @@
-<mat-card class="mat-card-top chat-app cardWithShadow">
+<mat-card class="cardWithShadow m-t-0">
+  <mat-card-content class="p-24">
+    <div class="row justify-content-between">
+      <div class="col-lg-4"></div>
+      <div class="col-lg-4 d-flex align-items-center justify-content-end">
+        <button (click)="createConversation()" mat-flat-button color="primary">
+          New conversation
+        </button>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>
+
+<mat-card class="mat-card-top chat-app cardWithShadow m-b-0">
   <mat-sidenav-container
     [ngClass]="{
       'side-panel-opened': sidePanelOpened,
@@ -14,22 +27,27 @@
       [opened]="!isOver()"
       (open)="sidePanelOpened = true"
       (close)="sidePanelOpened = false"
+      class="w-100"
     >
-      <ng-scrollbar class="position-relative" style="height: 100%">
-        <div class="d-flex align-items-center p-24">
+      <ng-scrollbar class="position-relative w-100" style="height: 100%">
+        <div class="d-flex align-items-center p-24 w-100">
           <img
-            src="assets/images/profile/user-1.jpg"
+            src="assets/images/chatbot-1.png"
             class="rounded-circle"
             width="54"
           />
 
           <div class="m-l-16">
-            <h4 class="mat-subtitle-1 f-s-16 f-w-600">Julia Roberts</h4>
-            <span class="f-s-12">Marketing Manager</span>
+            <h4 class="mat-subtitle-1 f-s-16 f-w-600">
+              {{ user.lastName + " " + user.firstName }}
+            </h4>
+            <span class="f-s-12">
+              {{ user.username }}
+            </span>
           </div>
         </div>
 
-        <div class="p-x-24">
+        <div class="p-x-24 w-100">
           <!-- search -->
           <mat-form-field appearance="outline" class="w-100">
             <input matInput placeholder="Search Contacts" />
@@ -57,12 +75,14 @@
           </mat-menu>
         </div>
 
-        <mat-nav-list class="chat-listing">
-          @for(message of messages; track message.photo) {
+        <mat-nav-list class="chat-listing w-100">
+          @for(conversation of conversations; track conversation.id) {
           <mat-list-item
+            [class.bg-light-primary]="
+              conversation.id === selectedConversation.info?.id
+            "
+            (click)="onSelect(conversation)"
             role="listitem"
-            (click)="onSelect(message)"
-            [class.bg-light-primary]="message === selectedMessage"
             lines="2"
           >
             <div
@@ -70,16 +90,16 @@
               matListItemTitle
             >
               <img
-                src="{{ message.photo }}"
+                src="assets/images/chatbot-1.png"
                 alt=""
                 width="42"
                 class="rounded-circle"
               />
               <div class="m-l-16">
                 <h3 class="f-w-600 mat-subtitle-1 f-s-16 lh-sm">
-                  {{ message.from }}
+                  {{ conversation.name }}
                 </h3>
-                <p class="f-s-14 m-t-4 m-b-0">{{ message.subject }}</p>
+                <p class="f-s-14 m-t-4 m-b-0">Tui có biết gì đâu</p>
               </div>
             </div>
           </mat-list-item>
@@ -98,12 +118,12 @@
       </button>
       <div class="d-flex align-items-center">
         <img
-          src="{{ selectedMessage.photo }}"
+          src="assets/images/chatbot-1.png"
           width="40"
           class="rounded-circle"
         />
         <div class="mat-subtitle-1 f-s-16 f-w-600 m-b-0 m-l-16">
-          {{ selectedMessage.from }}
+          {{ selectedConversation.info?.name }}
         </div>
       </div>
       <button [matMenuTriggerFor]="moredd" class="m-l-auto" mat-icon-button>
@@ -119,70 +139,87 @@
     <!-- ------------------------------------------- -->
     <!-- chat content -->
     <!-- ------------------------------------------- -->
-    <ng-scrollbar style="height: calc(100vh - 390px)" class="position-relative">
-      <mat-card-content class="chat-middle-box p-24">
-        @for(c of selectedMessage.chat; track c) {
-        <ng-template [ngIf]="c.type === 'odd'" [ngIfElse]="evenblock">
-          <div class="chat-list odd">
-            <div class="chat-message m-b-15">
-              <div
-                class="chat-block bg-light-primary p-10 rounded d-flex align-items-center"
+
+    <div>
+      <div
+        #chatContainer
+        style="height: calc(100vh - 390px); overflow-y: scroll"
+        class="position-relative"
+      >
+        <mat-card-content class="chat-middle-box p-24 chat-container">
+          <ng-container
+            *ngIf="selectedConversation?.data?.items ?? [] as items"
+          >
+            <ng-container *ngIf="items.length > 0">
+              @for(chat of items.slice().reverse(); track chat.id) {
+              <ng-template
+                [ngIf]="chat.fromUser.id !== user.id"
+                [ngIfElse]="evenblock"
               >
-                <span>
-                  <img
-                    src="{{ selectedMessage.photo }}"
-                    class="rounded-circle"
-                    width="40"
-                  />
-                </span>
-                <span class="m-l-16 mat-subheading-1 m-b-0 f-w-400 lh-md">{{
-                  c.msg
-                }}</span>
-              </div>
-              <p class="chat-date text-muted mat-h5 f-s-12 m-t-5 m-b-0">
-                {{ c.date | date }}
-              </p>
-            </div>
-          </div>
-        </ng-template>
-        <ng-template #evenblock>
-          <div class="chat-list even">
-            <div class="chat-message m-b-15">
-              <div
-                class="chat-block bg-light-accent lh-md p-10 rounded d-flex align-items-center mat-subheading-1 f-w-400 m-b-0"
-              >
-                {{ c.msg }}
-              </div>
-              <p class="chat-date text-muted mat-h5 m-0">
-                {{ c.date | date }}
-              </p>
-            </div>
-          </div>
-        </ng-template>
-        }
-      </mat-card-content>
-    </ng-scrollbar>
-    <mat-divider></mat-divider>
-    <div class="p-t-20 p-l-30 p-r-30">
-      <mat-form-field appearance="outline" class="w-100">
-        <mat-label>Message</mat-label>
-        <input
-          matInput
-          placeholder="Send message"
-          [(ngModel)]="msg"
-          #myInput
-          (keyup.enter)="OnAddMsg()"
-        />
-        <button
-          mat-icon-button
-          matSuffix
-          color="primary"
-          (click)="OnAddMsg()"
-          [disabled]="!msg"
-        >
-          <mat-icon>send</mat-icon>
-        </button>
-      </mat-form-field>
+                <div class="chat-list odd">
+                  <div class="chat-message m-b-15">
+                    <div
+                      class="chat-block bg-light-primary p-10 rounded d-flex align-items-center"
+                    >
+                      <span>
+                        <img
+                          src="assets/images/chatbot-1.png"
+                          class="rounded-circle"
+                          width="40"
+                        />
+                      </span>
+                      <span
+                        class="m-l-16 mat-subheading-1 m-b-0 f-w-400 lh-md"
+                        >{{ chat.messageText }}</span
+                      >
+                    </div>
+                    <p class="chat-date text-muted mat-h5 m-0">
+                      {{ DateFormat(chat.sendDate) }}
+                    </p>
+                  </div>
+                </div>
+              </ng-template>
+              <ng-template #evenblock>
+                <div class="chat-list even">
+                  <div class="chat-message m-b-15">
+                    <div
+                      class="chat-block bg-light-accent lh-md p-10 rounded d-flex align-items-center mat-subheading-1 f-w-400 m-b-0"
+                    >
+                      {{ chat.messageText }}
+                    </div>
+                    <p class="chat-date text-muted mat-h5 m-0">
+                      {{ DateFormat(chat.sendDate) }}
+                    </p>
+                  </div>
+                </div>
+              </ng-template>
+              }
+            </ng-container>
+          </ng-container>
+        </mat-card-content>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="p-t-20 p-l-30 p-r-30">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Message</mat-label>
+          <input
+            matInput
+            placeholder="Send message"
+            [(ngModel)]="msg"
+            #myInput
+            (keyup.enter)="OnAddMsg()"
+          />
+          <button
+            mat-icon-button
+            matSuffix
+            color="primary"
+            (click)="OnAddMsg()"
+            [disabled]="!msg"
+          >
+            <mat-icon>send</mat-icon>
+          </button>
+        </mat-form-field>
+      </div>
     </div>
   </mat-sidenav-container>
 </mat-card>

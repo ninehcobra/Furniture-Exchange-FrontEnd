@@ -18,10 +18,7 @@ export class ChatBotService extends BaseService {
   createChatBot(
     data: ICreateChatBotPayload
   ): Observable<ICreateChatBotResponse> {
-    return this.post<ICreateChatBotResponse>(
-      `${this.dynamicURL}/${this.url}`,
-      data
-    );
+    return this.post<ICreateChatBotResponse>(`${this.url}`, data);
   }
 
   getChatBot(): Observable<IGetChatBotResponse> {

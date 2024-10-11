@@ -22,7 +22,6 @@ export class ToastService {
       horizontalPosition: 'center',
       verticalPosition: 'bottom',
     };
-    console.log('Applying panel class:', panelClass); // Add this for debugging
     this.snackBar.open(message, 'Close', config);
   }
 }

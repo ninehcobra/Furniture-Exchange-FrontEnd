@@ -196,7 +196,7 @@
       aria-label="Notifications"
     >
       <img
-        src="/assets/images/profile/user-1.jpg"
+        src="assets/images/chatbot-1.png"
         class="rounded-circle object-cover"
         width="35"
       />
@@ -211,16 +211,18 @@
 
         <div class="d-flex align-items-center p-b-24 b-b-1 m-t-16">
           <img
-            src="/assets/images/profile/user-1.jpg"
+            src="assets/images/chatbot-1.png"
             class="rounded-circle"
             width="95"
           />
           <div class="m-l-16">
-            <h6 class="f-s-14 f-w-600 m-0 mat-subtitle-1">Mathew Anderson</h6>
-            <span class="f-s-14 d-block m-b-4">Designer</span>
+            <h6 class="f-s-14 f-w-600 m-0 mat-subtitle-1">
+              {{ user.firstName + " " + user.lastName }}
+            </h6>
+            <span class="f-s-14 d-block m-b-4">{{ user.username }}</span>
             <span class="d-flex align-items-center">
               <i-tabler name="mail" class="icon-15 m-r-4"></i-tabler>
-              info&#64;modernize.com
+              {{ user.email }}
             </span>
           </div>
         </div>

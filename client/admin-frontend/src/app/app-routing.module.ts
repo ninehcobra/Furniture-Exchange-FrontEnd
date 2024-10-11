@@ -11,7 +11,7 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: '/dashboards/dashboard1',
+        redirectTo: '/chatbot/management',
         pathMatch: 'full',
       },
       {
