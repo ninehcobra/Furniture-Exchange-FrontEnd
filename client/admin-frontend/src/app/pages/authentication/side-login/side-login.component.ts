@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component, NgZone } from '@angular/core';
 import { CoreService } from 'src/app/services/core.service';
 import { RouterModule, Router } from '@angular/router';
 
@@ -36,7 +36,9 @@ export class AppSideLoginComponent {
     private settings: CoreService,
     private authService: AuthService,
     private router: Router,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private ngZone: NgZone,
+    private cdr: ChangeDetectorRef
   ) {}
   //
   form = new FormGroup({
@@ -69,7 +71,11 @@ export class AppSideLoginComponent {
           LocalStorageUtil.set('access_token', response.accessToken);
           LocalStorageUtil.set('refresh_token', response.refreshToken);
           this.toastService.showSuccess('Login success');
-          this.router.navigate(['/starter']);
+          this.ngZone.run(() => {
+            this.router.navigate(['/dashboards/dashboard1']).then(() => {
+              this.cdr.detectChanges();
+            });
+          });
         });
     }
   }

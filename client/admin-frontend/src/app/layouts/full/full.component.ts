@@ -6,7 +6,7 @@ import {
   ViewChild,
   ViewEncapsulation,
 } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { MatSidenav, MatSidenavContent } from '@angular/material/sidenav';
 import { CoreService } from 'src/app/services/core.service';
 import { AppSettings } from 'src/app/app.config';
@@ -31,6 +31,7 @@ import { BannerComponent } from 'src/app/components/banner/banner.component';
 import { AuthService } from 'src/app/services/auth.service';
 import { IUser } from 'src/app/models/user.model';
 import { LocalStorageUtil } from 'src/app/utils/local-storage.util';
+import { UserService } from 'src/app/services/user.service';
 
 const MOBILE_VIEW = 'screen and (max-width: 768px)';
 const TABLET_VIEW = 'screen and (min-width: 769px) and (max-width: 1024px)';
@@ -75,12 +76,12 @@ interface quicklinks {
   encapsulation: ViewEncapsulation.None,
 })
 export class FullComponent implements OnInit, OnDestroy {
+  user: Observable<IUser | null>;
+
   bannerData: any;
   private bannerSubscription: Subscription;
 
   navItems = navItems;
-
-  user: IUser = LocalStorageUtil.get('user');
 
   @ViewChild('leftsidenav')
   public sidenav: MatSidenav;
@@ -212,7 +213,8 @@ export class FullComponent implements OnInit, OnDestroy {
     private breakpointObserver: BreakpointObserver,
     private navService: NavService,
     private bannerService: BannerService,
-    private authService: AuthService
+    private authService: AuthService,
+    private userService: UserService
   ) {
     this.htmlElement = document.querySelector('html')!;
     this.layoutChangesSubscription = this.breakpointObserver
@@ -226,6 +228,8 @@ export class FullComponent implements OnInit, OnDestroy {
         }
         this.isContentWidthFixed = state.breakpoints[MONITOR_VIEW];
         this.resView = state.breakpoints[BELOWMONITOR];
+
+        this.user = this.userService.user$;
       });
 
     // Initialize project theme with options

@@ -18,7 +18,8 @@ export class AuthGuard implements CanActivate {
     if (LocalStorageUtil.get('access_token')) {
       this.userService.getUserInfo().subscribe(
         (res) => {
-          LocalStorageUtil.set('user', res);
+          this.userService.setUser(res);
+          return true;
         },
         (error) => {
           LocalStorageUtil.remove('access_token');

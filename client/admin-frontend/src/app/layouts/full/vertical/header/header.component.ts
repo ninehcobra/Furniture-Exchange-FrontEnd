@@ -18,6 +18,8 @@ import { NgScrollbarModule } from 'ngx-scrollbar';
 import { AuthService } from 'src/app/services/auth.service';
 import { LocalStorageUtil } from 'src/app/utils/local-storage.util';
 import { IUser } from 'src/app/models/user.model';
+import { Observable } from 'rxjs';
+import { UserService } from 'src/app/services/user.service';
 
 interface notifications {
   id: number;
@@ -57,11 +59,14 @@ interface quicklinks {
     NgScrollbarModule,
     TablerIconsModule,
     MaterialModule,
+    CommonModule,
   ],
   templateUrl: './header.component.html',
   encapsulation: ViewEncapsulation.None,
 })
 export class HeaderComponent {
+  user: Observable<IUser | null>;
+
   @Input() showToggle = true;
   @Input() toggleChecked = false;
   @Output() toggleMobileNav = new EventEmitter<void>();
@@ -69,8 +74,6 @@ export class HeaderComponent {
   @Output() toggleCollapsed = new EventEmitter<void>();
 
   showFiller = false;
-
-  user: IUser = LocalStorageUtil.get('user');
 
   public selectedLanguage: any = {
     language: 'English',
@@ -108,9 +111,11 @@ export class HeaderComponent {
     public dialog: MatDialog,
     private translate: TranslateService,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private userService: UserService
   ) {
     translate.setDefaultLang('en');
+    this.user = this.userService.user$;
   }
 
   openDialog() {

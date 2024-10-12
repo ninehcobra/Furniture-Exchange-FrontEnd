@@ -7,11 +7,13 @@ import { Router, RouterModule } from '@angular/router';
 import { TablerIconsModule } from 'angular-tabler-icons';
 import { MaterialModule } from 'src/app/material.module';
 import { BrandingComponent } from '../../vertical/sidebar/branding.component';
-import { NgFor, NgForOf } from '@angular/common';
+import { CommonModule, NgFor, NgForOf } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
 import { IUser } from 'src/app/models/user.model';
 import { LocalStorageUtil } from 'src/app/utils/local-storage.util';
+import { Observable } from 'rxjs';
+import { UserService } from 'src/app/services/user.service';
 
 interface notifications {
   id: number;
@@ -51,10 +53,13 @@ interface quicklinks {
     MaterialModule,
     BrandingComponent,
     NgFor,
+    CommonModule,
   ],
   templateUrl: './header.component.html',
 })
 export class AppHorizontalHeaderComponent {
+  user: Observable<IUser | null>;
+
   @Input() showToggle = true;
   @Input() toggleChecked = false;
   @Output() toggleMobileNav = new EventEmitter<void>();
@@ -62,8 +67,6 @@ export class AppHorizontalHeaderComponent {
   @Output() toggleCollapsed = new EventEmitter<void>();
 
   showFiller = false;
-
-  user: IUser = LocalStorageUtil.get('user');
 
   public selectedLanguage: any = {
     language: 'English',
@@ -101,9 +104,11 @@ export class AppHorizontalHeaderComponent {
     public dialog: MatDialog,
     private translate: TranslateService,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private userService: UserService
   ) {
     translate.setDefaultLang('en');
+    this.user = this.userService.user$;
   }
 
   openDialog() {
