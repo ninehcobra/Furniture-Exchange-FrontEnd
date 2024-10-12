@@ -32,17 +32,18 @@
       <ng-scrollbar class="position-relative w-100" style="height: 100%">
         <div class="d-flex align-items-center p-24 w-100">
           <img
-            src="assets/images/chatbot-1.png"
+            src="{{ user.image_url }}"
             class="rounded-circle"
             width="54"
+            height="54"
           />
 
           <div class="m-l-16">
             <h4 class="mat-subtitle-1 f-s-16 f-w-600">
-              {{ user.lastName + " " + user.firstName }}
+              {{ user.last_name + " " + user.first_name }}
             </h4>
             <span class="f-s-12">
-              {{ user.username }}
+              {{ user.email }}
             </span>
           </div>
         </div>

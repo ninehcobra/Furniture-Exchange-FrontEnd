@@ -211,18 +211,19 @@
 
         <div class="d-flex align-items-center p-b-24 b-b-1 m-t-16">
           <img
-            src="assets/images/chatbot-1.png"
+            src="{{ user.image_url }}"
             class="rounded-circle"
             width="95"
+            height="95"
           />
           <div class="m-l-16">
             <h6 class="f-s-14 f-w-600 m-0 mat-subtitle-1">
-              {{ user.firstName + " " + user.lastName }}
+              {{ user.first_name + " " + user.last_name }}
             </h6>
-            <span class="f-s-14 d-block m-b-4">{{ user.username }}</span>
+            <span class="f-s-14 d-block m-b-4">{{ user.email }}</span>
             <span class="d-flex align-items-center">
               <i-tabler name="mail" class="icon-15 m-r-4"></i-tabler>
-              {{ user.email }}
+              {{ user.role }}
             </span>
           </div>
         </div>

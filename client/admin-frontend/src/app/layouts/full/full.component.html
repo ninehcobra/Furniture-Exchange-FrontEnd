@@ -40,15 +40,16 @@
       <div class="p-24 m-t-auto profile-bar">
         <div class="bg-light-accent d-flex align-items-center rounded p-16">
           <img
-            src="/assets/images/chatbot-1.png"
+            src="{{ user.image_url }}"
             class="rounded-circle"
             width="40"
+            height="40"
           />
           <div class="m-l-16">
             <h5 class="mat-subtitle-2 f-w-600">
-              {{ user.firstName + " " + user.lastName }}
+              {{ user.first_name + " " + user.last_name }}
             </h5>
-            <span class="f-s-12">{{ user.username }}</span>
+            <span class="f-s-12">{{ user.email }}</span>
           </div>
           <div class="m-l-auto">
             <a

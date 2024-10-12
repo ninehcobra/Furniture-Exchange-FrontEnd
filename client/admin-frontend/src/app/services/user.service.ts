@@ -10,6 +10,6 @@ export class UserService extends BaseService {
   url = 'users';
 
   getUserInfo() {
-    return this.get<IGetUserInfoResponse>(`${this.url}/me`);
+    return this.get<IGetUserInfoResponse>(`${this.url}/profile`);
   }
 }

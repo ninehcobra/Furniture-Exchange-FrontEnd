@@ -46,7 +46,7 @@ export class AppSideLoginComponent {
     ]),
     password: new FormControl('', [
       Validators.required,
-      Validators.minLength(6),
+      Validators.minLength(5),
     ]),
   });
 
@@ -69,7 +69,7 @@ export class AppSideLoginComponent {
           LocalStorageUtil.set('access_token', response.accessToken);
           LocalStorageUtil.set('refresh_token', response.refreshToken);
           this.toastService.showSuccess('Login success');
-          this.router.navigate(['/chatbot/management']);
+          this.router.navigate(['/starter']);
         });
     }
   }
