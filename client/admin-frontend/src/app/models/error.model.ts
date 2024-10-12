@@ -1,7 +1,8 @@
 export interface IErrorResponse {
-  statusCode: number;
-  error: string;
-  path: string;
-  timestamp: string;
+  title: string;
   message: string;
+  statusCode: number;
+  timestamp: string;
+  path: string;
+  trace: string;
 }

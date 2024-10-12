@@ -13,11 +13,6 @@ import { AuthService } from '../services/auth.service';
 import { IErrorResponse } from '../models/error.model';
 import { SPECIAL_ERRORS } from 'src/constants/special-error.constant';
 
-const EXCLUDED_TOAST_APIS = [
-  '/api/chat-bots/check-domain',
-  // Add more endpoints as needed
-];
-
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
   constructor(
@@ -35,24 +30,9 @@ export class ErrorInterceptor implements HttpInterceptor {
         let errorMessage = 'An unknown error occurred';
         const apiError = error.error as IErrorResponse;
 
-        const shouldShowToast = !EXCLUDED_TOAST_APIS.some((api) =>
-          request.url.includes(api)
-        );
-
         switch (error.status) {
           case 400:
             errorMessage = apiError.message;
-
-            switch (apiError.error) {
-              case SPECIAL_ERRORS.EMAIL_EXIST:
-                errorMessage =
-                  'Your email already exists in our system. Please login or use a different email.';
-                break;
-
-              case SPECIAL_ERRORS.EMAIL_NOT_VERIFIED:
-                this.router.navigate(['/authentication/verify-email']);
-                break;
-            }
 
             break;
           case 401:
@@ -75,9 +55,6 @@ export class ErrorInterceptor implements HttpInterceptor {
             break;
           default:
             errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
-        }
-        if (shouldShowToast) {
-          this.toastService.showError(errorMessage);
         }
 
         return throwError(errorMessage);

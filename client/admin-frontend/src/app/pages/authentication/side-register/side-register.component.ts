@@ -8,7 +8,6 @@ import { RouterModule } from '@angular/router';
 import { MaterialModule } from 'src/app/material.module';
 import { AuthService } from 'src/app/services/auth.service';
 import { IRegisterPayload } from 'src/app/models/auth.model';
-import { LocalStorageUtil } from 'src/app/utils/local-storage.util';
 import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
@@ -54,11 +53,12 @@ export class AppSideRegisterComponent {
   submit() {
     if (this.form.valid) {
       const registerPayload: IRegisterPayload = {
-        username: this.form.value.username || '',
         email: this.form.value.email || '',
         password: this.form.value.password || '',
         firstName: this.form.value.firstName || '',
         lastName: this.form.value.lastName || '',
+        sex: 'male',
+        phoneNumber: '',
       };
       this.authService
         .register(registerPayload)

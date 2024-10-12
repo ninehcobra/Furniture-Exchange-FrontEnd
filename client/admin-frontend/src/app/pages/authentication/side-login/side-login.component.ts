@@ -60,7 +60,6 @@ export class AppSideLoginComponent {
       const password = this.form.value.password ?? '';
       this.authService
         .login({
-          username: usernameOrEmail,
           email: usernameOrEmail,
           password: password,
         })
