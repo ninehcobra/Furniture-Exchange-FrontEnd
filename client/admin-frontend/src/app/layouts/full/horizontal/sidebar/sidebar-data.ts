@@ -2,7 +2,7 @@ import { NavItem } from '../../vertical/sidebar/nav-item/nav-item';
 
 export const navItems: NavItem[] = [
   {
-    navCap: 'Home',
+    navCap: 'Trang chủ',
   },
   {
     displayName: 'Dashboards',
@@ -10,7 +10,7 @@ export const navItems: NavItem[] = [
     route: 'dashboards',
     children: [
       {
-        displayName: 'Analytical',
+        displayName: 'Thống kê',
         iconName: 'point',
         route: 'dashboards/dashboard1',
       },
@@ -511,15 +511,15 @@ export const navItems: NavItem[] = [
         route: 'tables/sticky-header-footer-table',
       },
       {
-        displayName: 'Chatbot',
+        displayName: 'Tin nhắn',
         iconName: 'message-circle',
-        route: '/chatbot/management',
+        route: '/store/management',
 
         children: [
           {
             displayName: 'Detail',
             iconName: 'point',
-            route: '/chatbot/management/:id',
+            route: '/store/management/:id',
           },
         ],
       },

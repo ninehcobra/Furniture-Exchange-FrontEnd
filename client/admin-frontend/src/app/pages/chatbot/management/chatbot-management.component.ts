@@ -105,7 +105,7 @@ export class ChatbotManagementComponent implements AfterViewInit, OnInit {
   }
 
   editInterface(element: IChatBot): void {
-    this.router.navigate([`/chatbot/management/${element.id}`]);
+    this.router.navigate([`/store/management/${element.id}`]);
   }
 
   copyId(id: string) {

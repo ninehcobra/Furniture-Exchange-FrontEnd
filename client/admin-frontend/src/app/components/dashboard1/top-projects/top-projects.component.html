@@ -1,8 +1,10 @@
 <mat-card class="cardWithShadow">
   <mat-card-header class="d-flex">
     <div class="m-r-auto">
-      <mat-card-title>Top Projects</mat-card-title>
-      <mat-card-subtitle class="mat-body-1">Best Products</mat-card-subtitle>
+      <mat-card-title>Top doanh thu</mat-card-title>
+      <mat-card-subtitle class="mat-body-1"
+        >Top các shop bán hàng của tháng</mat-card-subtitle
+      >
     </div>
     <mat-form-field class="theme-select" appearance="outline">
       <mat-select value="mar">
@@ -24,7 +26,7 @@
             *matHeaderCellDef
             class="f-w-600 mat-subtitle-1 f-s-14"
           >
-            Assigned
+            Thành viên
           </th>
           <td mat-cell *matCellDef="let element">
             <div class="d-flex align-items-center">
@@ -53,7 +55,7 @@
             *matHeaderCellDef
             class="f-w-600 mat-subtitle-1 f-s-14"
           >
-            Name
+            Tên
           </th>
           <td mat-cell *matCellDef="let element" class="mat-body-1">
             {{ element.productName }}
@@ -67,7 +69,7 @@
             *matHeaderCellDef
             class="f-w-600 mat-subtitle-1 f-s-14"
           >
-            Priority
+            Danh hiệu
           </th>
           <td mat-cell *matCellDef="let element">
             <ng-template [ngIf]="element.priority == 'low'">
@@ -115,10 +117,10 @@
             *matHeaderCellDef
             class="f-w-600 mat-subtitle-1 f-s-14"
           >
-            Budget
+            Doanh thu
           </th>
           <td mat-cell *matCellDef="let element" class="mat-body-1">
-            ${{ element.budget }}k
+            {{ element.budget }}tr VNĐ
           </td>
         </ng-container>
 

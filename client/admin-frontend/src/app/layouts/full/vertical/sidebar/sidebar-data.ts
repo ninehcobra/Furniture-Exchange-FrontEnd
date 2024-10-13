@@ -2,20 +2,20 @@ import { NavItem } from './nav-item/nav-item';
 
 export const navItems: NavItem[] = [
   {
-    navCap: 'Home',
+    navCap: 'Trang chủ',
   },
   {
-    displayName: 'Analytical',
-    iconName: 'point',
+    displayName: 'Thống kê',
+    iconName: 'aperture',
     route: 'dashboards/dashboard1',
   },
   {
-    displayName: 'Chatbot',
-    iconName: 'message-circle',
-    route: '/chatbot/management',
+    displayName: 'Cửa hàng',
+    iconName: 'shopping-cart',
+    route: '/store/management',
   },
   {
-    displayName: 'Chatting',
+    displayName: 'Tin nhắn',
     iconName: 'message-2',
     route: 'apps/chat',
   },

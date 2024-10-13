@@ -15,6 +15,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { ToastService } from 'src/app/services/toast.service';
 import { LocalStorageUtil } from 'src/app/utils/local-storage.util';
 import { IErrorResponse } from 'src/app/models/error.model';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-side-login',
@@ -38,7 +39,8 @@ export class AppSideLoginComponent {
     private router: Router,
     private toastService: ToastService,
     private ngZone: NgZone,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private userService: UserService
   ) {}
   //
   form = new FormGroup({
@@ -70,10 +72,14 @@ export class AppSideLoginComponent {
           LocalStorageUtil.remove('refresh_token');
           LocalStorageUtil.set('access_token', response.accessToken);
           LocalStorageUtil.set('refresh_token', response.refreshToken);
-          this.toastService.showSuccess('Login success');
-          this.ngZone.run(() => {
-            this.router.navigate(['/dashboards/dashboard1']).then(() => {
-              this.cdr.detectChanges();
+
+          this.userService.getUserInfo().subscribe((response) => {
+            this.userService.setUser(response);
+            this.toastService.showSuccess('Login success');
+            this.ngZone.run(() => {
+              this.router.navigate(['/dashboards/dashboard1']).then(() => {
+                this.cdr.detectChanges();
+              });
             });
           });
         });

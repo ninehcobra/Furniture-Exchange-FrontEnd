@@ -90,22 +90,22 @@ export class AppWeeklyStatsComponent {
     {
       id: 1,
       color: 'primary',
-      title: 'Top Sales',
-      subtitle: 'Johnathan Doe',
+      title: 'Doanh thu cao nhất',
+      subtitle: 'Hòng Lâm',
       percent: '68',
     },
     {
       id: 2,
       color: 'success',
-      title: 'Best Seller',
-      subtitle: 'Footware',
+      title: 'Người bán hàng chạy',
+      subtitle: 'Vua đồ cũ',
       percent: '45',
     },
     {
       id: 3,
       color: 'error',
-      title: 'Most Commented',
-      subtitle: 'Fashionware',
+      title: 'Được yêu thích',
+      subtitle: 'Cô bé bán ghế',
       percent: '14',
     },
   ];

@@ -7,13 +7,16 @@ import { CoreService } from 'src/app/services/core.service';
   standalone: true,
   imports: [NgIf],
   template: `
-    <div class="branding">
+    <div
+      class="branding w-100 d-flex align-items-center justify-content-center"
+    >
       @if(options.theme === 'light') {
       <a href="/">
         <img
           src="./assets/images/logo.png"
           class="align-middle m-2"
           alt="logo"
+          height="95"
         />
       </a>
       } @if(options.theme === 'dark') {
@@ -22,6 +25,7 @@ import { CoreService } from 'src/app/services/core.service';
           src="./assets/images/logo.png"
           class="align-middle m-2"
           alt="logo"
+          height="95"
         />
       </a>
       }

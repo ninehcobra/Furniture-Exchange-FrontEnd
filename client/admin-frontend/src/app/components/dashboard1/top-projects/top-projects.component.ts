@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { MaterialModule } from '../../../material.module';
 import { CommonModule } from '@angular/common';
 
-
 export interface productsData {
   id: number;
   imagePath: string;
@@ -17,38 +16,38 @@ const ELEMENT_DATA: productsData[] = [
   {
     id: 1,
     imagePath: 'assets/images/profile/user-1.jpg',
-    uname: 'Sunil Joshi',
-    position: 'Web Designer',
-    productName: 'Elite Admin',
-    budget: 3.9,
-    priority: 'low'
+    uname: 'Hòng Lâm',
+    position: 'Bàn ghế, giường,...',
+    productName: 'Bàn học sinh viên',
+    budget: 32.9,
+    priority: 'critical',
   },
   {
     id: 2,
     imagePath: 'assets/images/profile/user-2.jpg',
-    uname: 'Andrew McDownland',
-    position: 'Project Manager',
-    productName: 'Real Homes Theme',
+    uname: 'Vua đồ cũ',
+    position: 'Đồ nội thất cũ',
+    productName: 'Giường tầng',
     budget: 24.5,
-    priority: 'medium'
+    priority: 'high',
   },
   {
     id: 3,
     imagePath: 'assets/images/profile/user-3.jpg',
-    uname: 'Christopher Jamil',
-    position: 'Project Manager',
-    productName: 'MedicalPro Theme',
+    uname: 'Bé hàng rong',
+    position: 'Bán đồ decor',
+    productName: 'Rèm cửa sổ',
     budget: 12.8,
-    priority: 'high'
+    priority: 'medium',
   },
   {
     id: 4,
     imagePath: 'assets/images/profile/user-4.jpg',
-    uname: 'Nirav Joshi',
-    position: 'Frontend Engineer',
-    productName: 'Hosting Press HTML',
+    uname: 'Bán đồ dạo',
+    position: 'Bán đồ dạo',
+    productName: 'Ghế sofa',
     budget: 2.4,
-    priority: 'critical'
+    priority: 'low',
   },
 ];
 
@@ -64,13 +63,12 @@ interface month {
   templateUrl: './top-projects.component.html',
 })
 export class AppTopProjectsComponent {
-
   displayedColumns: string[] = ['assigned', 'name', 'priority', 'budget'];
   dataSource = ELEMENT_DATA;
 
   months: month[] = [
-    { value: 'mar', viewValue: 'March 2023' },
-    { value: 'apr', viewValue: 'April 2023' },
-    { value: 'june', viewValue: 'June 2023' },
+    { value: 'mar', viewValue: '9/2024' },
+    { value: 'apr', viewValue: '10/2024' },
+    { value: 'june', viewValue: '11/2024' },
   ];
 }

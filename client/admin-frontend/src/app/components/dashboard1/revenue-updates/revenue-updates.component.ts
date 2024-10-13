@@ -51,21 +51,21 @@ export class AppRevenueUpdatesComponent {
   public revenueChart!: Partial<revenueChart> | any;
 
   months: month[] = [
-    { value: 'mar', viewValue: 'March 2023' },
-    { value: 'apr', viewValue: 'April 2023' },
-    { value: 'june', viewValue: 'June 2023' },
+    { value: 'mar', viewValue: '9/2024' },
+    { value: 'apr', viewValue: '10/2024' },
+    { value: 'june', viewValue: '11/2024' },
   ];
 
   constructor() {
     this.revenueChart = {
       series: [
         {
-          name: 'Eanings this month',
+          name: 'Thu nhập tháng này',
           data: [1.5, 2.7, 2.2, 3.6, 1.5, 1.0],
           color: '#5D87FF',
         },
         {
-          name: 'Expense this month',
+          name: 'Chi phi tháng này',
           data: [-1.8, -1.1, -2.5, -1.5, -0.6, -1.8],
           color: '#49BEFF',
         },
@@ -117,13 +117,13 @@ export class AppRevenueUpdatesComponent {
       },
       xaxis: {
         categories: [
-          '16/08',
-          '17/08',
-          '18/08',
-          '19/08',
-          '20/08',
-          '21/08',
-          '22/08',
+          '16/09',
+          '17/09',
+          '18/09',
+          '19/09',
+          '20/09',
+          '21/09',
+          '22/09',
         ],
         axisBorder: {
           show: false,

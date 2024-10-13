@@ -60,7 +60,7 @@ export class ChatbotConfigComponent implements OnInit, AfterViewInit {
       this.chatBotService.getChatBotById(chatbotId).subscribe(
         (chatbot: IChatBot) => {
           if (chatbot === null) {
-            this.router.navigate(['/chatbot/management']);
+            this.router.navigate(['/store/management']);
           }
           this.chatbot = chatbot;
           this.initializeConfig();
