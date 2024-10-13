@@ -1,0 +1,31 @@
+name: Sync frontend branch
+
+on:
+  schedule:
+    - cron: "*/3 * * * *" # Chạy hàng giờ
+  workflow_dispatch:
+
+jobs:
+  sync-frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Setup Git
+        run: |
+          git config --global user.name ninehcobra
+          git config --global user.email ttbexinhtt2903@gmail.com
+
+      - name: Fetch upstream changes
+        run: |
+          git remote add upstream https://github.com/Ninehcobra-Bale-Bros/Furniture-Exchange.git
+          git fetch upstream
+          git checkout frontend-admin
+          git merge upstream/frontend-admin
+
+      - name: Push changes to fork
+        run: |
+          git push origin frontend
