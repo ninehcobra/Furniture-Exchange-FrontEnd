@@ -28,6 +28,7 @@ import {
   IGetConversationResponse,
 } from 'src/app/models/conversation';
 import { DateUtils } from 'src/app/utils/date-format.util';
+import { SocketioService } from 'src/app/services/socket-io.service';
 
 @Component({
   selector: 'app-chat',
@@ -63,7 +64,8 @@ export class AppChatComponent implements OnInit, AfterViewInit {
   constructor(
     public dialog: MatDialog,
     public conversationService: ConversationService,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private socketIoService: SocketioService
   ) {
     this.selectedMessage = this.messages[0];
   }
@@ -71,6 +73,8 @@ export class AppChatComponent implements OnInit, AfterViewInit {
     this.scrollToBottom();
   }
   async ngOnInit(): Promise<void> {
+    this.socketIoService.connect();
+
     await this.conversationService
       .getUserConversation({ userId: this.user.id })
       .subscribe((res) => {

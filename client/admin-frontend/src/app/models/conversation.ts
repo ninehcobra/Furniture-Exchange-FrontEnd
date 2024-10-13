@@ -57,3 +57,37 @@ export interface IGetUserConversationPayload {
 }
 
 export interface IGetUserConversationResponse extends Array<IConversation> {}
+
+// export interface ICreateConversationPayload {
+//   product_id: string;
+//   user_id: string;
+//   other_id: string;
+// }
+
+// export interface ICreateConversationResponse {
+//   id: string;
+//   name: string;
+//   product_id: string;
+//   user_id: string;
+//   other_id: string;
+//   created_at: string;
+// }
+
+// export interface IGetUserConversationResponse {
+//   user: IUserConversationInfo;
+//   other: IUserConversationInfo;
+//   last_message: {
+//     id: number;
+//     created_at: string;
+//     sender_id: string;
+//     content: string;
+//     isRead: boolean;
+//   };
+// }
+
+// interface IUserConversationInfo {
+//   id: string;
+//   first_name: string;
+//   last_name: string;
+//   image_url: string;
+// }

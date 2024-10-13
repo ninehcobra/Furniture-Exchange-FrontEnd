@@ -38,6 +38,7 @@
     "ngx-scrollbar": "^11.0.0",
     "rxjs": "~7.5.0",
     "sass": "^1.57.1",
+    "socket.io-client": "^4.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.2"
   },

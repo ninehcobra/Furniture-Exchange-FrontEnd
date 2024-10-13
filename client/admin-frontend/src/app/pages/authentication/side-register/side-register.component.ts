@@ -33,10 +33,6 @@ export class AppSideRegisterComponent {
   ) {}
 
   form = new FormGroup({
-    username: new FormControl('', [
-      Validators.required,
-      Validators.minLength(6),
-    ]),
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [
       Validators.required,
@@ -44,6 +40,8 @@ export class AppSideRegisterComponent {
     ]),
     firstName: new FormControl('', [Validators.required]),
     lastName: new FormControl('', [Validators.required]),
+    phoneNumber: new FormControl('', [Validators.required]),
+    sex: new FormControl('', [Validators.required]),
   });
 
   get f() {
@@ -57,8 +55,8 @@ export class AppSideRegisterComponent {
         password: this.form.value.password || '',
         firstName: this.form.value.firstName || '',
         lastName: this.form.value.lastName || '',
-        sex: 'male',
-        phoneNumber: '',
+        phoneNumber: this.form.value.phoneNumber || '',
+        sex: this.form.value.sex || '',
       };
       this.authService
         .register(registerPayload)
@@ -73,7 +71,5 @@ export class AppSideRegisterComponent {
           }
         });
     }
-
-    // this.router.navigate(['/dashboards/dashboard1']);
   }
 }

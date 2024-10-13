@@ -5,6 +5,11 @@ export const navItems: NavItem[] = [
     navCap: 'Home',
   },
   {
+    displayName: 'Analytical',
+    iconName: 'point',
+    route: 'dashboards/dashboard1',
+  },
+  {
     displayName: 'Chatbot',
     iconName: 'message-circle',
     route: '/chatbot/management',
