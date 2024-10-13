@@ -24,7 +24,9 @@
           <mat-toolbar class="bg-white">
             <div class="row">
               <div class="col-12">
-                <p class="f-w-500 f-s-18 m-0 mat-subtitle-1">Todo App</p>
+                <p class="f-w-500 f-s-18 m-0 mat-subtitle-1">
+                  Quản lý đơn hàng
+                </p>
               </div>
             </div>
           </mat-toolbar>
@@ -35,7 +37,7 @@
               [class.bg-light-primary]="selectedCategory === 'all'"
             >
               <div class="d-flex align-items-center">
-                <span class="mat-subtitle-2">All</span>
+                <span class="mat-subtitle-2">Tất cả</span>
                 <div class="m-l-auto">
                   <span
                     class="icon-27 bg-primary text-white rounded d-flex align-items-center justify-content-center"
@@ -50,7 +52,7 @@
               (click)="selectionlblClick('uncomplete')"
             >
               <div class="d-flex align-items-center">
-                <span class="mat-subtitle-2">Incompleted</span>
+                <span class="mat-subtitle-2">Đang giao</span>
                 <div class="m-l-auto">
                   <span
                     class="icon-27 bg-error text-white rounded d-flex align-items-center justify-content-center"
@@ -65,7 +67,7 @@
               (click)="selectionlblClick('complete')"
             >
               <div class="d-flex align-items-center">
-                <span class="mat-subtitle-2">Completed</span>
+                <span class="mat-subtitle-2">Đã giao</span>
                 <div class="m-l-auto">
                   <span
                     class="icon-27 bg-success text-white rounded d-flex align-items-center justify-content-center"
@@ -90,13 +92,13 @@
                 <i-tabler name="align-left" class="icon-20"></i-tabler>
               </button>
               <mat-checkbox (change)="allTodos()" color="primary"
-                >Mark All
+                >Đánh dấu tất cả
               </mat-checkbox>
             </div>
             <!-- <label for="all">Mark All</label> -->
             <div class="m-l-auto">
               <span class="bg-primary text-white p-8 rounded f-s-14"
-                >{{ remainingList() }} Tasks left</span
+                >Còn {{ remainingList() }} đơn nữa</span
               >
             </div>
           </div>
@@ -113,7 +115,7 @@
                     [(ngModel)]="searchText"
                     formControlName="mess"
                     (keyup.enter)="addTodo(inputData.value)"
-                    placeholder="Add todo"
+                    placeholder="Thêm đơn hàng"
                   />
                 </mat-form-field>
               </div>
@@ -126,7 +128,7 @@
                   id="btnAddTodo"
                   (click)="addTodo(inputData.value)"
                 >
-                  Add Todo
+                  Thêm đơn
                 </button>
               </div>
             </div>

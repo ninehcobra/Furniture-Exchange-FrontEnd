@@ -1,16 +1,3 @@
-<mat-card class="cardWithShadow m-t-0">
-  <mat-card-content class="p-24">
-    <div class="row justify-content-between">
-      <div class="col-lg-4"></div>
-      <div class="col-lg-4 d-flex align-items-center justify-content-end">
-        <button (click)="createConversation()" mat-flat-button color="primary">
-          New conversation
-        </button>
-      </div>
-    </div>
-  </mat-card-content>
-</mat-card>
-
 <mat-card class="mat-card-top chat-app cardWithShadow m-b-0">
   <mat-sidenav-container
     [ngClass]="{
@@ -51,7 +38,7 @@
         <div class="p-x-24 w-100">
           <!-- search -->
           <mat-form-field appearance="outline" class="w-100">
-            <input matInput placeholder="Search Contacts" />
+            <input matInput placeholder="Tìm liên hệ" />
             <mat-icon matSuffix>
               <i-tabler name="search" class="icon-20"></i-tabler>
             </mat-icon>
@@ -59,19 +46,19 @@
           <!-- dropdown -->
           <button mat-button [matMenuTriggerFor]="menu">
             <div class="d-flex align-items-center">
-              Recent Chats
+              Trò chuyện gần đây
               <i-tabler name="chevron-down" class="icon-20 m-l-4"></i-tabler>
             </div>
           </button>
           <mat-menu #menu="matMenu" class="cardWithShadow">
             <button mat-menu-item>
-              <span>Sort by Time</span>
+              <span>Sắp xếp theo thời gian</span>
             </button>
             <button mat-menu-item>
-              <span>Sort by Unread</span>
+              <span>Sắp xếp theo Chưa đọc</span>
             </button>
             <button mat-menu-item>
-              <span>Mark as all Read</span>
+              <span>Đánh dấu là tất cả Đã đọc</span>
             </button>
           </mat-menu>
         </div>
@@ -118,11 +105,11 @@
         <mat-icon>short_text</mat-icon>
       </button>
       <div class="d-flex align-items-center">
-        <img
+        <!-- <img
           src="assets/images/chatbot-1.png"
           width="40"
           class="rounded-circle"
-        />
+        /> -->
         <div class="mat-subtitle-1 f-s-16 f-w-600 m-b-0 m-l-16">
           {{ selectedConversation.info?.name }}
         </div>
@@ -131,9 +118,9 @@
         <mat-icon>more_vert</mat-icon>
       </button>
       <mat-menu #moredd="matMenu" x-position="before" class="cardWithShadow">
-        <button mat-menu-item>Contact info</button>
-        <button mat-menu-item>Mute</button>
-        <button mat-menu-item>Delete chat</button>
+        <button mat-menu-item>Thông tin</button>
+        <button mat-menu-item>Tắt tiếng</button>
+        <button mat-menu-item>Xóa cuộc hội thoại</button>
       </mat-menu>
     </mat-toolbar>
 

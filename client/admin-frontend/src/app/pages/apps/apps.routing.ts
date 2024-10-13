@@ -28,10 +28,10 @@ export const AppsRoutes: Routes = [
         path: 'chat',
         component: AppChatComponent,
         data: {
-          title: 'Chat',
+          title: 'Tin nhắn',
           urls: [
-            { title: 'Dashboard', url: '/dashboards/dashboard1' },
-            { title: 'Chat' },
+            { title: 'Trang chủ', url: '/dashboards/dashboard1' },
+            { title: 'Tin nhắn' },
           ],
         },
       },
@@ -97,10 +97,10 @@ export const AppsRoutes: Routes = [
         path: 'todo',
         component: AppTodoComponent,
         data: {
-          title: 'Todo App',
+          title: 'Quản lý đơn hàng',
           urls: [
-            { title: 'Dashboard', url: '/dashboards/dashboard1' },
-            { title: 'Todo App' },
+            { title: 'Trang chủ', url: '/dashboards/dashboard1' },
+            { title: 'Quản lý đơn hàng' },
           ],
         },
       },

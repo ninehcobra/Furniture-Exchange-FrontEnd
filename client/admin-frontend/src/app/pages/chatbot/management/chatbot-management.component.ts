@@ -27,8 +27,8 @@ import {
 import { CHAT_WIDGET_DEFAULT_CONFIG } from 'src/constants/chat-widget-config.constant';
 import { BannerService } from 'src/app/services/banner.service';
 import { Router } from '@angular/router';
-
-const chatbots: IGetChatBotResponse = [];
+import { ProductService } from 'src/app/services/product.service';
+import { ICreateProductPayload, IProduct } from 'src/app/models/product.model';
 
 @Component({
   templateUrl: './chatbot-management.component.html',
@@ -37,121 +37,90 @@ const chatbots: IGetChatBotResponse = [];
 export class ChatbotManagementComponent implements AfterViewInit, OnInit {
   @ViewChild(MatTable, { static: true }) table: MatTable<any> =
     Object.create(null);
-  searchText: any;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator =
+    Object.create(null);
+
+  searchText: string = '';
   displayedColumns: string[] = [
     '#',
     'name',
-    'thumbnail',
-    'isPublic',
-    'isDeploy',
-    'domain',
-    'apiKey',
+    'price',
+    'description',
+    'category',
     'action',
   ];
-  dataSource = new MatTableDataSource(chatbots);
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator =
-    Object.create(null);
+  dataSource = new MatTableDataSource<IProduct>([]);
 
   constructor(
     public dialog: MatDialog,
     public datePipe: DatePipe,
     private clipboard: Clipboard,
     private toastService: ToastService,
-    private chatBotService: ChatBotService,
+    private productService: ProductService,
     private bannerService: BannerService,
     private router: Router
   ) {}
-
-  fetchChatBots(): void {
-    this.chatBotService
-      .getChatBot()
-      .subscribe((response: IGetChatBotResponse) => {
-        this.dataSource.data = response;
-      });
-  }
 
   ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator;
   }
 
   ngOnInit(): void {
-    this.fetchChatBots();
+    this.fetchProducts();
+  }
+
+  fetchProducts(): void {
+    this.productService.getAllProducts().subscribe(
+      (products: IProduct[]) => {
+        this.dataSource.data = products;
+        console.log(products);
+      },
+      (error) => {
+        this.toastService.showError('Failed to fetch products');
+      }
+    );
   }
 
   applyFilter(filterValue: string): void {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  openDialog(action: string, obj: any): void {
-    obj.action = action;
+  openDialog(action: string, product?: IProduct): void {
     const dialogRef = this.dialog.open(ChatbotDialogContentComponent, {
-      data: obj,
+      data: { action, product },
     });
+
     dialogRef.afterClosed().subscribe((result) => {
-      console.log('The dialog was closed', result.event);
-      if (result.event === 'Add') {
-        console.log(result.data);
-        this.addRowData(result.data);
-      } else if (result.event === 'Update') {
-        this.updateRowData(result.data);
-      } else if (result.event === 'Delete') {
-        this.deleteRowData(result.data);
-      }
-    });
-  }
-
-  editGeneralInfo(element: IChatBot): void {
-    this.openDialog('Update', element);
-  }
-
-  editInterface(element: IChatBot): void {
-    this.router.navigate([`/store/management/${element.id}`]);
-  }
-
-  copyId(id: string) {
-    this.clipboard.copy(id);
-    this.toastService.showSuccess('ID copied to clipboard');
-  }
-
-  toggleApiKeyVisibility(element: any): void {
-    element.showApiKey = !element.showApiKey;
-  }
-
-  addRowData(row_obj: IChatBot): void {
-    this.chatBotService.createChatBot(row_obj).subscribe(
-      (response: ICreateChatBotResponse) => {
-        this.toastService.showSuccess('Chatbot created successfully');
-        this.bannerService.show('Create chatbot successfully', 'success');
-        this.fetchChatBots(); // Refetch the chatbots
-      },
-      (error) => {
-        this.bannerService.show('Failed to create chatbot', 'error');
-        this.toastService.showError(error);
-      }
-    );
-  }
-
-  updateRowData(row_obj: IChatBot): void {
-    this.chatBotService.updateChatBot(row_obj).subscribe(
-      (success: boolean) => {
-        if (success) {
-          this.bannerService.show('Chatbot updated successfully', 'success');
-          this.fetchChatBots();
-        } else {
-          this.bannerService.show('Failed to update chatbot', 'error');
+      if (result) {
+        if (result.action === 'Add') {
+          this.addProduct(result.data);
+        } else if (result.action === 'Update') {
+          this.updateProduct(result.data);
+        } else if (result.action === 'Delete') {
+          this.deleteProduct(result.data);
         }
+      }
+    });
+  }
+
+  addProduct(productData: ICreateProductPayload): void {
+    this.productService.createProduct(productData).subscribe(
+      (response) => {
+        this.toastService.showSuccess('Product created successfully');
+        this.fetchProducts();
       },
       (error) => {
-        this.toastService.showError(error);
-        this.bannerService.show('Failed to update chatbot', 'error');
+        this.toastService.showError('Failed to create product');
       }
     );
   }
 
-  deleteRowData(row_obj: IChatBot): boolean | any {
-    this.dataSource.data = this.dataSource.data.filter((value: any) => {
-      return value.id !== row_obj.id;
-    });
+  updateProduct(product: IProduct): void {
+    // Implement update logic using ProductService
+  }
+
+  deleteProduct(product: IProduct): void {
+    // Implement delete logic using ProductService
   }
 }
 
@@ -188,8 +157,7 @@ export class ChatbotDialogContentComponent {
       );
     }
     if (this.local_data.imagePath === undefined) {
-      this.local_data.imagePath =
-        'https://th.bing.com/th/id/OIP.efATY6p5-5aINwEzOqYKFwAAAA?rs=1&pid=ImgDetMain';
+      this.local_data.imagePath = '';
     }
   }
 

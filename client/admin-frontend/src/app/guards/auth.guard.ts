@@ -45,6 +45,7 @@ export class AuthGuard implements CanActivate {
     if (!requiredRoles || requiredRoles.includes(userRole)) {
       return true;
     } else {
+      LocalStorageUtil.clear();
       this.router.navigate(['/unauthorized']);
       this.toastService.showError('Bạn không có quyền truy cập');
       return false;

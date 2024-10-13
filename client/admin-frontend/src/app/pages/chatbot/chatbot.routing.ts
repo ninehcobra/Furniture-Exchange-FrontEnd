@@ -10,10 +10,10 @@ export const ChatbotRoutes: Routes = [
         path: 'management',
         component: ChatbotManagementComponent,
         data: {
-          title: 'ChatBot',
+          title: 'Quản lý cửa hàng',
           urls: [
-            { title: 'Dashboard', url: '/dashboards/dashboard1' },
-            { title: 'ChatBot' },
+            { title: 'Trang chủ', url: '/dashboards/dashboard1' },
+            { title: 'Quản lý cửa hàng' },
           ],
         },
       },
@@ -21,10 +21,10 @@ export const ChatbotRoutes: Routes = [
         path: 'management/:id',
         component: ChatbotConfigComponent,
         data: {
-          title: 'ChatBot',
+          title: 'Quản lý cửa hàng',
           urls: [
-            { title: 'Dashboard', url: '/dashboards/dashboard1' },
-            { title: 'ChatBot' },
+            { title: 'Trang chủ', url: '/dashboards/dashboard1' },
+            { title: 'Quản lý cửa hàng' },
           ],
         },
       },

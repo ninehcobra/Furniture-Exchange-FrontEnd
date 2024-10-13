@@ -16,7 +16,7 @@ import { CoreService } from 'src/app/services/core.service';
           src="./assets/images/logo.png"
           class="align-middle m-2"
           alt="logo"
-          height="95"
+          height="50"
         />
       </a>
       } @if(options.theme === 'dark') {
@@ -25,7 +25,7 @@ import { CoreService } from 'src/app/services/core.service';
           src="./assets/images/logo.png"
           class="align-middle m-2"
           alt="logo"
-          height="95"
+          height="50"
         />
       </a>
       }
