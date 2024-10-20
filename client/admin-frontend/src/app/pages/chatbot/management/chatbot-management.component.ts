@@ -29,6 +29,11 @@ import { BannerService } from 'src/app/services/banner.service';
 import { Router } from '@angular/router';
 import { ProductService } from 'src/app/services/product.service';
 import { ICreateProductPayload, IProduct } from 'src/app/models/product.model';
+import { LocalStorageUtil } from 'src/app/utils/local-storage.util';
+import { IUser } from 'src/app/models/user.model';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ICategory } from 'src/app/models/category.model';
+import { CategoryService } from 'src/app/services/category.service';
 
 @Component({
   templateUrl: './chatbot-management.component.html',
@@ -39,6 +44,8 @@ export class ChatbotManagementComponent implements AfterViewInit, OnInit {
     Object.create(null);
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator =
     Object.create(null);
+
+  user: IUser = LocalStorageUtil.get('user');
 
   searchText: string = '';
   displayedColumns: string[] = [
@@ -66,11 +73,27 @@ export class ChatbotManagementComponent implements AfterViewInit, OnInit {
   }
 
   ngOnInit(): void {
-    this.fetchProducts();
+    if (this.user && this.user.role === 'seller') {
+      this.fetchSellerProducts();
+    } else {
+      this.fetchProducts();
+    }
   }
 
   fetchProducts(): void {
     this.productService.getAllProducts().subscribe(
+      (products: IProduct[]) => {
+        this.dataSource.data = products;
+        console.log(products);
+      },
+      (error) => {
+        this.toastService.showError('Failed to fetch products');
+      }
+    );
+  }
+
+  fetchSellerProducts(): void {
+    this.productService.getSellerProducts().subscribe(
       (products: IProduct[]) => {
         this.dataSource.data = products;
         console.log(products);
@@ -131,93 +154,95 @@ export class ChatbotManagementComponent implements AfterViewInit, OnInit {
   styleUrl: 'chatbot-dialog-content.scss',
 })
 // tslint:disable-next-line: component-class-suffix
-export class ChatbotDialogContentComponent {
-  action: string;
-  local_data: any;
-  selectedImage: any = '';
-  joiningDate: any = '';
+export class ChatbotDialogContentComponent implements OnInit {
+  productForm: FormGroup;
+  selectedFiles: File[] = [];
 
-  isDomainValid: boolean;
+  previewUrls: string[] = [];
+
+  categories: ICategory[] = [];
 
   constructor(
-    public datePipe: DatePipe,
+    private fb: FormBuilder,
     public dialogRef: MatDialogRef<ChatbotDialogContentComponent>,
-    private chatBotService: ChatBotService,
-    // @Optional() is used to prevent error if no data is passed
-    @Optional() @Inject(MAT_DIALOG_DATA) public data: IChatBot
+    private productService: ProductService,
+    private categoryService: CategoryService,
+    @Optional() @Inject(MAT_DIALOG_DATA) public data: any
   ) {
-    this.local_data = { ...data };
-    this.action = this.local_data.action;
-    this.isDomainValid = this.action !== 'Add';
-
-    if (this.local_data.DateOfJoining !== undefined) {
-      this.joiningDate = this.datePipe.transform(
-        new Date(this.local_data.DateOfJoining),
-        'yyyy-MM-dd'
-      );
-    }
-    if (this.local_data.imagePath === undefined) {
-      this.local_data.imagePath = '';
-    }
+    this.productForm = this.fb.group({
+      name: ['', Validators.required],
+      description: ['', Validators.required],
+      price: [0, [Validators.required, Validators.min(0)]],
+      quantity: [1, [Validators.required, Validators.min(1)]],
+      origin: ['', Validators.required],
+      address_line: ['', Validators.required],
+      district: ['', Validators.required],
+      province: ['', Validators.required],
+      state: ['used', Validators.required],
+      category_id: [null, Validators.required],
+      expired_at: ['', Validators.required],
+      kilogram: ['', Validators.required],
+      image_urls: this.fb.array([]),
+    });
+  }
+  ngOnInit(): void {
+    this.loadCategories();
   }
 
-  onDomainInput(event: Event) {
-    const domain = (event.target as HTMLInputElement).value;
+  addImageUrl() {
+    const imageUrls = this.productForm.get('image_urls') as FormArray;
+    imageUrls.push(this.fb.control(''));
+  }
 
-    // Special case for localhost with port
-    if (/^localhost:\d+$/.test(domain)) {
-      this.isDomainValid = true;
-      return;
-    }
+  removeImageUrl(index: number) {
+    const imageUrls = this.productForm.get('image_urls') as FormArray;
+    imageUrls.removeAt(index);
+  }
 
-    this.chatBotService.checkDomain(domain).subscribe(
-      (isValid) => {
-        this.isDomainValid = isValid;
+  loadCategories() {
+    this.categoryService.getAllCategories().subscribe(
+      (categories: ICategory[]) => {
+        this.categories = categories;
       },
       (error) => {
-        this.isDomainValid = false;
+        console.error('Error fetching categories:', error);
       }
     );
   }
 
-  doAction(): void {
-    if (this.action === 'Add') {
-      const payload: ICreateChatBotPayload = {
-        name: this.local_data.name,
-        thumbnail: this.local_data.imagePath,
-        isPublic: this.local_data.isPublic,
-        isDeploy: this.local_data.isDeploy,
-        domain: this.local_data.domain,
-        apiKeyId: this.local_data.apiKeyId,
-        flowData: '',
-        chatbotConfig: JSON.stringify(CHAT_WIDGET_DEFAULT_CONFIG),
+  onFileSelected(event: any): void {
+    this.selectedFiles = Array.from(event.target.files);
+    this.previewUrls = [];
+
+    for (let file of this.selectedFiles) {
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.previewUrls.push(e.target.result);
       };
-      this.dialogRef.close({ event: this.action, data: payload });
-    } else {
-      this.dialogRef.close({ event: this.action, data: this.local_data });
+      reader.readAsDataURL(file);
     }
-  }
-  closeDialog(): void {
-    this.dialogRef.close({ event: 'Cancel' });
   }
 
-  selectFile(event: any): void {
-    if (!event.target.files[0] || event.target.files[0].length === 0) {
-      // this.msg = 'You must select an image';
-      return;
+  get imageUrls() {
+    return this.productForm.get('image_urls') as FormArray;
+  }
+
+  doAction(): void {
+    if (this.productForm.valid) {
+      const productData = this.productForm.value;
+      this.productService.createProduct(productData).subscribe(
+        (response) => {
+          console.log('Server response:', response);
+          this.dialogRef.close({ event: 'Add', data: response });
+        },
+        (error) => {
+          console.error('Error creating product:', error);
+        }
+      );
     }
-    const mimeType = event.target.files[0].type;
-    if (mimeType.match(/image\/*/) == null) {
-      // this.msg = "Only images are supported";
-      return;
-    }
-    // tslint:disable-next-line - Disables all
-    const reader = new FileReader();
-    reader.readAsDataURL(event.target.files[0]);
-    // tslint:disable-next-line - Disables all
-    reader.onload = (_event) => {
-      // tslint:disable-next-line - Disables all
-      this.local_data.imagePath = reader.result;
-    };
+  }
+
+  closeDialog(): void {
+    this.dialogRef.close({ event: 'Cancel' });
   }
 }

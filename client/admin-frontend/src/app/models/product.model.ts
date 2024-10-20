@@ -20,19 +20,22 @@ export interface IProduct {
   expired_at: string;
   category_name?: string;
   slug: string;
+  kilogram: string;
 }
 
 export interface ICreateProductPayload {
   name: string;
   description: string;
-  image_urls: string[];
-  image_files: File[];
+  image_urls?: string[];
+  image_files?: File[];
   price: number;
   quantity: number;
   origin: string;
   address_line: string;
   district: string;
   province: string;
+  state: 'used' | 'new';
   category_id: number;
   expired_at: string;
+  kilogram: string;
 }

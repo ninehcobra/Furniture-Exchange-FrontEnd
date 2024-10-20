@@ -1,118 +1,147 @@
-<h2 class="f-w-500 m-b-24" mat-dialog-title>
-  <strong>{{ action }}</strong>
-</h2>
+<h2 class="m-b-12" mat-dialog-title>Tạo sản phẩm mới</h2>
+<mat-dialog-content class="mat-typography">
+  <form [formGroup]="productForm" class="form-container">
+    <div class="form-row m-t-16">
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Tên sản phẩm</mat-label>
+        <input
+          matInput
+          formControlName="name"
+          placeholder="Nhập tên sản phẩm"
+        />
+      </mat-form-field>
+    </div>
 
-@if(action !== 'Delete') {
-<mat-dialog-content style="max-width: 600px">
-  <form #userForm="ngForm">
-    <div class="m-b-12">Thumbnail</div>
-    <div class="d-flex align-items-center m-b-16">
-      <img
-        class="mat-card-avatar"
-        [src]="local_data.imagePath"
-        class="rounded-circle"
-        height="50"
-        width="50"
+    <div class="form-row d-flex justify-content-between">
+      <mat-form-field appearance="outline" class="half-width m-r-16">
+        <mat-label>Giá</mat-label>
+        <input
+          matInput
+          type="number"
+          formControlName="price"
+          placeholder="Nhập giá"
+        />
+        <span class="m-l-4" matPrefix>₫&nbsp;</span>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="half-width">
+        <mat-label>Số lượng</mat-label>
+        <input
+          matInput
+          type="number"
+          formControlName="quantity"
+          placeholder="Nhập số lượng"
+        />
+      </mat-form-field>
+    </div>
+
+    <mat-form-field appearance="outline" class="w-100">
+      <mat-label>Mô tả</mat-label>
+      <textarea
+        matInput
+        formControlName="description"
+        rows="3"
+        placeholder="Nhập mô tả sản phẩm"
+      ></textarea>
+    </mat-form-field>
+
+    <div class="form-row d-flex align-items-center">
+      <mat-form-field appearance="outline" class="full-width m-r-16">
+        <mat-label>Xuất xứ</mat-label>
+        <input matInput formControlName="origin" placeholder="Nhập xuất xứ" />
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Ngày hết hạn</mat-label>
+        <input
+          matInput
+          [matDatepicker]="picker"
+          formControlName="expired_at"
+          placeholder="Chọn ngày hết hạn"
+        />
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+    </div>
+
+    <mat-form-field class="w-100">
+      <mat-label>Trạng thái</mat-label>
+      <mat-select formControlName="state">
+        <mat-option value="used">Đã qua sử dụng</mat-option>
+        <mat-option value="new">Mới</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field class="w-100">
+      <mat-label>Địa chỉ</mat-label>
+      <input
+        matInput
+        formControlName="address_line"
+        placeholder="Nhập địa chỉ"
       />
-      <button mat-flat-button color="primary" class="m-l-16 input-file-button">
-        <input type="file" (change)="selectFile($event)" #fileInput />
-      </button>
+    </mat-form-field>
+    <div class="form-row d-flex justify-content-between">
+      <mat-form-field appearance="outline" class="half-width">
+        <mat-label>Quận/Huyện</mat-label>
+        <input
+          matInput
+          formControlName="district"
+          placeholder="Nhập quận/huyện"
+        />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="half-width">
+        <mat-label>Tỉnh/Thành phố</mat-label>
+        <input
+          matInput
+          formControlName="province"
+          placeholder="Nhập tỉnh/thành phố"
+        />
+      </mat-form-field>
     </div>
-    <div class="row">
-      <div class="col-lg-12">
-        <mat-form-field appearance="outline" class="w-100">
-          <input
-            matInput
-            required
-            id="name"
-            name="name"
-            [(ngModel)]="local_data.name"
-            placeholder="Chatbot Name"
-          />
-        </mat-form-field>
-      </div>
 
-      <div class="col-lg-12">
-        <mat-form-field appearance="outline" class="w-100">
-          <input
-            matInput
-            required
-            id="apiKeyId"
-            name="apiKeyId"
-            [(ngModel)]="local_data.apiKeyId"
-            placeholder="Chatbot apiKeyId"
-          />
-        </mat-form-field>
-      </div>
+    <div class="form-row d-flex align-items-center justify-content-between">
+      <mat-form-field appearance="outline">
+        <mat-label>Danh mục</mat-label>
+        <mat-select formControlName="category_id">
+          <mat-option *ngFor="let category of categories" [value]="category.id">
+            {{category.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
 
-      <div class="col-lg-6">
-        <mat-checkbox
-          id="isPublic"
-          name="isPublic"
-          [(ngModel)]="local_data.isPublic"
-          >Public</mat-checkbox
-        >
-      </div>
-      <div class="col-lg-6">
-        <mat-checkbox
-          id="isDeploy"
-          name="isDeploy"
-          [(ngModel)]="local_data.isDeploy"
-          >Deploy</mat-checkbox
-        >
-      </div>
-      <div class="col-lg-12 d-flex align-items-center">
-        <mat-form-field appearance="outline" class="w-100">
-          <input
-            matInput
-            required
-            id="domain"
-            name="domain"
-            [(ngModel)]="local_data.domain"
-            (input)="onDomainInput($event)"
-            placeholder="Domain"
-          />
+      <mat-form-field appearance="outline" class="half-width">
+        <mat-label>Khối lượng</mat-label>
+        <input matInput formControlName="kilogram" placeholder="kilogram" />
+      </mat-form-field>
+    </div>
+
+    <!-- Thêm các trường khác tương tự -->
+
+    <div formArrayName="image_urls">
+      <div *ngFor="let url of imageUrls.controls; let i = index">
+        <mat-form-field appearance="fill">
+          <mat-label>Image URL {{i + 1}}</mat-label>
+          <input matInput [formControlName]="i" placeholder="Enter image URL" />
         </mat-form-field>
-        <div
-          class="bg-icon-container m-l-8 m-b-12 d-flex align-items-center justify-content-center"
-        >
-          <i-tabler
-            [name]="isDomainValid ? 'check' : 'x'"
-            [class]="isDomainValid ? 'text-success' : 'text-error'"
-            class="icon-25"
-          ></i-tabler>
-        </div>
+        <button mat-icon-button color="warn" (click)="removeImageUrl(i)">
+          <mat-icon>delete</mat-icon>
+        </button>
+        <img
+          [src]="url.value"
+          *ngIf="url.value"
+          style="max-width: 100px; max-height: 100px; margin-top: 10px"
+        />
       </div>
     </div>
-    <button
-      mat-flat-button
-      (click)="doAction()"
-      mat-flat-button
-      color="primary"
-      [disabled]="!userForm.valid || !isDomainValid"
-    >
-      {{ action }}
-    </button>
-    <button
-      mat-stroked-button
-      color="warn"
-      class="m-l-8"
-      (click)="closeDialog()"
-    >
-      Cancel
+    <button mat-raised-button color="primary" (click)="addImageUrl()">
+      Add Image URL
     </button>
   </form>
 </mat-dialog-content>
-} @else {
-<div class="p-x-24">
-  <p>
-    Sure to delete <span class="f-w-600">{{ local_data.Name }}</span> ?
-  </p>
-</div>
-<div mat-dialog-actions class="p-x-24 p-b-24">
-  <button mat-button (click)="doAction()" mat-flat-button color="warn">
-    {{ action }}
+
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Hủy</button>
+  <button mat-raised-button color="primary" (click)="doAction()">
+    <mat-icon>add</mat-icon>
+    Tạo sản phẩm
   </button>
-  <button mat-button (click)="closeDialog()" class="m-l-8">Cancel</button>
-</div>
-}
+</mat-dialog-actions>

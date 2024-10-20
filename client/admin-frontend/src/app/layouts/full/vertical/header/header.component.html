@@ -45,7 +45,8 @@
         aria-label="Notifications"
       >
         <div class="d-flex align-items-center">
-          Apps <i-tabler name="chevron-down" class="icon-16 m-l-4"></i-tabler>
+          Ứng dụng
+          <i-tabler name="chevron-down" class="icon-16 m-l-4"></i-tabler>
         </div>
       </button>
       <mat-menu #appsmenu="matMenu" class="apps-dd cardWithShadow">
@@ -86,36 +87,20 @@
               <span
                 class="d-flex align-items-center mat-subtitle-1 f-s-16 f-w-500"
               >
-                <i-tabler name="help" class="icon-20 m-r-8"></i-tabler
-                >Frequently Asked Questions
+                <i-tabler name="help" class="icon-20 m-r-8"></i-tabler>Những câu
+                hỏi thường gặp
               </span>
               <a
                 [routerLink]="['/theme-pages/faq']"
                 mat-flat-button
                 color="primary"
-                >Check</a
+                >Xem qua</a
               >
-            </div>
-          </div>
-          <div class="col-sm-4">
-            <div class="p-x-16 p-y-32">
-              <h4 class="f-s-18 f-w-600 mat-subtitle-1 m-b-16">Quick Links</h4>
-              @for(quicklink of quicklinks; track quicklink.title) {
-              <div class="text-hover-primary">
-                <a
-                  [routerLink]="[quicklink.link]"
-                  class="hover-text text-decoration-none mat-body-1 f-w-600 d-block p-y-8"
-                  >{{ quicklink.title }}</a
-                >
-              </div>
-              }
             </div>
           </div>
         </div>
       </mat-menu>
-      <a mat-button [routerLink]="['/apps/chat']">Chat</a>
-      <a mat-button [routerLink]="['/apps/calendar']">Calendar</a>
-      <a mat-button [routerLink]="['/apps/email/inbox']">Email</a>
+      <a mat-button [routerLink]="['/apps/chat']">Tin nhắn</a>
     </div>
 
     <span class="flex-1-auto"></span>
@@ -193,7 +178,7 @@
 
       <div class="p-y-12 p-x-32">
         <button mat-stroked-button color="primary" class="w-100">
-          See all notifications
+          Xem tất cả
         </button>
       </div>
     </mat-menu>
@@ -269,10 +254,10 @@
             <div class="d-flex align-items-center">
               <div>
                 <h5 class="f-s-18 m-0 f-w-600 m-b-12 mat-subtitle-1">
-                  Unlimited <br />
-                  Access
+                  Giới hạn <br />
+                  Trụy cập
                 </h5>
-                <button mat-flat-button color="primary">Upgrade</button>
+                <button mat-flat-button color="primary">Nâng cấp</button>
               </div>
               <div class="m-l-auto">
                 <img
@@ -287,7 +272,7 @@
 
         <div class="p-y-12 p-x-32">
           <a (click)="logout()" mat-stroked-button color="primary" class="w-100"
-            >Logout</a
+            >Đăng xuất</a
           >
         </div>
       </ng-scrollbar>

@@ -76,13 +76,19 @@ export class HeaderComponent {
   showFiller = false;
 
   public selectedLanguage: any = {
-    language: 'English',
+    language: 'Tiếng Việt',
     code: 'en',
     type: 'US',
-    icon: '/assets/images/flag/icon-flag-en.svg',
+    icon: '/assets/images/flag/vietnam.png',
   };
 
   public languages: any[] = [
+    {
+      language: 'Tiếng Việt',
+      code: 'en',
+      type: 'US',
+      icon: '/assets/images/flag/vietnam.png',
+    },
     {
       language: 'English',
       code: 'en',
@@ -140,32 +146,32 @@ export class HeaderComponent {
     {
       id: 1,
       img: '/assets/images/profile/user-1.jpg',
-      title: 'Roman Joined the Team!',
-      subtitle: 'Congratulate him',
+      title: 'Roman đã tham gia đội ngũ!',
+      subtitle: 'Hãy chúc mừng anh ấy',
     },
     {
       id: 2,
       img: '/assets/images/profile/user-2.jpg',
-      title: 'New message received',
-      subtitle: 'Salma sent you new message',
+      title: 'Đã nhận được tin nhắn mới',
+      subtitle: 'Salma đã gửi cho bạn một tin nhắn mới',
     },
     {
       id: 3,
       img: '/assets/images/profile/user-3.jpg',
-      title: 'New Payment received',
-      subtitle: 'Check your earnings',
+      title: 'Đã nhận được khoản thanh toán mới',
+      subtitle: 'Kiểm tra thu nhập của bạn',
     },
     {
       id: 4,
       img: '/assets/images/profile/user-4.jpg',
-      title: 'Jolly completed tasks',
-      subtitle: 'Assign her new tasks',
+      title: 'Jolly đã hoàn thành các nhiệm vụ',
+      subtitle: 'Giao cho cô ấy nhiệm vụ mới',
     },
     {
       id: 5,
       img: '/assets/images/profile/user-5.jpg',
-      title: 'Roman Joined the Team!',
-      subtitle: 'Congratulate him',
+      title: 'Roman đã tham gia đội ngũ!',
+      subtitle: 'Hãy chúc mừng anh ấy',
     },
   ];
 
@@ -173,23 +179,16 @@ export class HeaderComponent {
     {
       id: 1,
       img: '/assets/images/svgs/icon-account.svg',
-      title: 'My Profile',
-      subtitle: 'Account Settings',
+      title: 'Tài khoản của tôi',
+      subtitle: 'Cài đặt tài khoản của bạn',
       link: '/',
     },
     {
       id: 2,
       img: '/assets/images/svgs/icon-inbox.svg',
-      title: 'My Inbox',
-      subtitle: 'Messages & Email',
-      link: '/apps/email/inbox',
-    },
-    {
-      id: 3,
-      img: '/assets/images/svgs/icon-tasks.svg',
-      title: 'My Tasks',
-      subtitle: 'To-do and Daily Tasks',
-      link: '/apps/taskboard',
+      title: 'Tin nhắn',
+      subtitle: 'Tin nhắn',
+      link: '/apps/chat',
     },
   ];
 
@@ -197,103 +196,34 @@ export class HeaderComponent {
     {
       id: 1,
       img: '/assets/images/svgs/icon-dd-chat.svg',
-      title: 'Chat Application',
-      subtitle: 'Messages & Emails',
+      title: 'Tin nhắn',
+      subtitle: 'Tin nhắn',
       link: '/apps/chat',
     },
     {
       id: 2,
       img: '/assets/images/svgs/icon-dd-cart.svg',
-      title: 'Todo App',
-      subtitle: 'Completed task',
-      link: '/apps/todo',
+      title: 'Cửa hàng',
+      subtitle: 'Quản lý cửa hàng',
+      link: '/store/management',
     },
     {
       id: 3,
       img: '/assets/images/svgs/icon-dd-invoice.svg',
-      title: 'Invoice App',
-      subtitle: 'Get latest invoice',
-      link: '/apps/invoice',
-    },
-    {
-      id: 4,
-      img: '/assets/images/svgs/icon-dd-date.svg',
-      title: 'Calendar App',
-      subtitle: 'Get Dates',
-      link: '/apps/calendar',
-    },
-    {
-      id: 5,
-      img: '/assets/images/svgs/icon-dd-mobile.svg',
-      title: 'Contact Application',
-      subtitle: '2 Unsaved Contacts',
-      link: '/apps/contacts',
+      title: 'Thống kê',
+      subtitle: 'Thống kê cửa hàng',
+      link: '/dashboard/dashborad1',
     },
     {
       id: 6,
       img: '/assets/images/svgs/icon-dd-lifebuoy.svg',
-      title: 'Tickets App',
-      subtitle: 'Create new ticket',
-      link: '/apps/tickets',
-    },
-    {
-      id: 7,
-      img: '/assets/images/svgs/icon-dd-message-box.svg',
-      title: 'Email App',
-      subtitle: 'Get new emails',
-      link: '/apps/email/inbox',
-    },
-    {
-      id: 8,
-      img: '/assets/images/svgs/icon-dd-application.svg',
-      title: 'Courses',
-      subtitle: 'Create new course',
-      link: '/apps/courses',
+      title: 'Giao hàng',
+      subtitle: 'Quản lý giao hàng',
+      link: '/apps/todo',
     },
   ];
 
-  quicklinks: quicklinks[] = [
-    {
-      id: 1,
-      title: 'Pricing Page',
-      link: '/theme-pages/pricing',
-    },
-    {
-      id: 2,
-      title: 'Authentication Design',
-      link: '/authentication/side-login',
-    },
-    {
-      id: 3,
-      title: 'Register Now',
-      link: '/authentication/side-register',
-    },
-    {
-      id: 4,
-      title: '404 Error Page',
-      link: '/authentication/error',
-    },
-    {
-      id: 5,
-      title: 'Notes App',
-      link: '/apps/notes',
-    },
-    {
-      id: 6,
-      title: 'Employee App',
-      link: '/apps/employee',
-    },
-    {
-      id: 7,
-      title: 'Todo Application',
-      link: '/apps/todo',
-    },
-    {
-      id: 8,
-      title: 'Treeview',
-      link: '/theme-pages/treeview',
-    },
-  ];
+  quicklinks: quicklinks[] = [];
 }
 
 @Component({

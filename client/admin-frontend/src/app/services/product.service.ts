@@ -22,4 +22,8 @@ export class ProductService extends BaseService {
   getProductBySlug(slug: string): Observable<IProduct> {
     return this.get(`${this.url}/${slug}`);
   }
+
+  getSellerProducts(): Observable<IProduct[]> {
+    return this.get(`${this.url}/seller`);
+  }
 }

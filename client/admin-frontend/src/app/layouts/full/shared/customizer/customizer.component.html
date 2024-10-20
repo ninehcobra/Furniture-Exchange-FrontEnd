@@ -1,11 +1,13 @@
 <div class="customizerNav">
   <ng-scrollbar class="position-relative" style="height: calc(100vh - 50px)">
     <div class="p-x-16 p-y-20">
-      <h3 class="mat-subtitle-1 f-s-21 f-w-600">Settings</h3>
+      <h3 class="mat-subtitle-1 f-s-21 f-w-600">Cài đặt</h3>
     </div>
     <mat-divider></mat-divider>
     <div class="p-24">
-      <h6 class="f-s-16 f-w-600 mat-subtitle-1 f-s-16 m-b-16">Theme Option</h6>
+      <h6 class="f-s-16 f-w-600 mat-subtitle-1 f-s-16 m-b-16">
+        Tùy chọn chủ đề
+      </h6>
       <mat-button-toggle-group
         #group="matButtonToggleGroup"
         [(ngModel)]="options.theme"
@@ -15,20 +17,20 @@
         <mat-button-toggle [value]="'light'">
           <div class="d-flex align-items-center f-w-500">
             <i-tabler name="sun-high" class="d-flex m-r-8 fill-icon"></i-tabler>
-            Light
+            Sáng
           </div>
         </mat-button-toggle>
         <mat-button-toggle [value]="'dark'">
           <div class="d-flex align-items-center f-w-500">
             <i-tabler name="moon" class="d-flex m-r-8 fill-icon"></i-tabler>
-            Dark
+            Tối
           </div>
         </mat-button-toggle>
       </mat-button-toggle-group>
 
       <div>
         <h6 class="f-s-16 f-w-600 mat-subtitle-1 f-s-16 m-b-16 m-t-24 p-t-16">
-          Theme Colors
+          Màu chủ đề
         </h6>
         <mat-button-toggle-group
           #group="matButtonToggleGroup"
@@ -101,7 +103,7 @@
       </div>
 
       <h6 class="f-s-16 f-w-600 mat-subtitle-1 f-s-16 m-b-16 m-t-24">
-        Theme Direction
+        Hướng chủ đề
       </h6>
 
       <mat-button-toggle-group
@@ -133,7 +135,7 @@
       @if(!options.horizontal){
       <div>
         <h6 class="f-s-16 f-w-600 mat-subtitle-1 f-s-16 m-b-16 m-t-24 p-t-16">
-          Sidebar type
+          Kiểu thanh điều hướng
         </h6>
 
         <mat-button-toggle-group
@@ -148,7 +150,7 @@
                 name="layout-sidebar-right"
                 class="d-flex m-r-8 fill-icon"
               ></i-tabler>
-              Full
+              Toàn bộ
             </div>
           </mat-button-toggle>
           <mat-button-toggle [value]="true">
@@ -157,14 +159,14 @@
                 name="layout-sidebar"
                 class="d-flex m-r-8 fill-icon"
               ></i-tabler>
-              Minisidebar
+              Thu nhỏ
             </div>
           </mat-button-toggle>
         </mat-button-toggle-group>
       </div>
       }
       <h6 class="f-s-16 f-w-600 mat-subtitle-1 f-s-16 m-b-16 m-t-24 p-t-16">
-        Layout type
+        Bố trí
       </h6>
 
       <mat-button-toggle-group
@@ -178,7 +180,7 @@
               name="layout-distribute-vertical"
               class="d-flex m-r-8 fill-icon"
             ></i-tabler>
-            Vertical
+            Dọc
           </div>
         </mat-button-toggle>
         <mat-button-toggle [value]="true">
@@ -187,13 +189,13 @@
               name="layout-distribute-horizontal"
               class="d-flex m-r-8 fill-icon"
             ></i-tabler>
-            Horizontal
+            Ngang
           </div>
         </mat-button-toggle>
       </mat-button-toggle-group>
 
       <h6 class="f-s-16 f-w-600 mat-subtitle-1 f-s-16 m-b-16 m-t-24 p-t-16">
-        Card with
+        Thẻ với
       </h6>
 
       <mat-button-toggle-group
@@ -204,7 +206,7 @@
         <mat-button-toggle [value]="false">
           <div class="d-flex align-items-center f-w-500">
             <i-tabler name="shadow" class="d-flex m-r-8 fill-icon"></i-tabler>
-            Shadow
+            đỗ bóng
           </div>
         </mat-button-toggle>
         <mat-button-toggle [value]="true">
@@ -213,13 +215,13 @@
               name="shadow-off"
               class="d-flex m-r-8 fill-icon"
             ></i-tabler>
-            Border
+            viền
           </div>
         </mat-button-toggle>
       </mat-button-toggle-group>
 
       <h6 class="f-s-16 f-w-600 mat-subtitle-1 f-s-16 m-b-16 m-t-24 p-t-16">
-        Container Option
+        Tùy chọn Container
       </h6>
 
       <mat-button-toggle-group
@@ -233,7 +235,7 @@
               name="layout-navbar"
               class="d-flex m-r-8 fill-icon"
             ></i-tabler>
-            Full
+            Toàn bộ
           </div>
         </mat-button-toggle>
         <mat-button-toggle [value]="true">
@@ -242,7 +244,7 @@
               name="layout-sidebar"
               class="d-flex m-r-8 fill-icon"
             ></i-tabler>
-            Boxed
+            Hộp
           </div>
         </mat-button-toggle>
       </mat-button-toggle-group>
