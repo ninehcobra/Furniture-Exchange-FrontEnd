@@ -16,7 +16,7 @@
       (close)="sidePanelOpened = false"
       class="w-100"
     >
-      <ng-scrollbar class="position-relative w-100" style="height: 100%">
+      <ng-scrollbar class="position-relative" style="height: 100%">
         <div class="d-flex align-items-center p-24 w-100">
           <img
             src="{{ user.image_url }}"
@@ -35,9 +35,9 @@
           </div>
         </div>
 
-        <div class="p-x-24 w-100">
+        <div class="p-x-24">
           <!-- search -->
-          <mat-form-field appearance="outline" class="w-100">
+          <mat-form-field appearance="outline">
             <input matInput placeholder="Tìm liên hệ" />
             <mat-icon matSuffix>
               <i-tabler name="search" class="icon-20"></i-tabler>
@@ -63,31 +63,37 @@
           </mat-menu>
         </div>
 
-        <mat-nav-list class="chat-listing w-100">
-          @for(conversation of conversations; track conversation.id) {
+        <mat-nav-list class="chat-listing">
+          @for(conversation of conversations; track conversation.user.id) {
           <mat-list-item
-            [class.bg-light-primary]="
-              conversation.id === selectedConversation.info?.id
-            "
+            [class.bg-light-primary]="true"
             (click)="onSelect(conversation)"
             role="listitem"
             lines="2"
+            style="max-width: 322px"
           >
             <div
               class="d-flex align-items-center p-x-16 p-b-4 h-100"
               matListItemTitle
             >
               <img
-                src="assets/images/chatbot-1.png"
+                src="{{ conversation.user.image_url }}"
                 alt=""
                 width="42"
+                height="42"
                 class="rounded-circle"
               />
               <div class="m-l-16">
                 <h3 class="f-w-600 mat-subtitle-1 f-s-16 lh-sm">
-                  {{ conversation.name }}
+                  {{
+                    conversation.user.last_name +
+                      " " +
+                      conversation.user.first_name
+                  }}
                 </h3>
-                <p class="f-s-14 m-t-4 m-b-0">Tui có biết gì đâu</p>
+                <p class="f-s-14 m-t-4 m-b-0 overflow-hidden">
+                  {{ conversation.last_message.content }}
+                </p>
               </div>
             </div>
           </mat-list-item>
@@ -105,13 +111,18 @@
         <mat-icon>short_text</mat-icon>
       </button>
       <div class="d-flex align-items-center">
-        <!-- <img
-          src="assets/images/chatbot-1.png"
+        <img
+          [src]="selectedConversation.data?.user?.image_url"
           width="40"
+          height="40"
           class="rounded-circle"
-        /> -->
+        />
         <div class="mat-subtitle-1 f-s-16 f-w-600 m-b-0 m-l-16">
-          {{ selectedConversation.info?.name }}
+          {{
+            (selectedConversation.info?.user?.last_name || "") +
+              " " +
+              (selectedConversation.info?.user?.first_name || "")
+          }}
         </div>
       </div>
       <button [matMenuTriggerFor]="moredd" class="m-l-auto" mat-icon-button>
@@ -136,12 +147,12 @@
       >
         <mat-card-content class="chat-middle-box p-24 chat-container">
           <ng-container
-            *ngIf="selectedConversation?.data?.items ?? [] as items"
+            *ngIf="selectedConversation?.data?.messages ?? [] as items"
           >
             <ng-container *ngIf="items.length > 0">
-              @for(chat of items.slice().reverse(); track chat.id) {
+              @for(chat of items.slice(); track chat.id) {
               <ng-template
-                [ngIf]="chat.fromUser.id !== user.id"
+                [ngIf]="chat.sender_id !== user.id"
                 [ngIfElse]="evenblock"
               >
                 <div class="chat-list odd">
@@ -151,18 +162,19 @@
                     >
                       <span>
                         <img
-                          src="assets/images/chatbot-1.png"
+                          src="{{ selectedConversation.data?.user?.image_url }}"
                           class="rounded-circle"
                           width="40"
+                          height="40"
                         />
                       </span>
                       <span
                         class="m-l-16 mat-subheading-1 m-b-0 f-w-400 lh-md"
-                        >{{ chat.messageText }}</span
+                        >{{ chat.content }}</span
                       >
                     </div>
                     <p class="chat-date text-muted mat-h5 m-0">
-                      {{ DateFormat(chat.sendDate) }}
+                      {{ DateFormat(chat.created_at) }}
                     </p>
                   </div>
                 </div>
@@ -173,10 +185,10 @@
                     <div
                       class="chat-block bg-light-accent lh-md p-10 rounded d-flex align-items-center mat-subheading-1 f-w-400 m-b-0"
                     >
-                      {{ chat.messageText }}
+                      {{ chat.content }}
                     </div>
                     <p class="chat-date text-muted mat-h5 m-0">
-                      {{ DateFormat(chat.sendDate) }}
+                      {{ DateFormat(chat.created_at) }}
                     </p>
                   </div>
                 </div>

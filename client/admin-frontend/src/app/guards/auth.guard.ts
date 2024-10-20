@@ -20,6 +20,11 @@ export class AuthGuard implements CanActivate {
     const isAuthPage = route.routeConfig?.path?.includes('authentication');
     const accessToken = LocalStorageUtil.get('access_token');
 
+    if (isAuthPage && accessToken) {
+      console.log('Đã đăng nhập');
+      this.router.navigate(['/dashboards/dashboard1']);
+    }
+
     if (isAuthPage) {
       return of(true);
     }

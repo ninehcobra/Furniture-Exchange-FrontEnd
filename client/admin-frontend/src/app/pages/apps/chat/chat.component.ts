@@ -25,6 +25,7 @@ import { ToastService } from 'src/app/services/toast.service';
 import { IUser } from 'src/app/models/user.model';
 import {
   IConversation,
+  IConversationResponse,
   IGetConversationResponse,
 } from 'src/app/models/conversation';
 import { DateUtils } from 'src/app/utils/date-format.util';
@@ -42,6 +43,8 @@ export class AppChatComponent implements OnInit, AfterViewInit {
 
   chatBox = document.getElementById('chat-box');
 
+  userEventConversation: string = '';
+
   sidePanelOpened = true;
   msg = '';
 
@@ -50,7 +53,7 @@ export class AppChatComponent implements OnInit, AfterViewInit {
 
   selectedConversation: {
     info: IConversation | null;
-    data: IGetConversationResponse | null;
+    data: IConversationResponse | null;
   } = { info: null, data: null };
 
   public messages: Array<any> = messages;
@@ -73,49 +76,60 @@ export class AppChatComponent implements OnInit, AfterViewInit {
     this.scrollToBottom();
   }
   async ngOnInit(): Promise<void> {
-    this.socketIoService.connect();
+    await this.conversationService.getUserConversations().subscribe((res) => {
+      this.conversations = res.conversations;
 
-    await this.conversationService
-      .getUserConversation({ userId: this.user.id })
-      .subscribe((res) => {
-        this.conversations = res;
-        if (this.conversations.length > 0) {
-          this.getConversationMessage(
-            this.conversations[0].id,
-            this.conversations[0].name
-          );
+      this.socketIoService.connect();
+
+      this.socketIoService.listen(res.conversation_name).subscribe(
+        (data) => {
+          console.log(`Received data for ${this.userEventConversation}:`, data);
+          if (this.selectedConversation?.data?.messages) {
+            this.selectedConversation.data.messages.push({
+              isRead: false,
+              content: data.content,
+              created_at: new Date().toString(),
+              sender_id: this.selectedConversation.data.other.id,
+              id: data.id,
+            });
+            this.scrollToBottom();
+          }
+        },
+        (error) => {
+          console.error('Error listening to conversation:', error);
         }
-      });
+      );
+
+      if (this.conversations.length > 0) {
+        this.selectedConversation.info = this.conversations[0];
+        this.getConversationMessage(this.selectedConversation.info);
+      }
+    });
 
     this.scrollToBottom();
   }
 
-  getConversationMessage(conversationId: string, name: string): void {
-    this.conversationService
-      .getConversation({
-        id: conversationId,
-        page: 1,
-        take: 50,
-      })
-      .subscribe((res) => {
-        this.selectedConversation = {
-          info: {
-            id: conversationId,
-            name: name,
-          },
-          data: res,
-        };
-        console.log('Selected conversation:', this.selectedConversation);
-      });
+  getConversationMessage(conversation: IConversation): void {
+    if (this.selectedConversation.info?.user?.id) {
+      this.conversationService
+        .getConversationByOtherUserId(this.selectedConversation.info.user.id)
+        .subscribe((res) => {
+          this.selectedConversation = {
+            info: conversation,
+            data: res,
+          };
+          console.log('Selected conversation:', this.selectedConversation);
+          this.scrollToBottom();
+        });
+    }
   }
-
-  getConversations() {
-    this.conversationService
-      .getUserConversation({ userId: this.user.id })
-      .subscribe((res) => {
-        this.conversations = res;
-      });
-  }
+  // getConversations() {
+  //   this.conversationService
+  //     .getUserConversation({ userId: this.user.id })
+  //     .subscribe((res) => {
+  //       this.conversations = res;
+  //     });
+  // }
 
   @ViewChild('myInput', { static: true }) myInput: ElementRef =
     Object.create(null);
@@ -137,19 +151,19 @@ export class AppChatComponent implements OnInit, AfterViewInit {
     });
     dialogRef.afterClosed().subscribe((result) => {
       if (result.event === 'Add') {
-        this.conversationService
-          .createConversation(result.data)
-          .subscribe((res) => {
-            this.conversationService
-              .addUserToConversation({
-                conversationId: res.id,
-                userId: this.user.id,
-              })
-              .subscribe((res) => {
-                this.getConversations();
-                this.toastService.showSuccess('Conversation created');
-              });
-          });
+        // this.conversationService
+        //   .createConversation(result.data)
+        //   .subscribe((res) => {
+        //     this.conversationService
+        //       .addUserToConversation({
+        //         conversationId: res.id,
+        //         userId: this.user.id,
+        //       })
+        //       .subscribe((res) => {
+        //         this.getConversations();
+        //         this.toastService.showSuccess('Conversation created');
+        //       });
+        //   });
       } else if (result.event === 'Update') {
       } else if (result.event === 'Delete') {
       }
@@ -158,18 +172,18 @@ export class AppChatComponent implements OnInit, AfterViewInit {
 
   // tslint:disable-next-line - Disables all
   onSelect(conversation: IConversation): void {
-    if (conversation.id === this.selectedConversation.info?.id) {
-      return;
-    }
-    this.getConversationMessage(conversation.id, conversation.name);
+    this.getConversationMessage(conversation);
   }
 
   scrollToBottom(): void {
-    const maxScroll = this.chatContainer?.nativeElement.scrollHeight;
-    this.chatContainer?.nativeElement.scrollTo({
-      top: maxScroll,
-      behavior: 'smooth',
-    });
+    setTimeout(() => {
+      try {
+        this.chatContainer.nativeElement.scrollTop =
+          this.chatContainer.nativeElement.scrollHeight;
+      } catch (err) {
+        console.error('Error scrolling to bottom:', err);
+      }
+    }, 0);
   }
 
   sanitizeInput(text: string): string {
@@ -178,8 +192,8 @@ export class AppChatComponent implements OnInit, AfterViewInit {
 
   async OnAddMsg(): Promise<void> {
     this.msg = this.myInput.nativeElement.value;
-
-    if (this.msg !== '' && this.selectedConversation.info?.id) {
+    this.scrollToBottom();
+    if (this.msg !== '' && this.selectedConversation.info?.user) {
       if (
         this.sanitizeInput(this.msg).length > 0 &&
         this.msg.length > this.MAX_MESSAGE_LENGTH
@@ -188,26 +202,19 @@ export class AppChatComponent implements OnInit, AfterViewInit {
           'Message is too long or have some special characters. Please enter a valid message.'
         );
       } else {
-        await this.conversationService
-          .sendMessage({
-            messageText: this.msg,
-            conversationId: this.selectedConversation.info?.id,
-            fromUserId: this.user.id,
-          })
-          .subscribe((res) => {
-            this.toastService.showSuccess('Message sent');
-            console.log(this.chatContainer.nativeElement);
-
-            if (
-              this.selectedConversation.info?.id &&
-              this.selectedConversation.info?.name
-            ) {
-              this.getConversationMessage(
-                this.selectedConversation.info.id,
-                this.selectedConversation.info.name
-              );
-            }
-          });
+        await this.socketIoService.sendMessage({
+          content: this.msg,
+          other_id: this.selectedConversation.data?.other.id,
+          product: '',
+        });
+        this.selectedConversation.data?.messages.push({
+          isRead: false,
+          content: this.msg,
+          created_at: new Date().toString(),
+          sender_id: this.user.id,
+          id: Math.random() * 100000,
+        });
+        this.scrollToBottom();
       }
     }
 

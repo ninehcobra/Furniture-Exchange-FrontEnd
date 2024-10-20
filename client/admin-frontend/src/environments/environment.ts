@@ -1,4 +1,4 @@
 export const environment = {
-  API_URL: 'https://54.169.214.177/api/v1',
-  SOCKET_URL: 'http://54.169.214.177:3000/',
+  API_URL: 'https://13.250.4.21/api/v1',
+  SOCKET_URL: 'http://13.250.4.21:3000/',
 };

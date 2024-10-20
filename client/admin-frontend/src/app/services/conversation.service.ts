@@ -1,17 +1,10 @@
 import { Injectable } from '@angular/core';
 
 import { BaseService } from './base.service';
+
 import {
-  ICreateChatBotPayload,
-  ICreateChatBotResponse,
-} from '../models/chat-bot.model';
-import {
-  IAddUserToConversationPayload,
-  IGetConversationQuery,
+  IConversationResponse,
   IGetConversationResponse,
-  IGetUserConversationPayload,
-  IGetUserConversationResponse,
-  ISendMessagePayload,
 } from '../models/conversation';
 
 @Injectable({
@@ -20,31 +13,15 @@ import {
 export class ConversationService extends BaseService {
   url = 'conversations';
 
-  createConversation(data: ICreateChatBotPayload) {
-    return this.post<ICreateChatBotResponse>(`${this.url}`, data);
+  getUserConversations() {
+    return this.get<IGetConversationResponse>(`${this.url}`);
   }
 
-  addUserToConversation(data: IAddUserToConversationPayload) {
-    return this.post<boolean>(
-      `${this.url}/${data.conversationId}/members`,
-      data
-    );
+  getConversationByOtherUserId(userId: string) {
+    return this.get<IConversationResponse>(`${this.url}/${userId}/user`);
   }
 
-  sendMessage(data: ISendMessagePayload) {
-    return this.post<boolean>(
-      `${this.url}/${data.conversationId}/messages`,
-      data
-    );
-  }
-
-  getUserConversation(data: IGetUserConversationPayload) {
-    return this.post<IGetUserConversationResponse>(`${this.url}/user`, data);
-  }
-
-  getConversation(data: IGetConversationQuery) {
-    return this.get<IGetConversationResponse>(
-      `${this.url}/${data.id}/messages?page=${data.page}&take=${data.take}`
-    );
+  getConversationByProductId(productId: string) {
+    return this.get<IConversationResponse>(`${this.url}/${productId}/product`);
   }
 }

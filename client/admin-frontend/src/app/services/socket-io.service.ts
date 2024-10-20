@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { io, Socket } from 'socket.io-client';
 import { environment } from 'src/environments/environment';
 
@@ -24,5 +25,18 @@ export class SocketioService {
 
   sendMessage(msg: any): void {
     this.socket.emit('newMessage', msg);
+  }
+
+  listen(eventName: string): Observable<any> {
+    return new Observable((subscriber) => {
+      console.log('Listening for event:', eventName);
+      this.socket.on(eventName, (data) => {
+        subscriber.next(data);
+      });
+    });
+  }
+
+  joinRoom(roomId: string): void {
+    this.socket.emit('joinRoom', roomId);
   }
 }
