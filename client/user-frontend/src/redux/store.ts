@@ -3,6 +3,7 @@ import { categoryApi } from '@/services/category.service'
 import { chatApi } from '@/services/chat.service'
 import { mailApi } from '@/services/mail.service'
 import { productApi } from '@/services/product.service'
+import { userApi } from '@/services/user.service'
 import { configureStore } from '@reduxjs/toolkit'
 
 export const store = configureStore({
@@ -11,7 +12,8 @@ export const store = configureStore({
     [mailApi.reducerPath]: mailApi.reducer,
     [productApi.reducerPath]: productApi.reducer,
     [categoryApi.reducerPath]: categoryApi.reducer,
-    [chatApi.reducerPath]: chatApi.reducer
+    [chatApi.reducerPath]: chatApi.reducer,
+    [userApi.reducerPath]: userApi.reducer
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(
@@ -19,7 +21,8 @@ export const store = configureStore({
       mailApi.middleware,
       productApi.middleware,
       categoryApi.middleware,
-      chatApi.middleware
+      chatApi.middleware,
+      userApi.middleware
     )
 })
 

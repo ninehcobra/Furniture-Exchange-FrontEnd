@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 'use client'
 import Image from 'next/image'
 import './header.scss'
@@ -5,10 +6,11 @@ import Link from 'next/link'
 import { Dropdown, List, Avatar, Badge } from 'antd'
 import type { MenuProps } from 'antd'
 import { useGetConversationQuery } from '@/services/chat.service'
+import { useGetUserProfileQuery } from '@/services/user.service'
 
 export default function Header(): JSX.Element {
-  const accessToken = localStorage.getItem('access-token')
-  console.log('token ne', accessToken)
+  const accessToken = ''
+  const { data: userProfile, isSuccess: isUserProfileSuccess } = useGetUserProfileQuery()
   const { data: conversations, isSuccess } = useGetConversationQuery(undefined, {
     skip: !accessToken
   })
@@ -73,9 +75,18 @@ export default function Header(): JSX.Element {
               </div>
               <div className='body-xs d-flex align-items-center header-btn'>
                 <div className='rounded-circle overflow-hidden me-2' style={{ width: '20px', height: '20px' }}>
-                  <Image src='/images/profile/user-1.jpg' alt='avatar' width={20} height={20} />
+                  <Image
+                    src={
+                      isUserProfileSuccess && userProfile.image_url
+                        ? userProfile.image_url
+                        : '/images/profile/user-1.jpg'
+                    }
+                    alt='avatar'
+                    width={20}
+                    height={20}
+                  />
                 </div>
-                <div>congchinh123</div>
+                <div>{isUserProfileSuccess ? `${userProfile.first_name} ${userProfile.last_name}` : 'Guest'}</div>
               </div>
             </div>
           </div>

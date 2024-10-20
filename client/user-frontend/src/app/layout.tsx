@@ -24,6 +24,10 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <head>
+        <title>ESOLD</title>
+        <link rel='icon' href='/favicon.ico' sizes='any' />
+        <link rel='apple-touch-icon' href='/apple-touch-icon.png' />
+        <meta name='description' content='App bán đồ nội thất cũ' />
         <link
           href='https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css'
           rel='stylesheet'
@@ -37,14 +41,11 @@ export default function RootLayout({
           crossOrigin='anonymous'
           strategy='lazyOnload'
         />
-        {/* <script src='https://ninehcobra.github.io/chat-template/chat-widget.js' async></script> */}
       </head>
       <Provider store={store}>
         <AntdRegistry>
           <ConfigProvider theme={theme}>
-           
-              <body className={poppins.className}>{children}</body>
-      
+            <body className={poppins.className}>{children}</body>
           </ConfigProvider>
         </AntdRegistry>
         <ToastContainer />

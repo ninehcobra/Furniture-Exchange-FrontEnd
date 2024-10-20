@@ -157,6 +157,13 @@ export default function Page({ params }: { params: { slug: string } }): React.Re
           data-full-width-responsive='true'
         ></ins>
       </GoogleAdUnit> */}
+      <img
+        src='/images/banner/banner-ads-1.png'
+        className='w-100 my-2 rounded'
+        style={{ objectFit: 'cover' }}
+        alt='banner-ads-1'
+        height={120}
+      />
       <div className='row g-2'>
         <div className='col-8 position-relative '>
           <button className='btn btn-link position-absolute top-0 end-0 d-flex align-items-center justify-content-center m-2 mt-1'>
@@ -289,6 +296,13 @@ export default function Page({ params }: { params: { slug: string } }): React.Re
               <div className='body-s px-3 py-2 sample-chat d-inline-block ms-2'>Bạn có đó không?</div>
             </div>
           </div>
+          <img
+            src='/images/banner/banner-ads-2.png'
+            className='w-100 my-2 rounded'
+            style={{ objectFit: 'cover', border: '1px solid #e0e0e0' }}
+            alt='banner-ads-1'
+            height={236}
+          />
         </div>
       </div>
 
@@ -313,9 +327,7 @@ export default function Page({ params }: { params: { slug: string } }): React.Re
                     </button>
                     {product.image_urls && product.image_urls.length > 0 && (
                       <img
-                        src={
-                          'https://res.cloudinary.com/delkyrtji/image/upload/v1727710554/test/izriag6nkmziqqco9xk4.webp'
-                        }
+                        src={product.image_urls[0] ? product.image_urls[0] : 'https://via.placeholder.com/150'}
                         alt={product.name || 'Product image'}
                         className='same-product-image w-100'
                       />
@@ -336,6 +348,12 @@ export default function Page({ params }: { params: { slug: string } }): React.Re
           })}{' '}
         </div>
       </div>
+      <img
+        src='/images/banner/banner-2.jpg'
+        className='w-100 my-2 rounded'
+        style={{ objectFit: 'cover', border: '1px solid #e0e0e0' }}
+        alt='banner-ads-1'
+      />
     </div>
   )
 }

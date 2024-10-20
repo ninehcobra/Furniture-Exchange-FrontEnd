@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 'use client'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 
@@ -9,6 +10,7 @@ import { ILoginPayload } from '@/types/auth'
 import { ToastService } from '@/services/toast.service'
 import { HandleErrorService } from '@/services/handle-error.service'
 import { IErrorResponse } from '@/types/error'
+import { setCookie } from 'cookies-next'
 
 export default function SignIn(): React.ReactNode {
   const [loginPayload, setLoginPayload] = useState<ILoginPayload>({ email: '', password: '' })
@@ -62,8 +64,21 @@ export default function SignIn(): React.ReactNode {
     if (isLoginSuccess) {
       if (loginData?.accessToken && loginData?.refreshToken) {
         toastService.success('Đăng nhập thành công')
-        localStorage.setItem('access-token', loginData.accessToken)
-        localStorage.setItem('refresh-token', loginData.refreshToken)
+
+        // Set cookies instead of using localStorage
+        setCookie('access-token', loginData.accessToken, {
+          maxAge: 3 * 60 * 60, // 7 days
+          path: '/',
+          secure: process.env.NODE_ENV === 'production',
+          sameSite: 'strict'
+        })
+        setCookie('refresh-token', loginData.refreshToken, {
+          maxAge: 30 * 24 * 60 * 60, // 30 days
+          path: '/',
+          secure: process.env.NODE_ENV === 'production',
+          sameSite: 'strict'
+        })
+
         router.push('/home')
       } else if (loginData?.message && loginData?.url) {
         toastService.error(loginData.message)

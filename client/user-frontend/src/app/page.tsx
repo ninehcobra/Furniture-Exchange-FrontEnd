@@ -96,18 +96,18 @@ export default function LandingPage(): React.ReactNode {
                   <div className='d-flex'>
                     <div>
                       <div className='slider-img'>
-                        <Image preview={false} src='/images/landingpage/bannerimg1.svg' alt='Đồ nội thất cũ' />
+                        <Image preview={false} src='/images/landingpage/banner1.png' alt='Đồ nội thất cũ' />
                       </div>
                       <div className='slider-img'>
-                        <Image preview={false} src='/images/landingpage/bannerimg1.svg' alt='Đồ điện tử cũ' />
+                        <Image preview={false} src='/images/landingpage/banner1.png' alt='Đồ điện tử cũ' />
                       </div>
                     </div>
                     <div>
                       <div className='slider-img2'>
-                        <Image preview={false} src='/images/landingpage/bannerimg2.svg' alt='Quần áo cũ' />
+                        <Image preview={false} src='/images/landingpage/banner2.png' alt='Quần áo cũ' />
                       </div>
                       <div className='slider-img2'>
-                        <Image preview={false} src='/images/landingpage/bannerimg2.svg' alt='Sách cũ' />
+                        <Image preview={false} src='/images/landingpage/banner2.png' alt='Sách cũ' />
                       </div>
                     </div>
                   </div>
