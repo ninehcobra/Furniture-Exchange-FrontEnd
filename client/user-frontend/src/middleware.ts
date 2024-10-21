@@ -1,8 +1,8 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
-const publicRoutes = ['/sign-in', '/sign-up', '/forgot-password']
-const privateRoutes = ['/home', '/profile', '/settings']
+const publicRoutes = ['/sign-in', '/sign-up', '/forgot-password', '/home']
+const privateRoutes = ['/profile', '/settings']
 
 export function middleware(request: NextRequest): NextResponse {
   const authToken = request.cookies.get('access-token')
