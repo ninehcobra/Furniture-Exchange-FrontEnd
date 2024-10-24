@@ -8,6 +8,7 @@ import { useGetUserProfileQuery } from '@/services/user.service'
 import { useCookies } from 'react-cookie'
 import { ReactNode, useEffect } from 'react'
 import { usePathname } from 'next/navigation'
+import { Dropdown, Menu } from 'antd'
 
 export default function Header(): ReactNode {
   const [cookies] = useCookies(['access-token'])
@@ -34,7 +35,18 @@ export default function Header(): ReactNode {
     return <div>Loading...</div>
   }
 
-  console.log('User Profile:', userProfile)
+  const handleLogout = (): void => {}
+
+  const menu = (
+    <Menu>
+      <Menu.Item key='1'>
+        <Link href='/profile'>Thông tin cá nhân</Link>
+      </Menu.Item>
+      <Menu.Item key='2' onClick={handleLogout}>
+        Đăng xuất
+      </Menu.Item>
+    </Menu>
+  )
 
   return (
     <div className='header-container'>
@@ -63,18 +75,20 @@ export default function Header(): ReactNode {
 
               <div>
                 {userProfile ? (
-                  <div className='body-xs d-flex align-items-center header-btn'>
-                    <div className='rounded-circle overflow-hidden me-2' style={{ width: '20px', height: '20px' }}>
-                      <img
-                        src={userProfile.image_url || '/images/profile/user-1.jpg'}
-                        alt='avatar'
-                        width={20}
-                        height={20}
-                        style={{ objectFit: 'cover' }}
-                      />
+                  <Dropdown overlay={menu} placement='bottomRight' trigger={['click']}>
+                    <div className='body-xs d-flex align-items-center header-btn'>
+                      <div className='rounded-circle overflow-hidden me-2' style={{ width: '20px', height: '20px' }}>
+                        <img
+                          src={userProfile.image_url || '/images/profile/user-1.jpg'}
+                          alt='avatar'
+                          width={20}
+                          height={20}
+                          style={{ objectFit: 'cover' }}
+                        />
+                      </div>
+                      <div>{`${userProfile.first_name} ${userProfile.last_name}`}</div>
                     </div>
-                    <div>{`${userProfile.first_name} ${userProfile.last_name}`}</div>
-                  </div>
+                  </Dropdown>
                 ) : (
                   <Link href='/sign-in' className='body-xs header-btn text-neutral-light-5'>
                     Đăng nhập
