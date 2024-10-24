@@ -73,21 +73,23 @@ export default function Header(): JSX.Element {
               <div className='body-xs me-3 header-btn'>
                 <i className='fa-regular fa-circle-question me-1'></i>Hỗ trợ
               </div>
-              <div className='body-xs d-flex align-items-center header-btn'>
-                <div className='rounded-circle overflow-hidden me-2' style={{ width: '20px', height: '20px' }}>
-                  <Image
-                    src={
-                      isUserProfileSuccess && userProfile.image_url
-                        ? userProfile.image_url
-                        : '/images/profile/user-1.jpg'
-                    }
-                    alt='avatar'
-                    width={20}
-                    height={20}
-                  />
+              {isUserProfileSuccess && userProfile ? (
+                <div className='body-xs d-flex align-items-center header-btn'>
+                  <div className='rounded-circle overflow-hidden me-2' style={{ width: '20px', height: '20px' }}>
+                    <Image
+                      src={userProfile.image_url || '/images/profile/user-1.jpg'}
+                      alt='avatar'
+                      width={20}
+                      height={20}
+                    />
+                  </div>
+                  <div>{`${userProfile.first_name} ${userProfile.last_name}`}</div>
                 </div>
-                <div>{isUserProfileSuccess ? `${userProfile.first_name} ${userProfile.last_name}` : 'Guest'}</div>
-              </div>
+              ) : (
+                <Link href='/sign-in' className='body-xs header-btn fw-500 text-neutral-light-5'>
+                  Đăng nhập
+                </Link>
+              )}
             </div>
           </div>
         </div>
