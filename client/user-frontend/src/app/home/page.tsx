@@ -6,7 +6,7 @@ import HomeBanner from './components/HomeBanner'
 import CategoryBanner from './components/category-banner'
 import ProductList from './components/ProductList'
 import { useGetProductsQuery } from '@/services/product.service'
-import { Alert, Spin } from 'antd'
+import { Spin } from 'antd'
 export default function Home(): React.ReactNode {
   const { data, isLoading } = useGetProductsQuery()
 
