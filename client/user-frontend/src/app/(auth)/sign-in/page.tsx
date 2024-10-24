@@ -10,7 +10,8 @@ import { ILoginPayload } from '@/types/auth'
 import { ToastService } from '@/services/toast.service'
 import { HandleErrorService } from '@/services/handle-error.service'
 import { IErrorResponse } from '@/types/error'
-import { setCookie } from 'cookies-next'
+import { setCookieFromClient } from '@/types/cookie'
+import { useCookies } from 'react-cookie'
 
 export default function SignIn(): React.ReactNode {
   const [loginPayload, setLoginPayload] = useState<ILoginPayload>({ email: '', password: '' })
@@ -60,23 +61,23 @@ export default function SignIn(): React.ReactNode {
     }
   }
 
+  const [cookies, setCookie, removeCookie] = useCookies()
+
   useEffect(() => {
     if (isLoginSuccess) {
       if (loginData?.accessToken && loginData?.refreshToken) {
         toastService.success('Đăng nhập thành công')
 
-        // Set cookies instead of using localStorage
         setCookie('access-token', loginData.accessToken, {
-          maxAge: 3 * 60 * 60, // 7 days
           path: '/',
-          secure: process.env.NODE_ENV === 'production',
-          sameSite: 'strict'
+          sameSite: 'strict',
+          expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
         })
+
         setCookie('refresh-token', loginData.refreshToken, {
-          maxAge: 30 * 24 * 60 * 60, // 30 days
           path: '/',
-          secure: process.env.NODE_ENV === 'production',
-          sameSite: 'strict'
+          sameSite: 'strict',
+          expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
         })
 
         router.push('/home')
@@ -91,7 +92,6 @@ export default function SignIn(): React.ReactNode {
       handleErrorService.handleHttpError(loginError as IErrorResponse)
     }
   }, [isLoginError, isLoginSuccess, loginData, loginError, router, toastService, handleErrorService])
-
   const randomString = (): string => Math.random().toString(36).substring(7)
 
   return (

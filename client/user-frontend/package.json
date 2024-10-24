@@ -19,6 +19,7 @@
     "nextjs13_google_adsense": "^1.0.8",
     "nookies": "^2.5.2",
     "react": "^18",
+    "react-cookie": "^7.2.1",
     "react-dom": "^18",
     "react-hook-form": "^7.53.0",
     "react-redux": "^9.1.2",

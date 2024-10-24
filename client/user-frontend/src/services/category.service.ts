@@ -1,9 +1,7 @@
 import { enviroment } from '@/environments/environment'
 import { ICategory, IGetProductByCategorySlugResponse } from '@/types/category'
-import { IMailPayload, IMailResponse } from '@/types/mail'
-import { IProduct } from '@/types/product'
+
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { get } from 'http'
 
 export const categoryApi = createApi({
   reducerPath: 'categoryApi',

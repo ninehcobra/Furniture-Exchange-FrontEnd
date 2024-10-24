@@ -1,16 +1,17 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { enviroment } from '@/environments/environment'
-import { IChatMessage } from '@/types/chat'
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { baseQuery } from './base.service'
+
+import { createApi } from '@reduxjs/toolkit/query/react'
+import { baseQueryWithAuth } from './base.service'
+import { IGetConversationResponse } from '@/types/chat'
 
 export const chatApi = createApi({
   reducerPath: 'chatApi',
-  baseQuery: baseQuery({ additionalPath: '/conversations' }),
+  baseQuery: baseQueryWithAuth(enviroment.apiUrl),
   endpoints: (builder) => ({
-    getConversation: builder.query<IChatMessage[], void>({
+    getConversation: builder.query<IGetConversationResponse, void>({
       query: () => ({
-        url: '/',
+        url: '/conversations',
         method: 'GET'
       })
     })
